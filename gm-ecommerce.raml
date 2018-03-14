@@ -1,0 +1,1713 @@
+﻿#%RAML 1.0
+title: Global Miles ECommerce API
+version: 2.0.0
+baseUri: default
+baseUriParameters: {}
+documentation:
+- title: Global Miles ECommerce API
+  content: API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.
+securitySchemes:
+  auth:
+    type: OAuth 2.0
+    settings:
+      authorizationUri: ''
+      accessTokenUri: https://test1.api.globalmiles.com/oauth/token
+      authorizationGrants:
+      - client_credentials
+      scopes: []
+types:
+  CompleteReturnRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        return_provision_token: rpt_e0563e09-e1b2-4144-a236-30ea76b58058
+    displayName: CompleteReturnRequest
+    description: Request of return for complete action.
+    type: object
+    properties:
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      return_provision_token:
+        required: true
+        displayName: return_provision_token
+        description: A token represents a return object for provisioning.
+        type: string
+  StartReturnResponse:
+    example:
+      value:
+        status: ok
+        result:
+          return_provision_token: rpt_e0563e09-e1b2-4144-a236-30ea76b58058
+    displayName: StartReturnResponse
+    description: Response object of return for start action.
+    type: Response
+    properties:
+      result:
+        required: true
+        displayName: result
+        description: Result object of the response.
+        type: StartReturnResult
+  StartReturnRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        transaction_id: cf01b6c3-74c9-4e69-a779-9742571abff6
+        amount:
+          value: 10
+          currency: usd
+    displayName: StartReturnRequest
+    description: Request of return for start action.
+    type: object
+    properties:
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      transaction_id:
+        required: true
+        displayName: transaction_id
+        description: The ID of the transaction that represents the order.
+        type: string
+      amount:
+        required: true
+        displayName: amount
+        description: An amount of the return.
+        type: Amount
+  StartReturnResult:
+    example:
+      value:
+        return_provision_token: rpt_e0563e09-e1b2-4144-a236-30ea76b58058
+    displayName: StartReturnResult
+    description: Result object of return for start action.
+    type: object
+    properties:
+      return_provision_token:
+        required: true
+        displayName: return_provision_token
+        description: A token represents a return object for provisioning.
+        type: string
+  CartResponse:
+    example:
+      value:
+        status: ok
+        result:
+          available_amount:
+            value: 100.2
+            currency: usd
+          cart_discount:
+            discount: 10
+            currency: usd
+            discount_provision_token: dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4
+    displayName: CartResponse
+    description: Response object of the cart.
+    type: Response
+    properties:
+      result:
+        required: false
+        displayName: result
+        description: Result object of the response.
+        type: CartResult
+  ListPointPaymentResponse:
+    example:
+      value:
+        status: ok
+        result:
+        - payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+          created_at: 1/1/2018 10:00:00 AM
+          updated_at: 1/1/2018 10:10:00 AM
+          status: completed
+          amount:
+            value: 10
+            currency: usd
+        - payment_provision_token: ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10
+          created_at: 12/1/2017 11:00:00 PM
+          updated_at: 12/2/2017 2:00:00 PM
+          status: refunded
+          amount:
+            value: 20
+            currency: usd
+        - payment_provision_token: ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5
+          created_at: 11/1/2017 12:00:00 PM
+          updated_at: 11/1/2017 12:05:00 PM
+          status: cancelled
+          amount:
+            value: 23
+            currency: usd
+    displayName: ListPointPaymentResponse
+    description: Response object of payment for list action.
+    type: Response
+    properties:
+      result:
+        required: false
+        displayName: result
+        description: Result object of the response.
+        type: array
+        items:
+          type: Payment
+  OrderResult:
+    example:
+      value:
+        transaction_token: ot_71f06a17-3021-4c42-bd38-e492a7579f65
+    displayName: OrderResult
+    description: Result object of the response.
+    type: object
+    properties:
+      transaction_token:
+        required: true
+        displayName: transaction_token
+        description: A token represents an order object from Global Miles system.
+        type: string
+  OrderResponse:
+    example:
+      value:
+        status: ok
+        result:
+          transaction_token: ot_71f06a17-3021-4c42-bd38-e492a7579f65
+    displayName: OrderResponse
+    description: Response object of order.
+    type: Response
+    properties:
+      result:
+        required: true
+        displayName: result
+        description: Result object of the response.
+        type: OrderResult
+  OrderItem:
+    example:
+      value:
+        id: 344187960
+        quantity: 2.2
+        price: 0.91
+    displayName: OrderItem
+    description: Representing an order item.
+    type: object
+    properties:
+      id:
+        required: true
+        displayName: id
+        description: An identifier to reference this product.
+        type: string
+      quantity:
+        required: true
+        displayName: quantity
+        description: The quantity of the item.
+        type: number
+        format: double
+      price:
+        required: true
+        displayName: price
+        description: The price of the item.
+        type: number
+        format: double
+  PaymentItem:
+    example:
+      value:
+        type: point_payment
+        amount: 50
+        payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+    displayName: PaymentItem
+    description: Representing a payment for order.
+    type: object
+    properties:
+      type:
+        required: true
+        displayName: type
+        description: A type of payment.
+        type: string
+        enum:
+        - credit_card
+        - debit_card
+        - bank_transfer
+        - cash
+        - digital_wallet
+        - mobile_payment
+        - gift_card
+        - point_payment
+        - other
+      amount:
+        required: true
+        displayName: amount
+        description: Amount of current payment.
+        type: number
+        format: double
+      payment_provision_token:
+        required: false
+        displayName: payment_provision_token
+        description: A token represents a payment object for provisioning.
+        type: string
+  OAuthResponse:
+    example:
+      value:
+        access_token: '{{access_token}}'
+        token_type: bearer
+        created_at: 1496737098
+    displayName: OAuthResponse
+    description: Representing an OAuth response.
+    type: object
+    properties:
+      access_token:
+        required: true
+        displayName: access_token
+        description: An access token from the authorization server.
+        type: string
+      token_type:
+        required: true
+        displayName: token_type
+        description: The type of token this is, typically just the string "bearer".
+        type: string
+      created_at:
+        required: true
+        displayName: created_at
+        description: The time in unix time format when the access token was created.
+        type: string
+  OAuthRequest:
+    example:
+      value:
+        client_id: '{{client_id}}'
+        client_secret: '{{client_secret}}'
+        grant_type: '{{grant_type}}'
+    displayName: OAuthRequest
+    description: Representing an OAuth request.
+    type: object
+    properties:
+      client_id:
+        required: true
+        displayName: client_id
+        description: ID of the client which is provided by Global Miles.
+        type: string
+      client_secret:
+        required: true
+        displayName: client_secret
+        description: Secret of the client which is provided by Global Miles.
+        type: string
+      grant_type:
+        required: true
+        default: client_credentials
+        displayName: grant_type
+        description: 'Type of the OAuth flows. We support only one type of token: client_credentials'
+        type: string
+  Order:
+    example:
+      value:
+        subtotal: 90
+        tax: 10.2
+        total: 100.2
+        currency: usd
+        items:
+        - id: 344187961
+          quantity: 1
+          price: 20
+        - id: 344187960
+          quantity: 2.2
+          price: 0.91
+        - id: 344187965
+          quantity: 5
+          price: 10
+        payments:
+        - type: cash
+          amount: 25.5
+        - type: point_payment
+          amount: 50
+          payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+        discounts:
+        - type: other
+          amount: 1.5
+        - type: loyalty_discount
+          amount: 1
+          discount_provision_token: dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4
+    displayName: Order
+    description: Representing an order.
+    type: object
+    properties:
+      subtotal:
+        required: true
+        displayName: subtotal
+        description: Total value of all order items without tax.
+        type: number
+        format: double
+      tax:
+        required: true
+        displayName: tax
+        description: The amount of tax.
+        type: number
+        format: double
+      total:
+        required: true
+        displayName: total
+        description: Total amount of order.
+        type: number
+        format: double
+      currency:
+        required: true
+        displayName: currency
+        description: ISO-4217 3-letter currency code.
+        type: string
+      items:
+        required: false
+        displayName: items
+        description: An array of order items.
+        type: array
+        items:
+          type: OrderItem
+      discounts:
+        required: false
+        displayName: discounts
+        description: An array of discount items.
+        type: array
+        items:
+          type: DiscountItem
+      payments:
+        required: false
+        displayName: payments
+        description: An array of payment items.
+        type: array
+        items:
+          type: PaymentItem
+  CartResult:
+    example:
+      value:
+        available_amount:
+          value: 100.2
+          currency: usd
+        cart_discount:
+          discount: 10
+          currency: usd
+          discount_provision_token: dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4
+    displayName: CartResult
+    description: Result object of the response.
+    type: object
+    properties:
+      available_amount:
+        required: false
+        displayName: available_amount
+        description: The available amount of money for payment.
+        type: Amount
+      cart_discount:
+        required: false
+        displayName: cart_discount
+        description: A discount object for cart.
+        type: CartDiscount
+  CartItem:
+    example:
+      value:
+        id: 344187961
+        quantity: 1
+        price: 20
+    displayName: CartItem
+    description: Representing a shopping cart item.
+    type: object
+    properties:
+      id:
+        required: true
+        displayName: id
+        description: An identifier to reference this product. Universal product code.
+        type: string
+      quantity:
+        required: true
+        displayName: quantity
+        description: The quantity of the item.
+        type: number
+        format: double
+      price:
+        required: true
+        displayName: price
+        description: The price of the item.
+        type: number
+        format: double
+  Cart:
+    example:
+      value:
+        subtotal: 90
+        tax: 10.2
+        total: 100.2
+        currency: usd
+        items:
+        - id: 344187961
+          quantity: 1
+          price: 20
+        - id: 344187960
+          quantity: 2.2
+          price: 0.91
+        - id: 344187965
+          quantity: 5
+          price: 10
+    displayName: Cart
+    description: Representing a shopping cart.
+    type: object
+    properties:
+      currency:
+        required: true
+        displayName: currency
+        description: ISO-4217 3-letter currency code.
+        type: string
+      subtotal:
+        required: true
+        displayName: subtotal
+        description: Total value of all cart items without tax.
+        type: number
+        format: double
+      tax:
+        required: true
+        displayName: tax
+        description: The amount of tax.
+        type: number
+        format: double
+      total:
+        required: true
+        displayName: total
+        description: Total amount of cart.
+        type: number
+        format: double
+      items:
+        required: false
+        displayName: items
+        description: An array of cart items.
+        type: array
+        items:
+          type: CartItem
+  CartItemDiscount:
+    example:
+      value:
+        id: 344187961
+        discount: 1
+    displayName: CartItemDiscount
+    description: Representing a discount for shopping cart item.
+    type: object
+    properties:
+      id:
+        required: true
+        displayName: id
+        description: An identifier to reference this product.
+        type: string
+      discount:
+        required: true
+        displayName: discount
+        description: Amount of the current discount.
+        type: number
+        format: double
+  DiscountItem:
+    example:
+      value:
+        type: loyalty_discount
+        amount: 1
+        discount_provision_token: dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4
+    displayName: DiscountItem
+    description: Representing a discount for order.
+    type: object
+    properties:
+      type:
+        required: true
+        displayName: type
+        description: Type of the discount.
+        type: string
+        enum:
+        - loyalty_discount
+        - other
+      amount:
+        required: true
+        displayName: amount
+        description: Amount of the current discount.
+        type: number
+        format: double
+      discount_provision_token:
+        required: false
+        displayName: discount_provision_token
+        description: A token represents a discount object for provisioning.
+        type: string
+  OrderRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        user_token: ut_b69c3393-54eb-471c-907d-8d4ed405f88e
+        transaction_id: cf01b6c3-74c9-4e69-a779-9742571abff6
+        order:
+          subtotal: 90
+          tax: 10.2
+          total: 100.2
+          currency: usd
+          items:
+          - id: 344187961
+            quantity: 1
+            price: 20
+          - id: 344187960
+            quantity: 2.2
+            price: 0.91
+          - id: 344187965
+            quantity: 5
+            price: 10
+          discounts:
+          - type: other
+            amount: 1.5
+          - type: loyalty_discount
+            amount: 1
+            discount_provision_token: dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4
+          payments:
+          - type: cash
+            amount: 25.5
+          - type: point_payment
+            amount: 50
+            payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+    displayName: OrderRequest
+    description: Request of order object.
+    type: object
+    properties:
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      user_token:
+        required: true
+        displayName: user_token
+        description: A token that is representing a Global Miles user for the current session.
+        type: string
+      transaction_id:
+        required: true
+        displayName: transaction_id
+        description: The ID of the transaction that represents the order.
+        type: string
+      order:
+        required: true
+        displayName: order
+        description: A complex object for order.
+        type: Order
+      shift_allowance:
+        required: false
+        default: 0
+        displayName: shift_allowance
+        description: It specifies how many days later the miles / points should be given to the user.
+        type: integer
+        format: int32
+  CartRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        user_token: b69c3393-54eb-471c-907d-8d4ed405f88e
+        cart:
+          subtotal: 90
+          tax: 10.2
+          total: 100.2
+          currency: usd
+          items:
+          - id: 344187961
+            quantity: 1
+            price: 20
+          - id: 344187960
+            quantity: 2.2
+            price: 0.91
+          - id: 344187965
+            quantity: 5
+            price: 10
+    displayName: CartRequest
+    description: Request of the card object.
+    type: object
+    properties:
+      user_token:
+        required: true
+        displayName: user_token
+        description: A token that is representing a Global Miles user for the current session.
+        type: string
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      cart:
+        required: true
+        displayName: cart
+        description: A complex object for cart.
+        type: Cart
+  Response:
+    example:
+      value:
+        status: user_not_found
+        message: User not found with given attributes
+    displayName: Response
+    description: A basic object of the response.
+    type: object
+    properties:
+      status:
+        required: true
+        displayName: status
+        description: The status of the response. The value is always "ok" for successful responses otherwise it includes error code.
+        type: string
+      message:
+        required: false
+        displayName: message
+        description: The message of the error. It is always null for successful responses.
+        type: string
+  Amount:
+    example:
+      value:
+        value: 10
+        currency: usd
+    displayName: Amount
+    description: A complex object for amount.
+    type: object
+    properties:
+      value:
+        required: true
+        displayName: value
+        description: A decimal value with two decimals in the string representation of amount.
+        type: number
+        format: double
+      currency:
+        required: true
+        displayName: currency
+        description: ISO 4217 currency code of the amount.
+        type: string
+  StartPointPaymentRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        user_token: ut_b69c3393-54eb-471c-907d-8d4ed405f88e
+        amount:
+          value: 10
+          currency: usd
+    displayName: StartPointPaymentRequest
+    description: Request of payment for start action.
+    type: object
+    properties:
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      user_token:
+        required: true
+        displayName: user_token
+        description: A token that is representing a Global Miles user for the current session.
+        type: string
+      amount:
+        required: true
+        displayName: amount
+        description: An amount of payment.
+        type: Amount
+  StartPointPaymentResponse:
+    example:
+      value:
+        status: ok
+        result:
+          payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+    displayName: StartPointPaymentResponse
+    description: Response object of payment for start action.
+    type: Response
+    properties:
+      result:
+        required: true
+        displayName: result
+        description: Result object of the response.
+        type: StartPointPaymentResult
+  StartPointPaymentResult:
+    example:
+      value:
+        payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+    displayName: StartPointPaymentResult
+    description: Result object of payment for start action.
+    type: object
+    properties:
+      payment_provision_token:
+        required: true
+        displayName: payment_provision_token
+        description: A token represents a payment object for provisioning.
+        type: string
+  CompletePointPaymentRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+    displayName: CompletePointPaymentRequest
+    description: Request of payment for complete action.
+    type: object
+    properties:
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      payment_provision_token:
+        required: true
+        displayName: payment_provision_token
+        description: A token represents a payment object for provisioning.
+        type: string
+  CancelPointPaymentRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+    displayName: CancelPointPaymentRequest
+    description: Request of payment for cancel action.
+    type: object
+    properties:
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      payment_provision_token:
+        required: true
+        displayName: payment_provision_token
+        description: A token represents a payment object for provisioning.
+        type: string
+  RefundPointPaymentRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+        amount:
+          value: 10
+          currency: usd
+    displayName: RefundPointPaymentRequest
+    description: Request of payment for refund action.
+    type: object
+    properties:
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      payment_provision_token:
+        required: true
+        displayName: payment_provision_token
+        description: A token represents a payment object for provisioning.
+        type: string
+      amount:
+        required: true
+        displayName: amount
+        description: An amount of the payment.
+        type: Amount
+  Payment:
+    example:
+      value:
+        payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+        created_at: 1/1/2018 10:00:00 AM
+        updated_at: 1/1/2018 10:10:00 AM
+        status: completed
+        amount:
+          value: 10
+          currency: usd
+    displayName: Payment
+    description: Representing a payment.
+    type: object
+    properties:
+      payment_provision_token:
+        required: true
+        displayName: payment_provision_token
+        description: A token represents a payment object for provisioning.
+        type: string
+      created_at:
+        required: true
+        displayName: created_at
+        description: Create date time of payment. The format is ISO 8601 date and time.
+        type: string
+      updated_at:
+        required: true
+        displayName: updated_at
+        description: Last update date time of payment. The format is ISO 8601 date and time.
+        type: string
+      status:
+        required: true
+        displayName: status
+        description: The status of payment.
+        type: string
+        enum:
+        - started
+        - completed
+        - cancelled
+        - refunded
+      amount:
+        required: true
+        displayName: amount
+        description: An amount of payment.
+        type: Amount
+  CancelReturnRequest:
+    example:
+      value:
+        store_code: ECO123858493939
+        return_provision_token: rpt_e0563e09-e1b2-4144-a236-30ea76b58058
+    displayName: CancelReturnRequest
+    description: Request of return for cancel action.
+    type: object
+    properties:
+      store_code:
+        required: true
+        displayName: store_code
+        description: An identifier for online store.
+        type: string
+      return_provision_token:
+        required: true
+        displayName: return_provision_token
+        description: A token represents a return object for provisioning.
+        type: string
+  CartDiscount:
+    example:
+      value:
+        discount: 10
+        currency: usd
+        discount_provision_token: dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4
+    displayName: CartDiscount
+    description: Representing a discount for shopping cart.
+    type: object
+    properties:
+      discount:
+        required: false
+        displayName: discount
+        description: Amount of the current discount.
+        type: number
+        format: double
+      currency:
+        required: true
+        displayName: currency
+        description: ISO-4217 3-letter currency code.
+        type: string
+      discount_provision_token:
+        required: false
+        displayName: discount_provision_token
+        description: A token represents a discount object for provisioning.
+        type: string
+      items:
+        required: false
+        displayName: items
+        description: An array of discounts for cart items.
+        type: array
+        items:
+          type: CartItemDiscount
+/oauth/token:
+  post:
+    displayName: Authentication
+    description: 'An access token will allow you to make requests for the system. We support only one type of token: client_credentials'
+    body:
+      application/json:
+        example:
+          value:
+            client_id: '{{client_id}}'
+            client_secret: '{{client_secret}}'
+            grant_type: '{{grant_type}}'
+        displayName: Body
+        description: The body of the request.
+        type: OAuthRequest
+    headers:
+      Accept:
+        required: true
+        default: application/json
+        example:
+          value: application/json
+        displayName: Accept
+        description: It advertises which content type is able to understand.
+        type: string
+      Content-Type:
+        required: true
+        default: application/json
+        example:
+          value: application/json
+        displayName: Content-Type
+        description: It tells the client what the content type of the returned.
+        type: string
+    responses:
+      200:
+        description: Success
+        body:
+          application/json:
+            example:
+              value:
+                access_token: '{{access_token}}'
+                token_type: bearer
+                created_at: 1496737098
+            displayName: Response
+            type: OAuthResponse
+      400:
+        description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+        body: {}
+      401:
+        description: Unauthorized - No valid API key provided.
+        body: {}
+      402:
+        description: Request Failed - The parameters were valid but the request failed.
+        body: {}
+      404:
+        description: Not Found - The requested resource doesn't exist.
+        body: {}
+      429:
+        description: Too Many Requests - Too many requests hit the API too quickly.
+        body: {}
+      500:
+        description: Server Error - Something went wrong.
+        body: {}
+/v2/ecommerce:
+  /payments:
+    get:
+      displayName: List Point Payments
+      description: This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API.
+      securedBy:
+      - auth
+      queryParameters:
+        Store Code:
+          required: true
+          example:
+            value: filter[store_code]=ECO123858493939
+          displayName: Store Code
+          description: An identifier for online store.
+          type: string
+        Filter By Created_At:
+          required: true
+          example:
+            value: filter[created_at]=2017-01-01...2018-01-01
+          displayName: Filter By Created_At
+          description: Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD.
+          type: string
+        Filter By Status:
+          required: false
+          example:
+            value: filter[status]=completed
+          displayName: Filter By Status
+          description: Filter for status field. It is accepted a valid status value of payment.
+          type: string
+        Sort By:
+          required: false
+          example:
+            value: sort=-created_at
+          displayName: Sort By
+          description: Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".
+          type: string
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+                  result:
+                  - payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+                    created_at: 1/1/2018 10:00:00 AM
+                    updated_at: 1/1/2018 10:10:00 AM
+                    status: completed
+                    amount:
+                      value: 10
+                      currency: usd
+                  - payment_provision_token: ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10
+                    created_at: 12/1/2017 11:00:00 PM
+                    updated_at: 12/2/2017 2:00:00 PM
+                    status: refunded
+                    amount:
+                      value: 20
+                      currency: usd
+                  - payment_provision_token: ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5
+                    created_at: 11/1/2017 12:00:00 PM
+                    updated_at: 11/1/2017 12:05:00 PM
+                    status: cancelled
+                    amount:
+                      value: 23
+                      currency: usd
+              displayName: response
+              type: ListPointPaymentResponse
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}
+    put:
+      displayName: Complete Point Payment
+      description: This endpoint allows to complete a payment.
+      body:
+        application/json:
+          example:
+            value:
+              store_code: ECO123858493939
+              payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+          displayName: Body
+          description: The body of the request.
+          type: CompletePointPaymentRequest
+      securedBy:
+      - auth
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+              displayName: response
+              type: Response
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}
+    post:
+      displayName: Start Point Payment
+      description: After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check "Complete Point Payment endpoint" please.
+      body:
+        application/json:
+          example:
+            value:
+              store_code: ECO123858493939
+              user_token: ut_b69c3393-54eb-471c-907d-8d4ed405f88e
+              amount:
+                value: 10
+                currency: usd
+          displayName: Body
+          description: The body of the request.
+          type: StartPointPaymentRequest
+      securedBy:
+      - auth
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+                  result:
+                    payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+              displayName: response
+              type: StartPointPaymentResponse
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}
+    delete:
+      displayName: Cancel Point Payment
+      description: This endpoint allows to cancel a payment.
+      body:
+        application/json:
+          example:
+            value:
+              store_code: ECO123858493939
+              payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+          displayName: Body
+          description: The body of the request.
+          type: CancelPointPaymentRequest
+      securedBy:
+      - auth
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+              displayName: response
+              type: Response
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}
+    /actions/refund:
+      post:
+        displayName: Refund Point Payment
+        description: This endpoint allows to refund a payment.
+        body:
+          application/json:
+            example:
+              value:
+                store_code: ECO123858493939
+                payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+                amount:
+                  value: 10
+                  currency: usd
+            displayName: Body
+            description: The body of the request.
+            type: RefundPointPaymentRequest
+        securedBy:
+        - auth
+        headers:
+          Accept:
+            required: true
+            default: application/json
+            example:
+              value: application/json
+            displayName: Accept
+            description: It advertises which content type is able to understand.
+            type: string
+          Content-Type:
+            required: true
+            default: application/json
+            example:
+              value: application/json
+            displayName: Content-Type
+            description: It tells the client what the content type of the returned.
+            type: string
+          Authorization:
+            required: true
+            example:
+              value: Bearer {{auth_token}}
+            displayName: Authorization
+            description: It includes OAuth2 token.
+            type: string
+        responses:
+          200:
+            description: Success
+            body:
+              application/json:
+                example:
+                  value:
+                    status: ok
+                displayName: response
+                type: Response
+          400:
+            description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+            body: {}
+          401:
+            description: Unauthorized - No valid API key provided.
+            body: {}
+          402:
+            description: Request Failed - The parameters were valid but the request failed.
+            body: {}
+          404:
+            description: Not Found - The requested resource doesn't exist.
+            body: {}
+          429:
+            description: Too Many Requests - Too many requests hit the API too quickly.
+            body: {}
+          500:
+            description: Server Error - Something went wrong.
+            body: {}
+  /orders:
+    post:
+      displayName: Order Info
+      description: This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments.
+      body:
+        application/json:
+          example:
+            value:
+              store_code: ECO123858493939
+              user_token: ut_b69c3393-54eb-471c-907d-8d4ed405f88e
+              transaction_id: cf01b6c3-74c9-4e69-a779-9742571abff6
+              order:
+                subtotal: 90
+                tax: 10.2
+                total: 100.2
+                currency: usd
+                items:
+                - id: 344187961
+                  quantity: 1
+                  price: 20
+                - id: 344187960
+                  quantity: 2.2
+                  price: 0.91
+                - id: 344187965
+                  quantity: 5
+                  price: 10
+                payments:
+                - type: cash
+                  amount: 25.5
+                - type: point_payment
+                  amount: 50
+                  payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
+                discounts:
+                - type: other
+                  amount: 1.5
+                - type: loyalty_discount
+                  amount: 1
+                  discount_provision_token: dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4
+          displayName: Body
+          description: The body of the request.
+          type: OrderRequest
+      securedBy:
+      - auth
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+                  result:
+                    transaction_token: ot_71f06a17-3021-4c42-bd38-e492a7579f65
+              displayName: response
+              type: OrderResponse
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}
+  /carts:
+    post:
+      displayName: Cart Info
+      description: This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items.
+      body:
+        application/json:
+          example:
+            value:
+              store_code: ECO123858493939
+              user_token: ut_b69c3393-54eb-471c-907d-8d4ed405f88e
+              cart:
+                subtotal: 90
+                tax: 10.2
+                total: 100.2
+                currency: usd
+                items:
+                - id: 344187961
+                  quantity: 1
+                  price: 20
+                - id: 344187960
+                  quantity: 2.2
+                  price: 0.91
+                - id: 344187965
+                  quantity: 5
+                  price: 10
+          displayName: Body
+          description: The body of the request.
+          type: CartRequest
+      securedBy:
+      - auth
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+                  result:
+                    available_point:
+                      value: 100.2
+                      currency: usd
+                    cart_discount:
+                      discount: 10
+                      currency: usd
+                      discount_provision_token: dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4
+              displayName: Response
+              type: CartResponse
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}
+  /returns:
+    put:
+      displayName: Complete Return
+      description: This endpoint allows to complete a return.
+      body:
+        application/json:
+          example:
+            value:
+              store_code: ECO123858493939
+              return_provision_token: rpt_e0563e09-e1b2-4144-a236-30ea76b58058
+          displayName: Body
+          description: The body of the request.
+          type: CompleteReturnRequest
+      securedBy:
+      - auth
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+              displayName: response
+              type: Response
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}
+    post:
+      displayName: Start Return
+      description: This endpoint allows to start a return for a specific order.
+      body:
+        application/json:
+          example:
+            value:
+              store_code: ECO123858493939
+              transaction_id: cf01b6c3-74c9-4e69-a779-9742571abff6
+              amount:
+                value: 10
+                currency: usd
+          displayName: Body
+          description: The body of the request.
+          type: StartReturnRequest
+      securedBy:
+      - auth
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+                  result:
+                    return_provision_token: rpt_e0563e09-e1b2-4144-a236-30ea76b58058
+              displayName: response
+              type: StartReturnResponse
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}
+    delete:
+      displayName: Cancel Return
+      description: This endpoint allows to cancel a return.
+      body:
+        application/json:
+          example:
+            value:
+              store_code: ECO123858493939
+              return_provision_token: rpt_e0563e09-e1b2-4144-a236-30ea76b58058
+          displayName: Body
+          description: The body of the request.
+          type: CancelReturnRequest
+      securedBy:
+      - auth
+      headers:
+        Accept:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Accept
+          description: It advertises which content type is able to understand.
+          type: string
+        Content-Type:
+          required: true
+          default: application/json
+          example:
+            value: application/json
+          displayName: Content-Type
+          description: It tells the client what the content type of the returned.
+          type: string
+        Authorization:
+          required: true
+          example:
+            value: Bearer {{auth_token}}
+          displayName: Authorization
+          description: It includes OAuth2 token.
+          type: string
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              example:
+                value:
+                  status: ok
+              displayName: response
+              type: Response
+        400:
+          description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
+          body: {}
+        401:
+          description: Unauthorized - No valid API key provided.
+          body: {}
+        402:
+          description: Request Failed - The parameters were valid but the request failed.
+          body: {}
+        404:
+          description: Not Found - The requested resource doesn't exist.
+          body: {}
+        429:
+          description: Too Many Requests - Too many requests hit the API too quickly.
+          body: {}
+        500:
+          description: Server Error - Something went wrong.
+          body: {}

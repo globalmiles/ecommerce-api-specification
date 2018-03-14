@@ -1,0 +1,1109 @@
+﻿FORMAT: 1A
+HOST: https://test1.api.globalmiles.com
+
+# Global Miles ECommerce API
+API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.
+
+## Authentication
+This API uses OAuth v2 Client Credentials Grant for its authentication.
+
+The properties required for this OAuth implentation are as follows:
++ Access Token Url - /oauth/token
+
+# Group Pay with Miles  Points
+
+## V2 Ecommerce Payments [/v2/ecommerce/payments{?Store Code,Filter By Created_At,Filter By Status,Sort By}]
+
+### List Point Payments [GET]
+This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API.
++ Parameters
+    + Store Code (string, required)
+
+        An identifier for online store.
+
+        + Sample: filter[store_code]=ECO123858493939
+    + Filter By Created_At (string, required)
+
+        Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD.
+
+        + Sample: filter[created_at]=2017-01-01...2018-01-01
+    + Filter By Status (string, optional)
+
+        Filter for status field. It is accepted a valid status value of payment.
+
+        + Sample: filter[status]=completed
+    + Sort By (string, optional)
+
+        Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".
+
+        + Sample: sort=-created_at
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+
+
+
++ Response 200 (application/json)
+    + Attributes (ListPointPaymentResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": [{
+                "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
+                "created_at": "2018-01-01T10:00:00",
+                "updated_at": "2018-01-01T10:10:00",
+                "status": "completed",
+                "amount": {
+                  "value": 10.00,
+                  "currency": "usd"
+                }
+              }, {
+                "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
+                "created_at": "2017-12-01T23:00:00",
+                "updated_at": "2017-12-02T14:00:00",
+                "status": "refunded",
+                "amount": {
+                  "value": 20.00,
+                  "currency": "usd"
+                }
+              }, {
+                "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
+                "created_at": "2017-11-01T12:00:00",
+                "updated_at": "2017-11-01T12:05:00",
+                "status": "cancelled",
+                "amount": {
+                  "value": 23.00,
+                  "currency": "usd"
+                }
+              }]
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+## V2 Ecommerce Payments Actions Refund [/v2/ecommerce/payments/actions/refund]
+
+### Refund Point Payment [POST]
+This endpoint allows to refund a payment.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (RefundPointPaymentRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+## V2 Ecommerce Payments [/v2/ecommerce/payments]
+
+### Cancel Point Payment [DELETE]
+This endpoint allows to cancel a payment.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (CancelPointPaymentRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+### Complete Point Payment [PUT]
+This endpoint allows to complete a payment.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (CompletePointPaymentRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+### Start Point Payment [POST]
+After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check "Complete Point Payment endpoint" please.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (StartPointPaymentRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (StartPointPaymentResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": {
+                "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
+              }
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+
+# Group Transaction
+
+## V2 Ecommerce Orders [/v2/ecommerce/orders]
+
+### Order Info [POST]
+This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (OrderRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (OrderResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": {
+                "transaction_token": "ot_71f06a17-3021-4c42-bd38-e492a7579f65"
+              }
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+## V2 Ecommerce Carts [/v2/ecommerce/carts]
+
+### Cart Info [POST]
+This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (CartRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (CartResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": {
+                "available_point": {
+                  "value": 100.20,
+                  "currency": "usd"
+                },
+                "cart_discount": {
+                  "discount": 10.00,
+                  "currency": "usd",
+                  "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
+                }
+              }
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+
+# Group Authentication
+
+## Oauth Token [/oauth/token]
+
+### Authentication [POST]
+An access token will allow you to make requests for the system. We support only one type of token: client_credentials
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+
+    + Attributes (OAuthRequest)
+
+    + Body
+
+            {
+                "client_id": "{{client_id}}",
+                "client_secret": "{{client_secret}}",
+                "grant_type": "{{grant_type}}"
+            }
+
+
++ Response 200 (application/json)
+    + Attributes (OAuthResponse)
+
+    + Body
+
+            {
+              "access_token":"{{access_token}}",
+              "token_type":"bearer",
+              "created_at":"1496737098"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+
+# Group Return
+
+## V2 Ecommerce Returns [/v2/ecommerce/returns]
+
+### Start Return [POST]
+This endpoint allows to start a return for a specific order.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (StartReturnRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (StartReturnResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": {
+                "return_provision_token": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058"
+              }
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+### Complete Return [PUT]
+This endpoint allows to complete a return.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (CompleteReturnRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+### Cancel Return [DELETE]
+This endpoint allows to cancel a return.
+
++ Request (application/json)
+    + Headers
+
+            Accept:application/json
+            Authorization:Bearer {{auth_token}}
+
+    + Attributes (CancelReturnRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+
+# Data Structures
+
+## CompleteReturnRequest (object)
+Request of return for complete action.
+
+### Properties
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `return_provision_token`: `rpt_e0563e09-e1b2-4144-a236-30ea76b58058` (string, required) - A token represents a return object for provisioning.
+
+
+## StartReturnResponse (Response)
+Response object of return for start action.
+
+### Properties
++ `result` (StartReturnResult, required) - Result object of the response.
+
+
+## StartReturnRequest (object)
+Request of return for start action.
+
+### Properties
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `transaction_id`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (string, required) - The ID of the transaction that represents the order.
++ `amount`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (Amount, required) - An amount of the return.
+
+
+## StartReturnResult (object)
+Result object of return for start action.
+
+### Properties
++ `return_provision_token`: `rpt_e0563e09-e1b2-4144-a236-30ea76b58058` (string, required) - A token represents a return object for provisioning.
+
+
+## CartResponse (Response)
+Response object of the cart.
+
+### Properties
++ `result` (CartResult, optional) - Result object of the response.
+
+
+## ListPointPaymentResponse (Response)
+Response object of payment for list action.
+
+### Properties
++ `result` (array[Payment], optional) - Result object of the response.
+
+
+## OrderResult (object)
+Result object of the response.
+
+### Properties
++ `transaction_token`: `ot_71f06a17-3021-4c42-bd38-e492a7579f65` (string, required) - A token represents an order object from Global Miles system.
+
+
+## OrderResponse (Response)
+Response object of order.
+
+### Properties
++ `result` (OrderResult, required) - Result object of the response.
+
+
+## OrderItem (object)
+Representing an order item.
+
+### Properties
++ `id`: `344187960` (string, required) - An identifier to reference this product.
++ `quantity`: `1.0` (number, required) - The quantity of the item.
++ `price`: `0.91` (number, required) - The price of the item.
+
+
+## PaymentItem (object)
+Representing a payment for order.
+
+### Properties
++ `type` (enum[string], required) - A type of payment.
+    + `credit_card`
+    + `debit_card`
+    + `bank_transfer`
+    + `cash`
+    + `digital_wallet`
+    + `mobile_payment`
+    + `gift_card`
+    + `point_payment`
+    + `other`
++ `amount`: `50.00` (number, required) - Amount of current payment.
++ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, optional) - A token represents a payment object for provisioning.
+
+
+## OAuthResponse (object)
+Representing an OAuth response.
+
+### Properties
++ `access_token`: `{{access_token}}` (string, required) - An access token from the authorization server.
++ `token_type`: `bearer` (string, required) - The type of token this is, typically just the string "bearer".
++ `created_at`: `1496737098` (string, required) - The time in unix time format when the access token was created.
+
+
+## OAuthRequest (object)
+Representing an OAuth request.
+
+### Properties
++ `client_id`: `{{client_id}}` (string, required) - ID of the client which is provided by Global Miles.
++ `client_secret`: `{{client_secret}}` (string, required) - Secret of the client which is provided by Global Miles.
++ `grant_type`: `client_credentials` (string, required) - Type of the OAuth flows. We support only one type of token: client_credentials
+
+
+## Order (object)
+Representing an order.
+
+### Properties
++ `subtotal`: `90.00` (number, required) - Total value of all order items without tax.
++ `tax`: `10.20` (number, required) - The amount of tax.
++ `total`: `100.20` (number, required) - Total amount of order.
++ `currency`: `usd` (string, required) - ISO-4217 3-letter currency code.
++ `items`: `usd` (array[OrderItem], optional) - An array of order items.
++ `discounts`: `usd` (array[DiscountItem], optional) - An array of discount items.
++ `payments`: `usd` (array[PaymentItem], optional) - An array of payment items.
+
+
+## CartResult (object)
+Result object of the response.
+
+### Properties
++ `available_amount` (Amount, optional) - The available amount of money for payment.
++ `cart_discount` (CartDiscount, optional) - A discount object for cart.
+
+
+## CartItem (object)
+Representing a shopping cart item.
+
+### Properties
++ `id`: `344187961` (string, required) - An identifier to reference this product. Universal product code.
++ `quantity`: `1.0` (number, required) - The quantity of the item.
++ `price`: `20.00` (number, required) - The price of the item.
+
+
+## Cart (object)
+Representing a shopping cart.
+
+### Properties
++ `currency`: `usd` (string, required) - ISO-4217 3-letter currency code.
++ `subtotal`: `90.00` (number, required) - Total value of all cart items without tax.
++ `tax`: `10.20` (number, required) - The amount of tax.
++ `total`: `100.20` (number, required) - Total amount of cart.
++ `items`: `100.20` (array[CartItem], optional) - An array of cart items.
+
+
+## CartItemDiscount (object)
+Representing a discount for shopping cart item.
+
+### Properties
++ `id`: `344187961` (string, required) - An identifier to reference this product.
++ `discount`: `1.00` (number, required) - Amount of the current discount.
+
+
+## DiscountItem (object)
+Representing a discount for order.
+
+### Properties
++ `type` (enum[string], required) - Type of the discount.
+    + `loyalty_discount`
+    + `other`
++ `amount`: `1.0` (number, required) - Amount of the current discount.
++ `discount_provision_token`: `dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4` (string, optional) - A token represents a discount object for provisioning.
+
+
+## OrderRequest (object)
+Request of order object.
+
+### Properties
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `user_token`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (string, required) - A token that is representing a Global Miles user for the current session.
++ `transaction_id`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (string, required) - The ID of the transaction that represents the order.
++ `order`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (Order, required) - A complex object for order.
++ `shift_allowance`: `0` (number, optional) - It specifies how many days later the miles / points should be given to the user.
+
+
+## CartRequest (object)
+Request of the card object.
+
+### Properties
++ `user_token`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (string, required) - A token that is representing a Global Miles user for the current session.
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `cart`: `ECO123858493939` (Cart, required) - A complex object for cart.
+
+
+## Response (object)
+A basic object of the response.
+
+### Properties
++ `status`: `ok` (string, required) - The status of the response. The value is always "ok" for successful responses otherwise it includes error code.
++ `message` (string, optional) - The message of the error. It is always null for successful responses.
+
+
+## Amount (object)
+A complex object for amount.
+
+### Properties
++ `value`: `10.00` (number, required) - A decimal value with two decimals in the string representation of amount.
++ `currency`: `usd` (string, required) - ISO 4217 currency code of the amount.
+
+
+## StartPointPaymentRequest (object)
+Request of payment for start action.
+
+### Properties
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `user_token`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (string, required) - A token that is representing a Global Miles user for the current session.
++ `amount`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (Amount, required) - An amount of payment.
+
+
+## StartPointPaymentResponse (Response)
+Response object of payment for start action.
+
+### Properties
++ `result` (StartPointPaymentResult, required) - Result object of the response.
+
+
+## StartPointPaymentResult (object)
+Result object of payment for start action.
+
+### Properties
++ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
+
+
+## CompletePointPaymentRequest (object)
+Request of payment for complete action.
+
+### Properties
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
+
+
+## CancelPointPaymentRequest (object)
+Request of payment for cancel action.
+
+### Properties
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
+
+
+## RefundPointPaymentRequest (object)
+Request of payment for refund action.
+
+### Properties
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
++ `amount`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (Amount, required) - An amount of the payment.
+
+
+## Payment (object)
+Representing a payment.
+
+### Properties
++ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
++ `created_at`: `01/01/2018 10:00:00` (string, required) - Create date time of payment. The format is ISO 8601 date and time.
++ `updated_at` (string, required) - Last update date time of payment. The format is ISO 8601 date and time.
++ `status` (enum[string], required) - The status of payment.
+    + `started`
+    + `completed`
+    + `cancelled`
+    + `refunded`
++ `amount` (Amount, required) - An amount of payment.
+
+
+## CancelReturnRequest (object)
+Request of return for cancel action.
+
+### Properties
++ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
++ `return_provision_token`: `rpt_e0563e09-e1b2-4144-a236-30ea76b58058` (string, required) - A token represents a return object for provisioning.
+
+
+## CartDiscount (object)
+Representing a discount for shopping cart.
+
+### Properties
++ `discount`: `1.00` (number, optional) - Amount of the current discount.
++ `currency`: `usd` (string, required) - ISO-4217 3-letter currency code.
++ `discount_provision_token`: `dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4` (string, optional) - A token represents a discount object for provisioning.
++ `items`: `dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4` (array[CartItemDiscount], optional) - An array of discounts for cart items.
+

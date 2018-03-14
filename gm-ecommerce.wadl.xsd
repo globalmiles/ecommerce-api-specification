@@ -1,0 +1,1336 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://wadl.dev.java.net/2009/02" xmlns:tns="http://tempuri.org">
+  <doc title="Global Miles ECommerce API" xml:lang="en">API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.</doc>
+  <grammars>
+    <xs:schema xmlns:tns="http://tempuri.org" targetNamespace="http://tempuri.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="CompleteReturnRequest">
+        <xs:annotation>
+          <xs:documentation>Request of return for complete action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="return_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a return object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StartReturnResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of return for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="1" name="result" type="tns:StartReturnResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="StartReturnRequest">
+        <xs:annotation>
+          <xs:documentation>Request of return for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="transaction_id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The ID of the transaction that represents the order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of the return.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="DiscountType">
+        <xs:annotation>
+          <xs:documentation>A type of discount.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="loyalty_discount">
+            <xs:annotation>
+              <xs:documentation>This type indicates a discount by Global Miles.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="other">
+            <xs:annotation>
+              <xs:documentation>Other type of discounts.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="StartReturnResult">
+        <xs:annotation>
+          <xs:documentation>Result object of return for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="return_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a return object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of the cart.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="tns:CartResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ListPointPaymentResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of payment for list action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="result" type="tns:Payment">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="OrderResult">
+        <xs:annotation>
+          <xs:documentation>Result object of the response.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="transaction_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents an order object from Global Miles system.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OrderResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of order.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="1" name="result" type="tns:OrderResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="OrderItem">
+        <xs:annotation>
+          <xs:documentation>Representing an order item.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier to reference this product.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="quantity">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The quantity of the item.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="price">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The price of the item.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaymentItem">
+        <xs:annotation>
+          <xs:documentation>Representing a payment for order.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="type" type="tns:PaymentType">
+            <xs:annotation>
+              <xs:documentation>A type of payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Amount of current payment.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OAuthResponse">
+        <xs:annotation>
+          <xs:documentation>Representing an OAuth response.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="access_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An access token from the authorization server.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="token_type">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The type of token this is, typically just the string "bearer".</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="created_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The time in unix time format when the access token was created.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OAuthRequest">
+        <xs:annotation>
+          <xs:documentation>Representing an OAuth request.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="client_id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ID of the client which is provided by Global Miles.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="client_secret">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Secret of the client which is provided by Global Miles.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" default="client_credentials" name="grant_type">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Type of the OAuth flows. We support only one type of token: client_credentials</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Order">
+        <xs:annotation>
+          <xs:documentation>Representing an order.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="subtotal">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total value of all order items without tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="tax">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The amount of tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="total">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total amount of order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO-4217 3-letter currency code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="items" type="tns:OrderItem">
+            <xs:annotation>
+              <xs:documentation>An array of order items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="discounts" type="tns:DiscountItem">
+            <xs:annotation>
+              <xs:documentation>An array of discount items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="payments" type="tns:PaymentItem">
+            <xs:annotation>
+              <xs:documentation>An array of payment items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="PaymentType">
+        <xs:annotation>
+          <xs:documentation>A type of payment.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="credit_card">
+            <xs:annotation>
+              <xs:documentation>Credit Card</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="debit_card">
+            <xs:annotation>
+              <xs:documentation>Debit Card</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="bank_transfer">
+            <xs:annotation>
+              <xs:documentation>Bank Transfers / Electronic Funds Transfer (EFT)</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="cash">
+            <xs:annotation>
+              <xs:documentation>Cash</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="digital_wallet">
+            <xs:annotation>
+              <xs:documentation>Digital Wallet</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="mobile_payment">
+            <xs:annotation>
+              <xs:documentation>Mobile Payment</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="gift_card">
+            <xs:annotation>
+              <xs:documentation>Gitf Card</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="point_payment">
+            <xs:annotation>
+              <xs:documentation>Point Payment provided by Global Miles</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="other">
+            <xs:annotation>
+              <xs:documentation>Other</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="CartResult">
+        <xs:annotation>
+          <xs:documentation>Result object of the response.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="available_amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>The available amount of money for payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="cart_discount" type="tns:CartDiscount">
+            <xs:annotation>
+              <xs:documentation>A discount object for cart.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartItem">
+        <xs:annotation>
+          <xs:documentation>Representing a shopping cart item.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier to reference this product. Universal product code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="quantity">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The quantity of the item.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="price">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The price of the item.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Cart">
+        <xs:annotation>
+          <xs:documentation>Representing a shopping cart.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO-4217 3-letter currency code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="subtotal">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total value of all cart items without tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="tax">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The amount of tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="total">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total amount of cart.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="items" type="tns:CartItem">
+            <xs:annotation>
+              <xs:documentation>An array of cart items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartItemDiscount">
+        <xs:annotation>
+          <xs:documentation>Representing a discount for shopping cart item.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier to reference this product.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="discount">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Amount of the current discount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DiscountItem">
+        <xs:annotation>
+          <xs:documentation>Representing a discount for order.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="type" type="tns:DiscountType">
+            <xs:annotation>
+              <xs:documentation>Type of the discount.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Amount of the current discount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="discount_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a discount object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OrderRequest">
+        <xs:annotation>
+          <xs:documentation>Request of order object.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="user_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token that is representing a Global Miles user for the current session.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="transaction_id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The ID of the transaction that represents the order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="order" type="tns:Order">
+            <xs:annotation>
+              <xs:documentation>A complex object for order.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" default="0" name="shift_allowance">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>It specifies how many days later the miles / points should be given to the user.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:integer" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartRequest">
+        <xs:annotation>
+          <xs:documentation>Request of the card object.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="user_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token that is representing a Global Miles user for the current session.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="cart" type="tns:Cart">
+            <xs:annotation>
+              <xs:documentation>A complex object for cart.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Response">
+        <xs:annotation>
+          <xs:documentation>A basic object of the response.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="status">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The status of the response. The value is always "ok" for successful responses otherwise it includes error code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="message">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The message of the error. It is always null for successful responses.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Amount">
+        <xs:annotation>
+          <xs:documentation>A complex object for amount.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="value">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A decimal value with two decimals in the string representation of amount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO 4217 currency code of the amount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StartPointPaymentRequest">
+        <xs:annotation>
+          <xs:documentation>Request of payment for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="user_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token that is representing a Global Miles user for the current session.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StartPointPaymentResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of payment for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="1" name="result" type="tns:StartPointPaymentResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="StartPointPaymentResult">
+        <xs:annotation>
+          <xs:documentation>Result object of payment for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CompletePointPaymentRequest">
+        <xs:annotation>
+          <xs:documentation>Request of payment for complete action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelPointPaymentRequest">
+        <xs:annotation>
+          <xs:documentation>Request of payment for cancel action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RefundPointPaymentRequest">
+        <xs:annotation>
+          <xs:documentation>Request of payment for refund action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of the payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="PaymentStatus">
+        <xs:annotation>
+          <xs:documentation>A payment status.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="started">
+            <xs:annotation>
+              <xs:documentation>Started</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="completed">
+            <xs:annotation>
+              <xs:documentation>Completed</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="cancelled">
+            <xs:annotation>
+              <xs:documentation>Cancelled</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="refunded">
+            <xs:annotation>
+              <xs:documentation>Refunded</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="Payment">
+        <xs:annotation>
+          <xs:documentation>Representing a payment.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="created_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Create date time of payment. The format is ISO 8601 date and time.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="updated_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Last update date time of payment. The format is ISO 8601 date and time.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="status" type="tns:PaymentStatus">
+            <xs:annotation>
+              <xs:documentation>The status of payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelReturnRequest">
+        <xs:annotation>
+          <xs:documentation>Request of return for cancel action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="return_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a return object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartDiscount">
+        <xs:annotation>
+          <xs:documentation>Representing a discount for shopping cart.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="discount">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Amount of the current discount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO-4217 3-letter currency code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="discount_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a discount object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="items" type="tns:CartItemDiscount">
+            <xs:annotation>
+              <xs:documentation>An array of discounts for cart items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </grammars>
+  <resources base="default">
+    <resource id="_v2ecommercepayments" path="/v2/ecommerce/payments">
+      <method id="ListPointPayments" name="GET">
+        <doc title="List Point Payments" xml:lang="en">This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <param name="Store_x0020_Code" style="query" type="xsd:string" default="" required="true">
+            <doc title="Store Code" xml:lang="en">An identifier for online store.</doc>
+          </param>
+          <param name="Filter_x0020_By_x0020_Created_At" style="query" type="xsd:string" default="" required="true">
+            <doc title="Filter By Created_At" xml:lang="en">Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD.</doc>
+          </param>
+          <param name="Filter_x0020_By_x0020_Status" style="query" type="xsd:string" default="">
+            <doc title="Filter By Status" xml:lang="en">Filter for status field. It is accepted a valid status value of payment.</doc>
+          </param>
+          <param name="Sort_x0020_By" style="query" type="xsd:string" default="">
+            <doc title="Sort By" xml:lang="en">Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".</doc>
+          </param>
+        </request>
+        <response status="200">
+          <representation element="tns:ListPointPaymentResponse" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+      <method id="CancelPointPayment" name="DELETE">
+        <doc title="Cancel Point Payment" xml:lang="en">This endpoint allows to cancel a payment.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:CancelPointPaymentRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:Response" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+      <method id="CompletePointPayment" name="PUT">
+        <doc title="Complete Point Payment" xml:lang="en">This endpoint allows to complete a payment.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:CompletePointPaymentRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:Response" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+      <method id="StartPointPayment" name="POST">
+        <doc title="Start Point Payment" xml:lang="en">After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check "Complete Point Payment endpoint" please.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:StartPointPaymentRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:StartPointPaymentResponse" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+    </resource>
+    <resource id="_v2ecommerceorders" path="/v2/ecommerce/orders">
+      <method id="OrderInfo" name="POST">
+        <doc title="Order Info" xml:lang="en">This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:OrderRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:OrderResponse" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+    </resource>
+    <resource id="_v2ecommercecarts" path="/v2/ecommerce/carts">
+      <method id="CartInfo" name="POST">
+        <doc title="Cart Info" xml:lang="en">This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:CartRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:CartResponse" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+    </resource>
+    <resource id="_oauthtoken" path="/oauth/token">
+      <method id="Authentication" name="POST">
+        <doc title="Authentication" xml:lang="en">An access token will allow you to make requests for the system. We support only one type of token: client_credentials</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <representation element="tns:OAuthRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:OAuthResponse" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+    </resource>
+    <resource id="_v2ecommercepaymentsactionsrefund" path="/v2/ecommerce/payments/actions/refund">
+      <method id="RefundPointPayment" name="POST">
+        <doc title="Refund Point Payment" xml:lang="en">This endpoint allows to refund a payment.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:RefundPointPaymentRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:Response" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+    </resource>
+    <resource id="_v2ecommercereturns" path="/v2/ecommerce/returns">
+      <method id="StartReturn" name="POST">
+        <doc title="Start Return" xml:lang="en">This endpoint allows to start a return for a specific order.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:StartReturnRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:StartReturnResponse" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+      <method id="CompleteReturn" name="PUT">
+        <doc title="Complete Return" xml:lang="en">This endpoint allows to complete a return.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:CompleteReturnRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:Response" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+      <method id="CancelReturn" name="DELETE">
+        <doc title="Cancel Return" xml:lang="en">This endpoint allows to cancel a return.</doc>
+        <request>
+          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
+          </param>
+          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
+            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
+          </param>
+          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
+            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
+          </param>
+          <representation element="tns:CancelReturnRequest" mediaType="application/json" />
+        </request>
+        <response status="200">
+          <representation element="tns:Response" mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Unauthorized - No valid API key provided.</doc>
+        </response>
+        <response status="402">
+          <doc title="402" xml:lang="en">Request Failed - The parameters were valid but the request failed.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Not Found - The requested resource doesn't exist.</doc>
+        </response>
+        <response status="429">
+          <doc title="429" xml:lang="en">Too Many Requests - Too many requests hit the API too quickly.</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>
