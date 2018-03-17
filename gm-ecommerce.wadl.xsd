@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://wadl.dev.java.net/2009/02" xmlns:tns="http://tempuri.org">
-  <doc title="Global Miles ECommerce API" xml:lang="en">API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.</doc>
+  <doc title="Global Miles Ecommerce API" xml:lang="en">API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.</doc>
   <grammars>
     <xs:schema xmlns:tns="http://tempuri.org" targetNamespace="http://tempuri.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:complexType name="CompleteReturnRequest">
@@ -382,7 +382,7 @@
           </xs:enumeration>
           <xs:enumeration value="point_payment">
             <xs:annotation>
-              <xs:documentation>Point Payment provided by Global Miles</xs:documentation>
+              <xs:documentation>Pay with miles / points provided by Global Miles</xs:documentation>
             </xs:annotation>
           </xs:enumeration>
           <xs:enumeration value="other">
@@ -929,17 +929,17 @@
           <param name="Authorization" style="header" type="xsd:string" default="" required="true">
             <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
           </param>
-          <param name="Store_x0020_Code" style="query" type="xsd:string" default="" required="true">
-            <doc title="Store Code" xml:lang="en">An identifier for online store.</doc>
+          <param name="StoreCode" style="query" type="xsd:string" default="" required="true">
+            <doc title="StoreCode" xml:lang="en">An identifier for online store.</doc>
           </param>
-          <param name="Filter_x0020_By_x0020_Created_At" style="query" type="xsd:string" default="" required="true">
-            <doc title="Filter By Created_At" xml:lang="en">Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD.</doc>
+          <param name="FilterByCreatedAt" style="query" type="xsd:string" default="" required="true">
+            <doc title="FilterByCreatedAt" xml:lang="en">Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD.</doc>
           </param>
-          <param name="Filter_x0020_By_x0020_Status" style="query" type="xsd:string" default="">
-            <doc title="Filter By Status" xml:lang="en">Filter for status field. It is accepted a valid status value of payment.</doc>
+          <param name="FilterByStatus" style="query" type="xsd:string" default="">
+            <doc title="FilterByStatus" xml:lang="en">Filter for status field. It is accepted a valid status value of payment.</doc>
           </param>
-          <param name="Sort_x0020_By" style="query" type="xsd:string" default="">
-            <doc title="Sort By" xml:lang="en">Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".</doc>
+          <param name="SortBy" style="query" type="xsd:string" default="">
+            <doc title="SortBy" xml:lang="en">Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".</doc>
           </param>
         </request>
         <response status="200">
