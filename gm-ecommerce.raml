@@ -1,11 +1,11 @@
 ﻿#%RAML 1.0
-title: Global Miles ECommerce API
+title: Global Miles Ecommerce API
 version: 2.0.0
 baseUri: default
 baseUriParameters: {}
 documentation:
-- title: Global Miles ECommerce API
-  content: API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.
+- title: Global Miles Ecommerce API
+  content: API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.
 securitySchemes:
   auth:
     type: OAuth 2.0
@@ -945,32 +945,32 @@ types:
       securedBy:
       - auth
       queryParameters:
-        Store Code:
+        StoreCode:
           required: true
           example:
             value: filter[store_code]=ECO123858493939
-          displayName: Store Code
+          displayName: StoreCode
           description: An identifier for online store.
           type: string
-        Filter By Created_At:
+        FilterByCreatedAt:
           required: true
           example:
             value: filter[created_at]=2017-01-01...2018-01-01
-          displayName: Filter By Created_At
+          displayName: FilterByCreatedAt
           description: Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD.
           type: string
-        Filter By Status:
+        FilterByStatus:
           required: false
           example:
             value: filter[status]=completed
-          displayName: Filter By Status
+          displayName: FilterByStatus
           description: Filter for status field. It is accepted a valid status value of payment.
           type: string
-        Sort By:
+        SortBy:
           required: false
           example:
             value: sort=-created_at
-          displayName: Sort By
+          displayName: SortBy
           description: Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".
           type: string
       headers:

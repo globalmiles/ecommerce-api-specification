@@ -1,8 +1,8 @@
 ﻿FORMAT: 1A
 HOST: https://test1.api.globalmiles.com
 
-# Global Miles ECommerce API
-API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.
+# Global Miles Ecommerce API
+API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.
 
 ## Authentication
 This API uses OAuth v2 Client Credentials Grant for its authentication.
@@ -12,27 +12,27 @@ The properties required for this OAuth implentation are as follows:
 
 # Group Pay with Miles  Points
 
-## V2 Ecommerce Payments [/v2/ecommerce/payments{?Store Code,Filter By Created_At,Filter By Status,Sort By}]
+## V2 Ecommerce Payments [/v2/ecommerce/payments{?StoreCode,FilterByCreatedAt,FilterByStatus,SortBy}]
 
 ### List Point Payments [GET]
 This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API.
 + Parameters
-    + Store Code (string, required)
+    + StoreCode (string, required)
 
         An identifier for online store.
 
         + Sample: filter[store_code]=ECO123858493939
-    + Filter By Created_At (string, required)
+    + FilterByCreatedAt (string, required)
 
         Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD.
 
         + Sample: filter[created_at]=2017-01-01...2018-01-01
-    + Filter By Status (string, optional)
+    + FilterByStatus (string, optional)
 
         Filter for status field. It is accepted a valid status value of payment.
 
         + Sample: filter[status]=completed
-    + Sort By (string, optional)
+    + SortBy (string, optional)
 
         Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".
 
@@ -394,7 +394,7 @@ After successful authentication and retrieving needed token,this endpoint allows
 
 
 
-# Group Transaction
+# Group Earn Miles  Points
 
 ## V2 Ecommerce Orders [/v2/ecommerce/orders]
 
@@ -1016,7 +1016,7 @@ A basic object of the response.
 
 ### Properties
 + `status`: `ok` (string, required) - The status of the response. The value is always "ok" for successful responses otherwise it includes error code.
-+ `message` (string, optional) - The message of the error. It is always null for successful responses.
++ `message`: `User not found with given attributes` (string, optional) - The message of the error. It is always null for successful responses.
 
 
 ## Amount (object)
@@ -1081,13 +1081,13 @@ Representing a payment.
 ### Properties
 + `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
 + `created_at`: `01/01/2018 10:00:00` (string, required) - Create date time of payment. The format is ISO 8601 date and time.
-+ `updated_at` (string, required) - Last update date time of payment. The format is ISO 8601 date and time.
-+ `status` (enum[string], required) - The status of payment.
++ `updated_at`: `01/01/2018 10:00:00` (string, required) - Last update date time of payment. The format is ISO 8601 date and time.
++ `status`: `01/01/2018 10:00:00` (enum[string], required) - The status of payment.
     + `started`
     + `completed`
     + `cancelled`
     + `refunded`
-+ `amount` (Amount, required) - An amount of payment.
++ `amount`: `01/01/2018 10:00:00` (Amount, required) - An amount of payment.
 
 
 ## CancelReturnRequest (object)

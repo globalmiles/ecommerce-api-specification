@@ -1,8 +1,8 @@
 ﻿{
   "info": {
-    "name": "Global Miles ECommerce API",
-    "_postman_id": "2981b66b-8f40-4f79-9af9-2261a43ffa16",
-    "description": "API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.",
+    "name": "Global Miles Ecommerce API",
+    "_postman_id": "963b49e4-24c6-449c-988a-b5acd4a5ad6d",
+    "description": "API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/"
   },
   "item": [
@@ -10,10 +10,10 @@
       "name": "Pay with Miles / Points",
       "item": [
         {
-          "id": "b734ad1f-f589-45f8-890f-92d8880a869c",
+          "id": "3cd77fdd-49f1-45b4-899d-df86ab6252a8",
           "name": "List Point Payments",
           "request": {
-            "url": "http://default/v2/ecommerce/payments?Store Code=filter%5Bstore_code%5D%3DECO123858493939&Filter By Created_At=filter%5Bcreated_at%5D%3D2017-01-01...2018-01-01&Filter By Status=filter%5Bstatus%5D%3Dcompleted&Sort By=sort%3D-created_at",
+            "url": "http://default/v2/ecommerce/payments?StoreCode=filter%5Bstore_code%5D%3DECO123858493939&FilterByCreatedAt=filter%5Bcreated_at%5D%3D2017-01-01...2018-01-01&FilterByStatus=filter%5Bstatus%5D%3Dcompleted&SortBy=sort%3D-created_at",
             "auth": {
               "type": "oauth2",
               "oauth2": {
@@ -50,15 +50,15 @@
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\",\n  \"result\": [{\n    \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\",\n    \"created_at\": \"2018-01-01T10:00:00\",\n    \"updated_at\": \"2018-01-01T10:10:00\",\n    \"status\": \"completed\",\n    \"amount\": {\n      \"value\": 10.00,\n      \"currency\": \"usd\"\n    }\n  }, {\n    \"payment_provision_token\": \"ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10\",\n    \"created_at\": \"2017-12-01T23:00:00\",\n    \"updated_at\": \"2017-12-02T14:00:00\",\n    \"status\": \"refunded\",\n    \"amount\": {\n      \"value\": 20.00,\n      \"currency\": \"usd\"\n    }\n  }, {\n    \"payment_provision_token\": \"ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5\",\n    \"created_at\": \"2017-11-01T12:00:00\",\n    \"updated_at\": \"2017-11-01T12:05:00\",\n    \"status\": \"cancelled\",\n    \"amount\": {\n      \"value\": 23.00,\n      \"currency\": \"usd\"\n    }\n  }]\n}",
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": [\r\n    {\r\n      \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\",\r\n      \"created_at\": \"2018-01-01T10:00:00\",\r\n      \"updated_at\": \"2018-01-01T10:10:00\",\r\n      \"status\": \"completed\",\r\n      \"amount\": {\r\n        \"value\": 10.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    },\r\n    {\r\n      \"payment_provision_token\": \"ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10\",\r\n      \"created_at\": \"2017-12-01T23:00:00\",\r\n      \"updated_at\": \"2017-12-02T14:00:00\",\r\n      \"status\": \"refunded\",\r\n      \"amount\": {\r\n        \"value\": 20.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    },\r\n    {\r\n      \"payment_provision_token\": \"ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5\",\r\n      \"created_at\": \"2017-11-01T12:00:00\",\r\n      \"updated_at\": \"2017-11-01T12:05:00\",\r\n      \"status\": \"cancelled\",\r\n      \"amount\": {\r\n        \"value\": 23.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    }\r\n  ]\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "69054ac1-0636-4a20-ba4b-7e5ba3b6dba4"
+              "id": "d4d7a0b1-ee49-4304-802f-ed78656ea6c9"
             }
           ]
         },
         {
-          "id": "3799c4f6-db07-49fb-9325-db31f7f9aa0a",
+          "id": "8135fcd7-0fd2-42f7-b10b-f789760fec79",
           "name": "Refund Point Payment",
           "request": {
             "url": "http://default/v2/ecommerce/payments/actions/refund",
@@ -89,30 +89,25 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\",\n  \"amount\": {\n    \"value\": 10.00,\n    \"currency\": \"usd\"\n  }\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"usd\"\r\n  }\r\n}"
             },
             "description": "This endpoint allows to refund a payment."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\"\n}",
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "4a48a87e-ef83-444d-bcf6-203d97326231"
+              "id": "c2704732-8eb6-4853-80bb-0d3ebc6954f0"
             }
           ]
         },
         {
-          "id": "26b7f159-8e04-464b-b5c6-d235d9380b26",
+          "id": "604c040d-8b0d-4d1e-ac0f-842f49ed37b0",
           "name": "Cancel Point Payment",
           "request": {
             "url": "http://default/v2/ecommerce/payments",
@@ -143,30 +138,25 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n}"
             },
             "description": "This endpoint allows to cancel a payment."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\"\n}",
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "49fb0b40-0e46-4dca-84ee-f70deedf251e"
+              "id": "1e08d720-e55d-49b7-931c-18903861c11e"
             }
           ]
         },
         {
-          "id": "85f4d9ef-c9da-477c-a94d-6bae089bb884",
+          "id": "14dbc9c3-f707-4a48-9129-06028d7f8832",
           "name": "Complete Point Payment",
           "request": {
             "url": "http://default/v2/ecommerce/payments",
@@ -197,30 +187,25 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n}"
             },
             "description": "This endpoint allows to complete a payment."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\"\n}",
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "b1d51917-fe3a-43d6-9549-562b162ec5d9"
+              "id": "98a48061-f632-4e78-bd38-13225acc5923"
             }
           ]
         },
         {
-          "id": "40703694-a18e-47b9-8b94-e0032beb4ac9",
+          "id": "473b128f-f20a-4537-9f0d-81dada925bc6",
           "name": "Start Point Payment",
           "request": {
             "url": "http://default/v2/ecommerce/payments",
@@ -251,35 +236,30 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\n  \"amount\": {\n    \"value\": 10.00,\n    \"currency\": \"usd\"\n  }\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"usd\"\r\n  }\r\n}"
             },
             "description": "After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check \"Complete Point Payment endpoint\" please."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\",\n  \"result\": {\n    \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\n  }\n}",
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "36f0cdfb-aec3-4d4a-b52e-d88e2313ef89"
+              "id": "38400ac5-b955-41ca-9ec2-888b8ab0dc43"
             }
           ]
         }
       ]
     },
     {
-      "name": "Transaction",
+      "name": "Earn Miles / Points",
       "item": [
         {
-          "id": "a2e3b168-00af-48d4-99e1-cab15b265649",
+          "id": "43104d7f-6018-4452-9a58-329c86cace36",
           "name": "Order Info",
           "request": {
             "url": "http://default/v2/ecommerce/orders",
@@ -310,30 +290,25 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\n  \"transaction_id\": \"cf01b6c3-74c9-4e69-a779-9742571abff6\",\n  \"order\": {\n    \"subtotal\": 90.00,\n    \"tax\": 10.20,\n    \"total\": 100.20,\n    \"currency\": \"usd\",\n    \"items\": [{\n      \"id\": \"344187961\",\n      \"quantity\": 1,\n      \"price\": 20.00\n    },{\n      \"id\": \"344187960\",\n      \"quantity\": 2.2,\n      \"price\": 0.91\n    },{\n      \"id\": \"344187965\",\n      \"quantity\": 5,\n      \"price\": 10.00\n    }],\n    \"payments\": [{\n      \"type\": \"cash\",\n      \"amount\": 25.50\n    },{\n      \"type\": \"point_payment\",\n      \"amount\": 50.00,\n      \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\n    }],\n    \"discounts\": [{\n      \"type\": \"other\",\n      \"amount\": 1.50\n    },{\n      \"type\": \"loyalty_discount\",\n      \"amount\": 1.00,\n      \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\n    }]\n  }\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"transaction_id\": \"cf01b6c3-74c9-4e69-a779-9742571abff6\",\r\n  \"order\": {\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"usd\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ],\r\n    \"payments\": [\r\n      {\r\n        \"type\": \"cash\",\r\n        \"amount\": 25.5\r\n      },\r\n      {\r\n        \"type\": \"point_payment\",\r\n        \"amount\": 50.0,\r\n        \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n      }\r\n    ],\r\n    \"discounts\": [\r\n      {\r\n        \"type\": \"other\",\r\n        \"amount\": 1.5\r\n      },\r\n      {\r\n        \"type\": \"loyalty_discount\",\r\n        \"amount\": 1.0,\r\n        \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\r\n      }\r\n    ]\r\n  }\r\n}"
             },
             "description": "This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\",\n  \"result\": {\n    \"transaction_token\": \"ot_71f06a17-3021-4c42-bd38-e492a7579f65\"\n  }\n}",
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"transaction_token\": \"ot_71f06a17-3021-4c42-bd38-e492a7579f65\"\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "f1eef190-dd3e-4f72-8979-fb8329bb493d"
+              "id": "bb696e5c-b4fd-491f-9b8a-7a389dcb1069"
             }
           ]
         },
         {
-          "id": "3cbed8cb-dd0f-4e65-96e0-11ae84120620",
+          "id": "35883426-654c-4439-8b70-28729fca77d8",
           "name": "Cart Info",
           "request": {
             "url": "http://default/v2/ecommerce/carts",
@@ -364,25 +339,20 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\n  \"cart\": {\n    \"subtotal\": 90.00,\n    \"tax\": 10.20,\n    \"total\": 100.20,\n    \"currency\": \"usd\",\n    \"items\": [{\n      \"id\": \"344187961\",\n      \"quantity\": 1,\n      \"price\": 20.00\n    },{\n      \"id\": \"344187960\",\n      \"quantity\": 2.2,\n      \"price\": 0.91\n    },{\n      \"id\": \"344187965\",\n      \"quantity\": 5,\n      \"price\": 10.00\n    }]\n  }\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"cart\": {\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"usd\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ]\r\n  }\r\n}"
             },
             "description": "This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\",\n  \"result\": {\n    \"available_point\": {\n      \"value\": 100.20,\n      \"currency\": \"usd\"\n    },\n    \"cart_discount\": {\n      \"discount\": 10.00,\n      \"currency\": \"usd\",\n      \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\n    }\n  }\n}",
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"available_point\": {\r\n      \"value\": 100.2,\r\n      \"currency\": \"usd\"\r\n    },\r\n    \"cart_discount\": {\r\n      \"discount\": 10.0,\r\n      \"currency\": \"usd\",\r\n      \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\r\n    }\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "80e4fa7b-f79b-421e-9ef5-7142ad534b20"
+              "id": "bdf039a2-e723-4d07-9442-a3da3d825cee"
             }
           ]
         }
@@ -392,7 +362,7 @@
       "name": "Authentication",
       "item": [
         {
-          "id": "2b0bff68-d9c4-45b3-b4de-341db4a2b2c6",
+          "id": "360b34e4-86ab-434e-9dcb-3c7917e1e65e",
           "name": "Authentication",
           "request": {
             "url": "http://default/oauth/token",
@@ -409,25 +379,20 @@
                 "value": "application/json",
                 "description": "It tells the client what the content type of the returned.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\": \"{{client_secret}}\",\n  \"grant_type\": \"{{grant_type}}\"\n}"
+              "raw": "{\r\n  \"client_id\": \"{{client_id}}\",\r\n  \"client_secret\": \"{{client_secret}}\",\r\n  \"grant_type\": \"{{grant_type}}\"\r\n}"
             },
             "description": "An access token will allow you to make requests for the system. We support only one type of token: client_credentials"
           },
           "response": [
             {
-              "body": "{\n  \"access_token\":\"{{access_token}}\",\n  \"token_type\":\"bearer\",\n  \"created_at\":\"1496737098\"\n}",
+              "body": "{\r\n  \"access_token\": \"{{access_token}}\",\r\n  \"token_type\": \"bearer\",\r\n  \"created_at\": \"1496737098\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "6527e5ad-96e3-4653-aae5-1339fe05a2e9"
+              "id": "1674a171-3d1b-465a-a39a-dd90aa298911"
             }
           ]
         }
@@ -437,7 +402,7 @@
       "name": "Return",
       "item": [
         {
-          "id": "d5b0807e-6462-4989-ad64-1c14ffb9762c",
+          "id": "0c675cf6-92bd-4f0f-98a3-fb0be9a7cd9c",
           "name": "Start Return",
           "request": {
             "url": "http://default/v2/ecommerce/returns",
@@ -468,30 +433,25 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"transaction_id\": \"cf01b6c3-74c9-4e69-a779-9742571abff6\",\n  \"amount\": {\n    \"value\": 10.00,\n    \"currency\": \"usd\"\n  }\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"transaction_id\": \"cf01b6c3-74c9-4e69-a779-9742571abff6\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"usd\"\r\n  }\r\n}"
             },
             "description": "This endpoint allows to start a return for a specific order."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\",\n  \"result\": {\n    \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\n  }\n}",
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "f98495fd-8c82-4567-aaa3-d0771d09541f"
+              "id": "20063461-4063-40df-81e5-851c77024675"
             }
           ]
         },
         {
-          "id": "eab73490-9a15-40f4-b652-a7bd3369d635",
+          "id": "849212b9-0b03-4ec6-855e-bf2aef620484",
           "name": "Complete Return",
           "request": {
             "url": "http://default/v2/ecommerce/returns",
@@ -522,30 +482,25 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\r\n}"
             },
             "description": "This endpoint allows to complete a return."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\"\n}",
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "e88a61da-ff07-4a37-8890-8f52733901f4"
+              "id": "d97fec27-440d-4c42-97ca-4fd763116a58"
             }
           ]
         },
         {
-          "id": "8a0225b6-785d-4eaa-8599-f9e13687d54f",
+          "id": "8dbdfb8f-a68e-4f3d-85d5-2fa4b5f08d65",
           "name": "Cancel Return",
           "request": {
             "url": "http://default/v2/ecommerce/returns",
@@ -576,25 +531,20 @@
                 "value": "Bearer {{auth_token}}",
                 "description": "It includes OAuth2 token.",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"store_code\": \"ECO123858493939\",\n  \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\r\n}"
             },
             "description": "This endpoint allows to cancel a return."
           },
           "response": [
             {
-              "body": "{\n  \"status\": \"ok\"\n}",
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "f64f3b19-9402-496c-a39f-37c287239035"
+              "id": "62594f53-9bb3-4b8c-9361-c2e732aa2eaf"
             }
           ]
         }
