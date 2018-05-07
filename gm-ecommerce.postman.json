@@ -1,93 +1,49 @@
 ﻿{
   "info": {
     "name": "Global Miles Ecommerce API",
-    "_postman_id": "963b49e4-24c6-449c-988a-b5acd4a5ad6d",
+    "_postman_id": "af2265b7-e9b9-4bd2-8286-f409345fe1b5",
     "description": "API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/"
   },
   "item": [
     {
-      "name": "Pay with Miles / Points",
+      "name": "Pay with Miles",
       "item": [
         {
-          "id": "3cd77fdd-49f1-45b4-899d-df86ab6252a8",
-          "name": "List Point Payments",
+          "id": "9a436078-47e3-4926-9738-fa49a8ef13c4",
+          "name": "List Mile Payments",
           "request": {
             "url": "http://default/v2/ecommerce/payments?StoreCode=filter%5Bstore_code%5D%3DECO123858493939&FilterByCreatedAt=filter%5Bcreated_at%5D%3D2017-01-01...2018-01-01&FilterByStatus=filter%5Bstatus%5D%3Dcompleted&SortBy=sort%3D-created_at",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
-                "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
-                "disabled": false
-              }
-            ],
             "body": {
               "mode": "raw"
             },
-            "description": "This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API."
+            "description": "This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint."
           },
           "response": [
             {
               "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": [\r\n    {\r\n      \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\",\r\n      \"created_at\": \"2018-01-01T10:00:00\",\r\n      \"updated_at\": \"2018-01-01T10:10:00\",\r\n      \"status\": \"completed\",\r\n      \"amount\": {\r\n        \"value\": 10.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    },\r\n    {\r\n      \"payment_provision_token\": \"ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10\",\r\n      \"created_at\": \"2017-12-01T23:00:00\",\r\n      \"updated_at\": \"2017-12-02T14:00:00\",\r\n      \"status\": \"refunded\",\r\n      \"amount\": {\r\n        \"value\": 20.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    },\r\n    {\r\n      \"payment_provision_token\": \"ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5\",\r\n      \"created_at\": \"2017-11-01T12:00:00\",\r\n      \"updated_at\": \"2017-11-01T12:05:00\",\r\n      \"status\": \"cancelled\",\r\n      \"amount\": {\r\n        \"value\": 23.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    }\r\n  ]\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "d4d7a0b1-ee49-4304-802f-ed78656ea6c9"
+              "id": "aa901434-9e5e-478e-9948-cc1fa2d171f8"
             }
           ]
         },
         {
-          "id": "8135fcd7-0fd2-42f7-b10b-f789760fec79",
-          "name": "Refund Point Payment",
+          "id": "1788d12c-6d5e-4a9d-bf63-66a16fc614a2",
+          "name": "Refund Mile Payment",
           "request": {
             "url": "http://default/v2/ecommerce/payments/actions/refund",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
@@ -102,41 +58,25 @@
               "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "c2704732-8eb6-4853-80bb-0d3ebc6954f0"
+              "id": "b83f0032-845a-4238-b9d5-76ad0e6afb36"
             }
           ]
         },
         {
-          "id": "604c040d-8b0d-4d1e-ac0f-842f49ed37b0",
-          "name": "Cancel Point Payment",
+          "id": "067f2618-1bb3-44f7-affa-66597a76c2ad",
+          "name": "Cancel Mile Payment",
           "request": {
             "url": "http://default/v2/ecommerce/payments",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "DELETE",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
@@ -151,41 +91,25 @@
               "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "1e08d720-e55d-49b7-931c-18903861c11e"
+              "id": "805c7d10-c1dd-4368-8033-ebbd7609bfb6"
             }
           ]
         },
         {
-          "id": "14dbc9c3-f707-4a48-9129-06028d7f8832",
-          "name": "Complete Point Payment",
+          "id": "59a090b5-bee7-4c29-b2de-9bf371e53ad9",
+          "name": "Complete Mile Payment",
           "request": {
             "url": "http://default/v2/ecommerce/payments",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "PUT",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
@@ -200,41 +124,25 @@
               "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "98a48061-f632-4e78-bd38-13225acc5923"
+              "id": "829b5c64-f0e2-4e77-9ff2-8387adf3020f"
             }
           ]
         },
         {
-          "id": "473b128f-f20a-4537-9f0d-81dada925bc6",
-          "name": "Start Point Payment",
+          "id": "e91667c6-8f93-4a5d-bb3c-0a2efbb88262",
+          "name": "Start Mile Payment",
           "request": {
             "url": "http://default/v2/ecommerce/payments",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
@@ -242,102 +150,70 @@
               "mode": "raw",
               "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"usd\"\r\n  }\r\n}"
             },
-            "description": "After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check \"Complete Point Payment endpoint\" please."
+            "description": "After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check \"Complete Mile Payment endpoint\" please."
           },
           "response": [
             {
               "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "38400ac5-b955-41ca-9ec2-888b8ab0dc43"
+              "id": "1e0104bb-d463-4e03-bca3-30571a041472"
             }
           ]
         }
       ]
     },
     {
-      "name": "Earn Miles / Points",
+      "name": "Earn Miles",
       "item": [
         {
-          "id": "43104d7f-6018-4452-9a58-329c86cace36",
+          "id": "426d7a34-fefa-4b5a-b7ad-dce77cbf3a2a",
           "name": "Order Info",
           "request": {
             "url": "http://default/v2/ecommerce/orders",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"transaction_id\": \"cf01b6c3-74c9-4e69-a779-9742571abff6\",\r\n  \"order\": {\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"usd\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ],\r\n    \"payments\": [\r\n      {\r\n        \"type\": \"cash\",\r\n        \"amount\": 25.5\r\n      },\r\n      {\r\n        \"type\": \"point_payment\",\r\n        \"amount\": 50.0,\r\n        \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n      }\r\n    ],\r\n    \"discounts\": [\r\n      {\r\n        \"type\": \"other\",\r\n        \"amount\": 1.5\r\n      },\r\n      {\r\n        \"type\": \"loyalty_discount\",\r\n        \"amount\": 1.0,\r\n        \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\r\n      }\r\n    ]\r\n  }\r\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"transaction_id\": \"cf01b6c3-74c9-4e69-a779-9742571abff6\",\r\n  \"order\": {\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"usd\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ],\r\n    \"payments\": [\r\n      {\r\n        \"type\": \"cash\",\r\n        \"amount\": 25.5\r\n      },\r\n      {\r\n        \"type\": \"mile_payment\",\r\n        \"amount\": 50.0,\r\n        \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n      }\r\n    ],\r\n    \"discounts\": [\r\n      {\r\n        \"type\": \"other\",\r\n        \"amount\": 1.5\r\n      },\r\n      {\r\n        \"type\": \"loyalty_discount\",\r\n        \"amount\": 1.0,\r\n        \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\r\n      }\r\n    ]\r\n  }\r\n}"
             },
-            "description": "This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments."
+            "description": "This endpoint allows to create an order for earn miles. It may also include discounts and payments."
           },
           "response": [
             {
               "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"transaction_token\": \"ot_71f06a17-3021-4c42-bd38-e492a7579f65\"\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "bb696e5c-b4fd-491f-9b8a-7a389dcb1069"
+              "id": "b61ef010-6a27-4e42-b7df-4131a7a67b33"
             }
           ]
         },
         {
-          "id": "35883426-654c-4439-8b70-28729fca77d8",
+          "id": "4630e4df-f3de-4481-b892-b5c602a01b99",
           "name": "Cart Info",
           "request": {
             "url": "http://default/v2/ecommerce/carts",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
@@ -345,14 +221,14 @@
               "mode": "raw",
               "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"cart\": {\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"usd\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ]\r\n  }\r\n}"
             },
-            "description": "This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items."
+            "description": "This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items."
           },
           "response": [
             {
               "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"available_point\": {\r\n      \"value\": 100.2,\r\n      \"currency\": \"usd\"\r\n    },\r\n    \"cart_discount\": {\r\n      \"discount\": 10.0,\r\n      \"currency\": \"usd\",\r\n      \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\r\n    }\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "bdf039a2-e723-4d07-9442-a3da3d825cee"
+              "id": "2659e904-cc2e-4922-91da-95b006b8fd5a"
             }
           ]
         }
@@ -362,10 +238,13 @@
       "name": "Authentication",
       "item": [
         {
-          "id": "360b34e4-86ab-434e-9dcb-3c7917e1e65e",
+          "id": "3c80c245-fcbc-4bf1-b5a8-6b1dad4fda6b",
           "name": "Authentication",
           "request": {
             "url": "http://default/oauth/token",
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -392,7 +271,7 @@
               "body": "{\r\n  \"access_token\": \"{{access_token}}\",\r\n  \"token_type\": \"bearer\",\r\n  \"created_at\": \"1496737098\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "1674a171-3d1b-465a-a39a-dd90aa298911"
+              "id": "e4be8f05-b853-4ded-bb5b-9354e1f105e3"
             }
           ]
         }
@@ -402,36 +281,20 @@
       "name": "Return",
       "item": [
         {
-          "id": "0c675cf6-92bd-4f0f-98a3-fb0be9a7cd9c",
+          "id": "c96d18b7-f469-4e21-b42d-397b71c51092",
           "name": "Start Return",
           "request": {
             "url": "http://default/v2/ecommerce/returns",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
@@ -446,41 +309,25 @@
               "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "20063461-4063-40df-81e5-851c77024675"
+              "id": "5da5a059-2a66-4585-b082-2be9eb98cf1f"
             }
           ]
         },
         {
-          "id": "849212b9-0b03-4ec6-855e-bf2aef620484",
+          "id": "aab5236a-9fbf-42be-a583-f210d5141d4c",
           "name": "Complete Return",
           "request": {
             "url": "http://default/v2/ecommerce/returns",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "PUT",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
@@ -495,41 +342,25 @@
               "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "d97fec27-440d-4c42-97ca-4fd763116a58"
+              "id": "2d0d2cb4-fd47-4d4a-b683-6fc4951a054a"
             }
           ]
         },
         {
-          "id": "8dbdfb8f-a68e-4f3d-85d5-2fa4b5f08d65",
+          "id": "8a3c7bd1-aca1-452a-bad2-3f4bd2e18809",
           "name": "Cancel Return",
           "request": {
             "url": "http://default/v2/ecommerce/returns",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": {
-                "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
-                "scope": "",
-                "grantType": "client_credentials"
-              }
-            },
             "method": "DELETE",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
-                "description": "It advertises which content type is able to understand.",
                 "disabled": false
               },
               {
                 "key": "Content-Type",
-                "value": "application/json",
-                "description": "It tells the client what the content type of the returned.",
-                "disabled": false
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{auth_token}}",
-                "description": "It includes OAuth2 token.",
+                "value": "application/json;charset=utf-8",
                 "disabled": false
               }
             ],
@@ -544,7 +375,7 @@
               "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "62594f53-9bb3-4b8c-9361-c2e732aa2eaf"
+              "id": "c33fae0e-0d40-4a07-85bc-a1cf2b4a46b5"
             }
           ]
         }

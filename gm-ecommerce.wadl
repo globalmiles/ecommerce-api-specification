@@ -1,8 +1,42 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://wadl.dev.java.net/2009/02" xmlns:tns="http://tempuri.org">
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://wadl.dev.java.net/2009/02" xmlns:tns="default/schemas">
   <doc title="Global Miles Ecommerce API" xml:lang="en">API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.</doc>
   <grammars>
-    <xs:schema xmlns:tns="http://tempuri.org" targetNamespace="http://tempuri.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:schema xmlns:tns="default/schemas" targetNamespace="default/schemas" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="CompleteReturnRequest" type="tns:CompleteReturnRequest" />
+      <xs:element name="StartReturnResponse" type="tns:StartReturnResponse" />
+      <xs:element name="StartReturnRequest" type="tns:StartReturnRequest" />
+      <xs:element name="DiscountType" type="tns:DiscountType" />
+      <xs:element name="StartReturnResult" type="tns:StartReturnResult" />
+      <xs:element name="CartResponse" type="tns:CartResponse" />
+      <xs:element name="ListMilePaymentResponse" type="tns:ListMilePaymentResponse" />
+      <xs:element name="OrderResult" type="tns:OrderResult" />
+      <xs:element name="OrderResponse" type="tns:OrderResponse" />
+      <xs:element name="OrderItem" type="tns:OrderItem" />
+      <xs:element name="PaymentItem" type="tns:PaymentItem" />
+      <xs:element name="OAuthResponse" type="tns:OAuthResponse" />
+      <xs:element name="OAuthRequest" type="tns:OAuthRequest" />
+      <xs:element name="Order" type="tns:Order" />
+      <xs:element name="PaymentType" type="tns:PaymentType" />
+      <xs:element name="CartResult" type="tns:CartResult" />
+      <xs:element name="CartItem" type="tns:CartItem" />
+      <xs:element name="Cart" type="tns:Cart" />
+      <xs:element name="CartItemDiscount" type="tns:CartItemDiscount" />
+      <xs:element name="DiscountItem" type="tns:DiscountItem" />
+      <xs:element name="OrderRequest" type="tns:OrderRequest" />
+      <xs:element name="CartRequest" type="tns:CartRequest" />
+      <xs:element name="Response" type="tns:Response" />
+      <xs:element name="Amount" type="tns:Amount" />
+      <xs:element name="StartMilePaymentRequest" type="tns:StartMilePaymentRequest" />
+      <xs:element name="StartMilePaymentResponse" type="tns:StartMilePaymentResponse" />
+      <xs:element name="StartMilePaymentResult" type="tns:StartMilePaymentResult" />
+      <xs:element name="CompleteMilePaymentRequest" type="tns:CompleteMilePaymentRequest" />
+      <xs:element name="CancelMilePaymentRequest" type="tns:CancelMilePaymentRequest" />
+      <xs:element name="RefundMilePaymentRequest" type="tns:RefundMilePaymentRequest" />
+      <xs:element name="PaymentStatus" type="tns:PaymentStatus" />
+      <xs:element name="Payment" type="tns:Payment" />
+      <xs:element name="CancelReturnRequest" type="tns:CancelReturnRequest" />
+      <xs:element name="CartDiscount" type="tns:CartDiscount" />
       <xs:complexType name="CompleteReturnRequest">
         <xs:annotation>
           <xs:documentation>Request of return for complete action.</xs:documentation>
@@ -118,7 +152,7 @@
           </xs:extension>
         </xs:complexContent>
       </xs:complexType>
-      <xs:complexType name="ListPointPaymentResponse">
+      <xs:complexType name="ListMilePaymentResponse">
         <xs:annotation>
           <xs:documentation>Response object of payment for list action.</xs:documentation>
         </xs:annotation>
@@ -380,9 +414,9 @@
               <xs:documentation>Gitf Card</xs:documentation>
             </xs:annotation>
           </xs:enumeration>
-          <xs:enumeration value="point_payment">
+          <xs:enumeration value="mile_payment">
             <xs:annotation>
-              <xs:documentation>Pay with miles / points provided by Global Miles</xs:documentation>
+              <xs:documentation>Pay with miles provided by Global Miles</xs:documentation>
             </xs:annotation>
           </xs:enumeration>
           <xs:enumeration value="other">
@@ -572,7 +606,7 @@
           <xs:element minOccurs="0" default="0" name="shift_allowance">
             <xs:simpleType>
               <xs:annotation>
-                <xs:documentation>It specifies how many days later the miles / points should be given to the user.</xs:documentation>
+                <xs:documentation>It specifies how many days later the miles should be given to the user.</xs:documentation>
               </xs:annotation>
               <xs:restriction base="xs:integer" />
             </xs:simpleType>
@@ -653,7 +687,7 @@
           </xs:element>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="StartPointPaymentRequest">
+      <xs:complexType name="StartMilePaymentRequest">
         <xs:annotation>
           <xs:documentation>Request of payment for start action.</xs:documentation>
         </xs:annotation>
@@ -681,14 +715,14 @@
           </xs:element>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="StartPointPaymentResponse">
+      <xs:complexType name="StartMilePaymentResponse">
         <xs:annotation>
           <xs:documentation>Response object of payment for start action.</xs:documentation>
         </xs:annotation>
         <xs:complexContent mixed="false">
           <xs:extension base="tns:Response">
             <xs:sequence>
-              <xs:element minOccurs="1" name="result" type="tns:StartPointPaymentResult">
+              <xs:element minOccurs="1" name="result" type="tns:StartMilePaymentResult">
                 <xs:annotation>
                   <xs:documentation>Result object of the response.</xs:documentation>
                 </xs:annotation>
@@ -697,7 +731,7 @@
           </xs:extension>
         </xs:complexContent>
       </xs:complexType>
-      <xs:complexType name="StartPointPaymentResult">
+      <xs:complexType name="StartMilePaymentResult">
         <xs:annotation>
           <xs:documentation>Result object of payment for start action.</xs:documentation>
         </xs:annotation>
@@ -712,7 +746,7 @@
           </xs:element>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="CompletePointPaymentRequest">
+      <xs:complexType name="CompleteMilePaymentRequest">
         <xs:annotation>
           <xs:documentation>Request of payment for complete action.</xs:documentation>
         </xs:annotation>
@@ -735,7 +769,7 @@
           </xs:element>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="CancelPointPaymentRequest">
+      <xs:complexType name="CancelMilePaymentRequest">
         <xs:annotation>
           <xs:documentation>Request of payment for cancel action.</xs:documentation>
         </xs:annotation>
@@ -758,7 +792,7 @@
           </xs:element>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="RefundPointPaymentRequest">
+      <xs:complexType name="RefundMilePaymentRequest">
         <xs:annotation>
           <xs:documentation>Request of payment for refund action.</xs:documentation>
         </xs:annotation>
@@ -917,18 +951,9 @@
   </grammars>
   <resources base="default">
     <resource id="_v2ecommercepayments" path="/v2/ecommerce/payments">
-      <method id="ListPointPayments" name="GET">
-        <doc title="List Point Payments" xml:lang="en">This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API.</doc>
+      <method id="ListMilePayments" name="GET">
+        <doc title="List Mile Payments" xml:lang="en">This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
           <param name="StoreCode" style="query" type="xsd:string" default="" required="true">
             <doc title="StoreCode" xml:lang="en">An identifier for online store.</doc>
           </param>
@@ -943,7 +968,7 @@
           </param>
         </request>
         <response status="200">
-          <representation element="tns:ListPointPaymentResponse" mediaType="application/json" />
+          <representation element="tns:ListMilePaymentResponse" mediaType="application/json" />
         </response>
         <response status="400">
           <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
@@ -964,19 +989,10 @@
           <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
         </response>
       </method>
-      <method id="CancelPointPayment" name="DELETE">
-        <doc title="Cancel Point Payment" xml:lang="en">This endpoint allows to cancel a payment.</doc>
+      <method id="CancelMilePayment" name="DELETE">
+        <doc title="Cancel Mile Payment" xml:lang="en">This endpoint allows to cancel a payment.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
-          <representation element="tns:CancelPointPaymentRequest" mediaType="application/json" />
+          <representation element="tns:CancelMilePaymentRequest" mediaType="application/json" />
         </request>
         <response status="200">
           <representation element="tns:Response" mediaType="application/json" />
@@ -1000,19 +1016,10 @@
           <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
         </response>
       </method>
-      <method id="CompletePointPayment" name="PUT">
-        <doc title="Complete Point Payment" xml:lang="en">This endpoint allows to complete a payment.</doc>
+      <method id="CompleteMilePayment" name="PUT">
+        <doc title="Complete Mile Payment" xml:lang="en">This endpoint allows to complete a payment.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
-          <representation element="tns:CompletePointPaymentRequest" mediaType="application/json" />
+          <representation element="tns:CompleteMilePaymentRequest" mediaType="application/json" />
         </request>
         <response status="200">
           <representation element="tns:Response" mediaType="application/json" />
@@ -1036,22 +1043,13 @@
           <doc title="500" xml:lang="en">Server Error - Something went wrong.</doc>
         </response>
       </method>
-      <method id="StartPointPayment" name="POST">
-        <doc title="Start Point Payment" xml:lang="en">After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check "Complete Point Payment endpoint" please.</doc>
+      <method id="StartMilePayment" name="POST">
+        <doc title="Start Mile Payment" xml:lang="en">After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check "Complete Mile Payment endpoint" please.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
-          <representation element="tns:StartPointPaymentRequest" mediaType="application/json" />
+          <representation element="tns:StartMilePaymentRequest" mediaType="application/json" />
         </request>
         <response status="200">
-          <representation element="tns:StartPointPaymentResponse" mediaType="application/json" />
+          <representation element="tns:StartMilePaymentResponse" mediaType="application/json" />
         </response>
         <response status="400">
           <doc title="400" xml:lang="en">Bad Request	- The request was unacceptable, often due to missing a required parameter.</doc>
@@ -1075,17 +1073,8 @@
     </resource>
     <resource id="_v2ecommerceorders" path="/v2/ecommerce/orders">
       <method id="OrderInfo" name="POST">
-        <doc title="Order Info" xml:lang="en">This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments.</doc>
+        <doc title="Order Info" xml:lang="en">This endpoint allows to create an order for earn miles. It may also include discounts and payments.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
           <representation element="tns:OrderRequest" mediaType="application/json" />
         </request>
         <response status="200">
@@ -1113,17 +1102,8 @@
     </resource>
     <resource id="_v2ecommercecarts" path="/v2/ecommerce/carts">
       <method id="CartInfo" name="POST">
-        <doc title="Cart Info" xml:lang="en">This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items.</doc>
+        <doc title="Cart Info" xml:lang="en">This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
           <representation element="tns:CartRequest" mediaType="application/json" />
         </request>
         <response status="200">
@@ -1185,19 +1165,10 @@
       </method>
     </resource>
     <resource id="_v2ecommercepaymentsactionsrefund" path="/v2/ecommerce/payments/actions/refund">
-      <method id="RefundPointPayment" name="POST">
-        <doc title="Refund Point Payment" xml:lang="en">This endpoint allows to refund a payment.</doc>
+      <method id="RefundMilePayment" name="POST">
+        <doc title="Refund Mile Payment" xml:lang="en">This endpoint allows to refund a payment.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
-          <representation element="tns:RefundPointPaymentRequest" mediaType="application/json" />
+          <representation element="tns:RefundMilePaymentRequest" mediaType="application/json" />
         </request>
         <response status="200">
           <representation element="tns:Response" mediaType="application/json" />
@@ -1226,15 +1197,6 @@
       <method id="StartReturn" name="POST">
         <doc title="Start Return" xml:lang="en">This endpoint allows to start a return for a specific order.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
           <representation element="tns:StartReturnRequest" mediaType="application/json" />
         </request>
         <response status="200">
@@ -1262,15 +1224,6 @@
       <method id="CompleteReturn" name="PUT">
         <doc title="Complete Return" xml:lang="en">This endpoint allows to complete a return.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
           <representation element="tns:CompleteReturnRequest" mediaType="application/json" />
         </request>
         <response status="200">
@@ -1298,15 +1251,6 @@
       <method id="CancelReturn" name="DELETE">
         <doc title="Cancel Return" xml:lang="en">This endpoint allows to cancel a return.</doc>
         <request>
-          <param name="Accept" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Accept" xml:lang="en">It advertises which content type is able to understand.</doc>
-          </param>
-          <param name="Content-Type" style="header" type="xsd:string" default="application/json" required="true">
-            <doc title="Content-Type" xml:lang="en">It tells the client what the content type of the returned.</doc>
-          </param>
-          <param name="Authorization" style="header" type="xsd:string" default="" required="true">
-            <doc title="Authorization" xml:lang="en">It includes OAuth2 token.</doc>
-          </param>
           <representation element="tns:CancelReturnRequest" mediaType="application/json" />
         </request>
         <response status="200">

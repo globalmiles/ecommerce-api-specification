@@ -10,13 +10,13 @@ This API uses OAuth v2 Client Credentials Grant for its authentication.
 The properties required for this OAuth implentation are as follows:
 + Access Token Url - /oauth/token
 
-# Group Pay with Miles  Points
+# Group Pay with Miles
 
-## V2 Ecommerce Payments [/v2/ecommerce/payments{?StoreCode,FilterByCreatedAt,FilterByStatus,SortBy}]
+## V2 Ecommerce Payments [/v2/ecommerce/payments]
 
-### List Point Payments [GET]
-This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API.
-+ Parameters
+### List Mile Payments [GET]
+This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.
++ Attributes
     + StoreCode (string, required)
 
         An identifier for online store.
@@ -38,17 +38,8 @@ This endpoint allows to get list of payments. In order to get detailed payment h
 
         + Sample: sort=-created_at
 
-+ Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
-
-
-
 + Response 200 (application/json)
-    + Attributes (ListPointPaymentResponse)
+    + Attributes (ListMilePaymentResponse)
 
     + Body
 
@@ -127,86 +118,11 @@ This endpoint allows to get list of payments. In order to get detailed payment h
 
 
 
-
-## V2 Ecommerce Payments Actions Refund [/v2/ecommerce/payments/actions/refund]
-
-### Refund Point Payment [POST]
-This endpoint allows to refund a payment.
-
-+ Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
-    + Attributes (RefundPointPaymentRequest)
-
-
-+ Response 200 (application/json)
-    + Attributes (Response)
-
-    + Body
-
-            {
-              "status": "ok"
-            }
-
-
-+ Response 400 
-
-        Bad Request    - The request was unacceptable, often due to missing a required parameter.
-
-
-
-
-+ Response 401 
-
-        Unauthorized - No valid API key provided.
-
-
-
-
-+ Response 402 
-
-        Request Failed - The parameters were valid but the request failed.
-
-
-
-
-+ Response 404 
-
-        Not Found - The requested resource doesn't exist.
-
-
-
-
-+ Response 429 
-
-        Too Many Requests - Too many requests hit the API too quickly.
-
-
-
-
-+ Response 500 
-
-        Server Error - Something went wrong.
-
-
-
-
-
-## V2 Ecommerce Payments [/v2/ecommerce/payments]
-
-### Cancel Point Payment [DELETE]
+### Cancel Mile Payment [DELETE]
 This endpoint allows to cancel a payment.
 
 + Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
-    + Attributes (CancelPointPaymentRequest)
+    + Attributes (CancelMilePaymentRequest)
 
 
 + Response 200 (application/json)
@@ -261,16 +177,11 @@ This endpoint allows to cancel a payment.
 
 
 
-### Complete Point Payment [PUT]
+### Complete Mile Payment [PUT]
 This endpoint allows to complete a payment.
 
 + Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
-    + Attributes (CompletePointPaymentRequest)
+    + Attributes (CompleteMilePaymentRequest)
 
 
 + Response 200 (application/json)
@@ -325,20 +236,15 @@ This endpoint allows to complete a payment.
 
 
 
-### Start Point Payment [POST]
-After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check "Complete Point Payment endpoint" please.
+### Start Mile Payment [POST]
+After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check "Complete Mile Payment endpoint" please.
 
 + Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
-    + Attributes (StartPointPaymentRequest)
+    + Attributes (StartMilePaymentRequest)
 
 
 + Response 200 (application/json)
-    + Attributes (StartPointPaymentResponse)
+    + Attributes (StartMilePaymentResponse)
 
     + Body
 
@@ -393,20 +299,77 @@ After successful authentication and retrieving needed token,this endpoint allows
 
 
 
+## V2 Ecommerce Payments Actions Refund [/v2/ecommerce/payments/actions/refund]
 
-# Group Earn Miles  Points
+### Refund Mile Payment [POST]
+This endpoint allows to refund a payment.
+
++ Request (application/json)
+    + Attributes (RefundMilePaymentRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+
+# Group Earn Miles
 
 ## V2 Ecommerce Orders [/v2/ecommerce/orders]
 
 ### Order Info [POST]
-This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments.
+This endpoint allows to create an order for earn miles. It may also include discounts and payments.
 
 + Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
     + Attributes (OrderRequest)
 
 
@@ -469,14 +432,9 @@ This endpoint allows to create an order for earn a miles / points. It may also i
 ## V2 Ecommerce Carts [/v2/ecommerce/carts]
 
 ### Cart Info [POST]
-This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items.
+This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.
 
 + Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
     + Attributes (CartRequest)
 
 
@@ -632,11 +590,6 @@ An access token will allow you to make requests for the system. We support only 
 This endpoint allows to start a return for a specific order.
 
 + Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
     + Attributes (StartReturnRequest)
 
 
@@ -699,11 +652,6 @@ This endpoint allows to start a return for a specific order.
 This endpoint allows to complete a return.
 
 + Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
     + Attributes (CompleteReturnRequest)
 
 
@@ -763,11 +711,6 @@ This endpoint allows to complete a return.
 This endpoint allows to cancel a return.
 
 + Request (application/json)
-    + Headers
-
-            Accept:application/json
-            Authorization:Bearer {{auth_token}}
-
     + Attributes (CancelReturnRequest)
 
 
@@ -865,7 +808,7 @@ Response object of the cart.
 + `result` (CartResult, optional) - Result object of the response.
 
 
-## ListPointPaymentResponse (Response)
+## ListMilePaymentResponse (Response)
 Response object of payment for list action.
 
 ### Properties
@@ -876,7 +819,7 @@ Response object of payment for list action.
 Result object of the response.
 
 ### Properties
-+ `transaction_token`: `ot_71f06a17-3021-4c42-bd38-e492a7579f65` (string, required) - A token represents an order object from Global Miles system.
++ `transaction_token`: `"ot_71f06a17-3021-4c42-bd38-e492a7579f65"` (string, required) - A token represents an order object from Global Miles system.
 
 
 ## OrderResponse (Response)
@@ -907,7 +850,7 @@ Representing a payment for order.
     + `digital_wallet`
     + `mobile_payment`
     + `gift_card`
-    + `point_payment`
+    + `mile_payment`
     + `other`
 + `amount`: `50.00` (number, required) - Amount of current payment.
 + `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, optional) - A token represents a payment object for provisioning.
@@ -999,7 +942,7 @@ Request of order object.
 + `user_token`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (string, required) - A token that is representing a Global Miles user for the current session.
 + `transaction_id`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (string, required) - The ID of the transaction that represents the order.
 + `order`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (Order, required) - A complex object for order.
-+ `shift_allowance`: `0` (number, optional) - It specifies how many days later the miles / points should be given to the user.
++ `shift_allowance`: `0` (number, optional) - It specifies how many days later the miles should be given to the user.
 
 
 ## CartRequest (object)
@@ -1027,7 +970,7 @@ A complex object for amount.
 + `currency`: `usd` (string, required) - ISO 4217 currency code of the amount.
 
 
-## StartPointPaymentRequest (object)
+## StartMilePaymentRequest (object)
 Request of payment for start action.
 
 ### Properties
@@ -1036,21 +979,21 @@ Request of payment for start action.
 + `amount`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (Amount, required) - An amount of payment.
 
 
-## StartPointPaymentResponse (Response)
+## StartMilePaymentResponse (Response)
 Response object of payment for start action.
 
 ### Properties
-+ `result` (StartPointPaymentResult, required) - Result object of the response.
++ `result` (StartMilePaymentResult, required) - Result object of the response.
 
 
-## StartPointPaymentResult (object)
+## StartMilePaymentResult (object)
 Result object of payment for start action.
 
 ### Properties
 + `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
 
 
-## CompletePointPaymentRequest (object)
+## CompleteMilePaymentRequest (object)
 Request of payment for complete action.
 
 ### Properties
@@ -1058,7 +1001,7 @@ Request of payment for complete action.
 + `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
 
 
-## CancelPointPaymentRequest (object)
+## CancelMilePaymentRequest (object)
 Request of payment for cancel action.
 
 ### Properties
@@ -1066,7 +1009,7 @@ Request of payment for cancel action.
 + `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
 
 
-## RefundPointPaymentRequest (object)
+## RefundMilePaymentRequest (object)
 Request of payment for refund action.
 
 ### Properties
@@ -1080,14 +1023,14 @@ Representing a payment.
 
 ### Properties
 + `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
-+ `created_at`: `01/01/2018 10:00:00` (string, required) - Create date time of payment. The format is ISO 8601 date and time.
-+ `updated_at`: `01/01/2018 10:00:00` (string, required) - Last update date time of payment. The format is ISO 8601 date and time.
-+ `status`: `01/01/2018 10:00:00` (enum[string], required) - The status of payment.
++ `created_at`: `"2018-01-01T10:00:00"` (string, required) - Create date time of payment. The format is ISO 8601 date and time.
++ `updated_at`: `"2018-01-01T10:00:00"` (string, required) - Last update date time of payment. The format is ISO 8601 date and time.
++ `status`: `"2018-01-01T10:00:00"` (enum[string], required) - The status of payment.
     + `started`
     + `completed`
     + `cancelled`
     + `refunded`
-+ `amount`: `01/01/2018 10:00:00` (Amount, required) - An amount of payment.
++ `amount`: `"2018-01-01T10:00:00"` (Amount, required) - An amount of payment.
 
 
 ## CancelReturnRequest (object)

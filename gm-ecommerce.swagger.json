@@ -28,37 +28,16 @@
   "paths": {
     "/v2/ecommerce/payments": {
       "get": {
-        "description": "This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API.",
-        "summary": "List Point Payments",
+        "description": "This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.",
+        "summary": "List Mile Payments",
         "tags": [
-          "Pay with Miles / Points"
+          "Pay with Miles"
         ],
         "operationId": "V2EcommercePaymentsGet",
         "produces": [
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
           {
             "name": "StoreCode",
             "in": "query",
@@ -92,7 +71,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ListPointPaymentResponse"
+              "$ref": "#/definitions/ListMilePaymentResponse"
             },
             "examples": {
               "application/json": {
@@ -172,9 +151,9 @@
       },
       "put": {
         "description": "This endpoint allows to complete a payment.",
-        "summary": "Complete Point Payment",
+        "summary": "Complete Mile Payment",
         "tags": [
-          "Pay with Miles / Points"
+          "Pay with Miles"
         ],
         "operationId": "V2EcommercePaymentsPut",
         "produces": [
@@ -182,33 +161,12 @@
         ],
         "parameters": [
           {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
-          {
             "name": "Body",
             "in": "body",
             "required": true,
             "description": "The body of the request.",
             "schema": {
-              "$ref": "#/definitions/CompletePointPaymentRequest"
+              "$ref": "#/definitions/CompleteMilePaymentRequest"
             }
           }
         ],
@@ -263,10 +221,10 @@
         }
       },
       "post": {
-        "description": "After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check \"Complete Point Payment endpoint\" please.",
-        "summary": "Start Point Payment",
+        "description": "After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check \"Complete Mile Payment endpoint\" please.",
+        "summary": "Start Mile Payment",
         "tags": [
-          "Pay with Miles / Points"
+          "Pay with Miles"
         ],
         "operationId": "V2EcommercePaymentsPost",
         "produces": [
@@ -274,33 +232,12 @@
         ],
         "parameters": [
           {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
-          {
             "name": "Body",
             "in": "body",
             "required": true,
             "description": "The body of the request.",
             "schema": {
-              "$ref": "#/definitions/StartPointPaymentRequest"
+              "$ref": "#/definitions/StartMilePaymentRequest"
             }
           }
         ],
@@ -308,7 +245,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/StartPointPaymentResponse"
+              "$ref": "#/definitions/StartMilePaymentResponse"
             },
             "examples": {
               "application/json": {
@@ -359,9 +296,9 @@
       },
       "delete": {
         "description": "This endpoint allows to cancel a payment.",
-        "summary": "Cancel Point Payment",
+        "summary": "Cancel Mile Payment",
         "tags": [
-          "Pay with Miles / Points"
+          "Pay with Miles"
         ],
         "operationId": "V2EcommercePaymentsDelete",
         "produces": [
@@ -369,33 +306,12 @@
         ],
         "parameters": [
           {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
-          {
             "name": "Body",
             "in": "body",
             "required": true,
             "description": "The body of the request.",
             "schema": {
-              "$ref": "#/definitions/CancelPointPaymentRequest"
+              "$ref": "#/definitions/CancelMilePaymentRequest"
             }
           }
         ],
@@ -452,37 +368,16 @@
     },
     "/v2/ecommerce/orders": {
       "post": {
-        "description": "This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments.",
+        "description": "This endpoint allows to create an order for earn miles. It may also include discounts and payments.",
         "summary": "Order Info",
         "tags": [
-          "Earn Miles / Points"
+          "Earn Miles"
         ],
         "operationId": "V2EcommerceOrdersPost",
         "produces": [
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
           {
             "name": "Body",
             "in": "body",
@@ -549,37 +444,16 @@
     },
     "/v2/ecommerce/carts": {
       "post": {
-        "description": "This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items.",
+        "description": "This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.",
         "summary": "Cart Info",
         "tags": [
-          "Earn Miles / Points"
+          "Earn Miles"
         ],
         "operationId": "V2EcommerceCartsPost",
         "produces": [
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
           {
             "name": "Body",
             "in": "body",
@@ -648,11 +522,6 @@
             "request": {
               "method": "POST",
               "uri": "/v2/ecommerce/carts",
-              "headers": {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": "Bearer {{auth_token}}"
-              },
               "body": ""
             },
             "expectedResponse": {
@@ -789,9 +658,9 @@
     "/v2/ecommerce/payments/actions/refund": {
       "post": {
         "description": "This endpoint allows to refund a payment.",
-        "summary": "Refund Point Payment",
+        "summary": "Refund Mile Payment",
         "tags": [
-          "Pay with Miles / Points"
+          "Pay with Miles"
         ],
         "operationId": "V2EcommercePaymentsActionsRefundPost",
         "produces": [
@@ -799,33 +668,12 @@
         ],
         "parameters": [
           {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
-          {
             "name": "Body",
             "in": "body",
             "required": true,
             "description": "The body of the request.",
             "schema": {
-              "$ref": "#/definitions/RefundPointPaymentRequest"
+              "$ref": "#/definitions/RefundMilePaymentRequest"
             }
           }
         ],
@@ -892,27 +740,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
           {
             "name": "Body",
             "in": "body",
@@ -984,27 +811,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
           {
             "name": "Body",
             "in": "body",
@@ -1079,27 +885,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It advertises which content type is able to understand."
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It tells the client what the content type of the returned."
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "It includes OAuth2 token."
-          },
           {
             "name": "Body",
             "in": "body",
@@ -1316,8 +1101,8 @@
         }
       ]
     },
-    "ListPointPaymentResponse": {
-      "title": "ListPointPaymentResponse",
+    "ListMilePaymentResponse": {
+      "title": "ListMilePaymentResponse",
       "description": "Response object of payment for list action.",
       "allOf": [
         {
@@ -1414,7 +1199,7 @@
       "properties": {
         "transaction_token": {
           "description": "A token represents an order object from Global Miles system.",
-          "example": "ot_71f06a17-3021-4c42-bd38-e492a7579f65",
+          "example": "\"ot_71f06a17-3021-4c42-bd38-e492a7579f65\"",
           "type": "string"
         }
       },
@@ -1486,7 +1271,7 @@
       "title": "PaymentItem",
       "description": "Representing a payment for order.",
       "example": {
-        "type": "point_payment",
+        "type": "mile_payment",
         "amount": 50.0,
         "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
       },
@@ -1607,7 +1392,7 @@
             "amount": 25.5
           },
           {
-            "type": "point_payment",
+            "type": "mile_payment",
             "amount": 50.0,
             "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
           }
@@ -1699,7 +1484,7 @@
               "amount": 25.5
             },
             {
-              "type": "point_payment",
+              "type": "mile_payment",
               "amount": 50.0,
               "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
             }
@@ -1751,8 +1536,8 @@
           "description": "Gitf Card"
         },
         {
-          "name": "point_payment",
-          "description": "Pay with miles / points provided by Global Miles"
+          "name": "mile_payment",
+          "description": "Pay with miles provided by Global Miles"
         },
         {
           "name": "other",
@@ -1768,7 +1553,7 @@
         "digital_wallet",
         "mobile_payment",
         "gift_card",
-        "point_payment",
+        "mile_payment",
         "other"
       ]
     },
@@ -2015,7 +1800,7 @@
               "amount": 25.5
             },
             {
-              "type": "point_payment",
+              "type": "mile_payment",
               "amount": 50.0,
               "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
             }
@@ -2043,7 +1828,7 @@
           "$ref": "#/definitions/Order"
         },
         "shift_allowance": {
-          "description": "It specifies how many days later the miles / points should be given to the user.",
+          "description": "It specifies how many days later the miles should be given to the user.",
           "example": 0,
           "type": "integer",
           "default": 0,
@@ -2159,8 +1944,8 @@
         "currency"
       ]
     },
-    "StartPointPaymentRequest": {
-      "title": "StartPointPaymentRequest",
+    "StartMilePaymentRequest": {
+      "title": "StartMilePaymentRequest",
       "description": "Request of payment for start action.",
       "example": {
         "store_code": "ECO123858493939",
@@ -2192,8 +1977,8 @@
         "amount"
       ]
     },
-    "StartPointPaymentResponse": {
-      "title": "StartPointPaymentResponse",
+    "StartMilePaymentResponse": {
+      "title": "StartMilePaymentResponse",
       "description": "Response object of payment for start action.",
       "allOf": [
         {
@@ -2209,7 +1994,7 @@
           "type": "object",
           "properties": {
             "result": {
-              "$ref": "#/definitions/StartPointPaymentResult"
+              "$ref": "#/definitions/StartMilePaymentResult"
             }
           },
           "required": [
@@ -2218,8 +2003,8 @@
         }
       ]
     },
-    "StartPointPaymentResult": {
-      "title": "StartPointPaymentResult",
+    "StartMilePaymentResult": {
+      "title": "StartMilePaymentResult",
       "description": "Result object of payment for start action.",
       "example": {
         "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
@@ -2236,8 +2021,8 @@
         "payment_provision_token"
       ]
     },
-    "CompletePointPaymentRequest": {
-      "title": "CompletePointPaymentRequest",
+    "CompleteMilePaymentRequest": {
+      "title": "CompleteMilePaymentRequest",
       "description": "Request of payment for complete action.",
       "example": {
         "store_code": "ECO123858493939",
@@ -2261,8 +2046,8 @@
         "payment_provision_token"
       ]
     },
-    "CancelPointPaymentRequest": {
-      "title": "CancelPointPaymentRequest",
+    "CancelMilePaymentRequest": {
+      "title": "CancelMilePaymentRequest",
       "description": "Request of payment for cancel action.",
       "example": {
         "store_code": "ECO123858493939",
@@ -2286,8 +2071,8 @@
         "payment_provision_token"
       ]
     },
-    "RefundPointPaymentRequest": {
-      "title": "RefundPointPaymentRequest",
+    "RefundMilePaymentRequest": {
+      "title": "RefundMilePaymentRequest",
       "description": "Request of payment for refund action.",
       "example": {
         "store_code": "ECO123858493939",
@@ -2371,12 +2156,12 @@
         },
         "created_at": {
           "description": "Create date time of payment. The format is ISO 8601 date and time.",
-          "example": "01/01/2018 10:00:00",
+          "example": "\"2018-01-01T10:00:00\"",
           "type": "string"
         },
         "updated_at": {
           "description": "Last update date time of payment. The format is ISO 8601 date and time.",
-          "example": "01/01/2018 10:00:00",
+          "example": "\"2018-01-01T10:00:00\"",
           "type": "string"
         },
         "status": {
