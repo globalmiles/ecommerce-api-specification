@@ -111,7 +111,7 @@ types:
         displayName: result
         description: Result object of the response.
         type: CartResult
-  ListPointPaymentResponse:
+  ListMilePaymentResponse:
     example:
       value:
         status: ok
@@ -137,7 +137,7 @@ types:
           amount:
             value: 23
             currency: usd
-    displayName: ListPointPaymentResponse
+    displayName: ListMilePaymentResponse
     description: Response object of payment for list action.
     type: Response
     properties:
@@ -206,7 +206,7 @@ types:
   PaymentItem:
     example:
       value:
-        type: point_payment
+        type: mile_payment
         amount: 50
         payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
     displayName: PaymentItem
@@ -226,7 +226,7 @@ types:
         - digital_wallet
         - mobile_payment
         - gift_card
-        - point_payment
+        - mile_payment
         - other
       amount:
         required: true
@@ -310,7 +310,7 @@ types:
         payments:
         - type: cash
           amount: 25.5
-        - type: point_payment
+        - type: mile_payment
           amount: 50
           payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
         discounts:
@@ -548,7 +548,7 @@ types:
           payments:
           - type: cash
             amount: 25.5
-          - type: point_payment
+          - type: mile_payment
             amount: 50
             payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
     displayName: OrderRequest
@@ -579,7 +579,7 @@ types:
         required: false
         default: 0
         displayName: shift_allowance
-        description: It specifies how many days later the miles / points should be given to the user.
+        description: It specifies how many days later the miles should be given to the user.
         type: integer
         format: int32
   CartRequest:
@@ -660,7 +660,7 @@ types:
         displayName: currency
         description: ISO 4217 currency code of the amount.
         type: string
-  StartPointPaymentRequest:
+  StartMilePaymentRequest:
     example:
       value:
         store_code: ECO123858493939
@@ -668,7 +668,7 @@ types:
         amount:
           value: 10
           currency: usd
-    displayName: StartPointPaymentRequest
+    displayName: StartMilePaymentRequest
     description: Request of payment for start action.
     type: object
     properties:
@@ -687,13 +687,13 @@ types:
         displayName: amount
         description: An amount of payment.
         type: Amount
-  StartPointPaymentResponse:
+  StartMilePaymentResponse:
     example:
       value:
         status: ok
         result:
           payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
-    displayName: StartPointPaymentResponse
+    displayName: StartMilePaymentResponse
     description: Response object of payment for start action.
     type: Response
     properties:
@@ -701,12 +701,12 @@ types:
         required: true
         displayName: result
         description: Result object of the response.
-        type: StartPointPaymentResult
-  StartPointPaymentResult:
+        type: StartMilePaymentResult
+  StartMilePaymentResult:
     example:
       value:
         payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
-    displayName: StartPointPaymentResult
+    displayName: StartMilePaymentResult
     description: Result object of payment for start action.
     type: object
     properties:
@@ -715,12 +715,12 @@ types:
         displayName: payment_provision_token
         description: A token represents a payment object for provisioning.
         type: string
-  CompletePointPaymentRequest:
+  CompleteMilePaymentRequest:
     example:
       value:
         store_code: ECO123858493939
         payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
-    displayName: CompletePointPaymentRequest
+    displayName: CompleteMilePaymentRequest
     description: Request of payment for complete action.
     type: object
     properties:
@@ -734,12 +734,12 @@ types:
         displayName: payment_provision_token
         description: A token represents a payment object for provisioning.
         type: string
-  CancelPointPaymentRequest:
+  CancelMilePaymentRequest:
     example:
       value:
         store_code: ECO123858493939
         payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
-    displayName: CancelPointPaymentRequest
+    displayName: CancelMilePaymentRequest
     description: Request of payment for cancel action.
     type: object
     properties:
@@ -753,7 +753,7 @@ types:
         displayName: payment_provision_token
         description: A token represents a payment object for provisioning.
         type: string
-  RefundPointPaymentRequest:
+  RefundMilePaymentRequest:
     example:
       value:
         store_code: ECO123858493939
@@ -761,7 +761,7 @@ types:
         amount:
           value: 10
           currency: usd
-    displayName: RefundPointPaymentRequest
+    displayName: RefundMilePaymentRequest
     description: Request of payment for refund action.
     type: object
     properties:
@@ -940,8 +940,8 @@ types:
 /v2/ecommerce:
   /payments:
     get:
-      displayName: List Point Payments
-      description: This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this API.
+      displayName: List Mile Payments
+      description: This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.
       securedBy:
       - auth
       queryParameters:
@@ -972,30 +972,6 @@ types:
             value: sort=-created_at
           displayName: SortBy
           description: Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".
-          type: string
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
           type: string
       responses:
         200:
@@ -1028,7 +1004,7 @@ types:
                       value: 23
                       currency: usd
               displayName: response
-              type: ListPointPaymentResponse
+              type: ListMilePaymentResponse
         400:
           description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
           body: {}
@@ -1048,7 +1024,7 @@ types:
           description: Server Error - Something went wrong.
           body: {}
     put:
-      displayName: Complete Point Payment
+      displayName: Complete Mile Payment
       description: This endpoint allows to complete a payment.
       body:
         application/json:
@@ -1058,33 +1034,9 @@ types:
               payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
           displayName: Body
           description: The body of the request.
-          type: CompletePointPaymentRequest
+          type: CompleteMilePaymentRequest
       securedBy:
       - auth
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
-          type: string
       responses:
         200:
           description: Success
@@ -1114,8 +1066,8 @@ types:
           description: Server Error - Something went wrong.
           body: {}
     post:
-      displayName: Start Point Payment
-      description: After successful authentication and retrieving needed token,this endpoint allows to start a payment transaction. To be able to complete whole sale process successfully  also check "Complete Point Payment endpoint" please.
+      displayName: Start Mile Payment
+      description: After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check "Complete Mile Payment endpoint" please.
       body:
         application/json:
           example:
@@ -1127,33 +1079,9 @@ types:
                 currency: usd
           displayName: Body
           description: The body of the request.
-          type: StartPointPaymentRequest
+          type: StartMilePaymentRequest
       securedBy:
       - auth
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
-          type: string
       responses:
         200:
           description: Success
@@ -1165,7 +1093,7 @@ types:
                   result:
                     payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
               displayName: response
-              type: StartPointPaymentResponse
+              type: StartMilePaymentResponse
         400:
           description: Bad Request	- The request was unacceptable, often due to missing a required parameter.
           body: {}
@@ -1185,7 +1113,7 @@ types:
           description: Server Error - Something went wrong.
           body: {}
     delete:
-      displayName: Cancel Point Payment
+      displayName: Cancel Mile Payment
       description: This endpoint allows to cancel a payment.
       body:
         application/json:
@@ -1195,33 +1123,9 @@ types:
               payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
           displayName: Body
           description: The body of the request.
-          type: CancelPointPaymentRequest
+          type: CancelMilePaymentRequest
       securedBy:
       - auth
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
-          type: string
       responses:
         200:
           description: Success
@@ -1252,7 +1156,7 @@ types:
           body: {}
     /actions/refund:
       post:
-        displayName: Refund Point Payment
+        displayName: Refund Mile Payment
         description: This endpoint allows to refund a payment.
         body:
           application/json:
@@ -1265,33 +1169,9 @@ types:
                   currency: usd
             displayName: Body
             description: The body of the request.
-            type: RefundPointPaymentRequest
+            type: RefundMilePaymentRequest
         securedBy:
         - auth
-        headers:
-          Accept:
-            required: true
-            default: application/json
-            example:
-              value: application/json
-            displayName: Accept
-            description: It advertises which content type is able to understand.
-            type: string
-          Content-Type:
-            required: true
-            default: application/json
-            example:
-              value: application/json
-            displayName: Content-Type
-            description: It tells the client what the content type of the returned.
-            type: string
-          Authorization:
-            required: true
-            example:
-              value: Bearer {{auth_token}}
-            displayName: Authorization
-            description: It includes OAuth2 token.
-            type: string
         responses:
           200:
             description: Success
@@ -1323,7 +1203,7 @@ types:
   /orders:
     post:
       displayName: Order Info
-      description: This endpoint allows to create an order for earn a miles / points. It may also include discounts and payments.
+      description: This endpoint allows to create an order for earn miles. It may also include discounts and payments.
       body:
         application/json:
           example:
@@ -1349,7 +1229,7 @@ types:
                 payments:
                 - type: cash
                   amount: 25.5
-                - type: point_payment
+                - type: mile_payment
                   amount: 50
                   payment_provision_token: ppt_66feace2-873d-4a8b-9fdc-9eac06b07517
                 discounts:
@@ -1363,30 +1243,6 @@ types:
           type: OrderRequest
       securedBy:
       - auth
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
-          type: string
       responses:
         200:
           description: Success
@@ -1420,7 +1276,7 @@ types:
   /carts:
     post:
       displayName: Cart Info
-      description: This endpoint allows to get available amount of money, based on miles / points of user and their discounts which is based on cart or items.
+      description: This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.
       body:
         application/json:
           example:
@@ -1447,30 +1303,6 @@ types:
           type: CartRequest
       securedBy:
       - auth
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
-          type: string
       responses:
         200:
           description: Success
@@ -1522,30 +1354,6 @@ types:
           type: CompleteReturnRequest
       securedBy:
       - auth
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
-          type: string
       responses:
         200:
           description: Success
@@ -1591,30 +1399,6 @@ types:
           type: StartReturnRequest
       securedBy:
       - auth
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
-          type: string
       responses:
         200:
           description: Success
@@ -1659,30 +1443,6 @@ types:
           type: CancelReturnRequest
       securedBy:
       - auth
-      headers:
-        Accept:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Accept
-          description: It advertises which content type is able to understand.
-          type: string
-        Content-Type:
-          required: true
-          default: application/json
-          example:
-            value: application/json
-          displayName: Content-Type
-          description: It tells the client what the content type of the returned.
-          type: string
-        Authorization:
-          required: true
-          example:
-            value: Bearer {{auth_token}}
-          displayName: Authorization
-          description: It includes OAuth2 token.
-          type: string
       responses:
         200:
           description: Success
