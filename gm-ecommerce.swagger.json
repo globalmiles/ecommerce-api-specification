@@ -1,23 +1,23 @@
-﻿{
+{
   "swagger": "2.0",
   "info": {
-    "version": "2.0.0",
-    "title": "Global Miles Ecommerce API",
-    "description": "API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles."
+    "version": "2.1.0",
+    "title": "Global Miles E-commerce API",
+    "description": "API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles."
   },
-  "host": "default",
+  "host": "api.sandbox.globalmiles.com",
   "basePath": "/",
   "securityDefinitions": {
     "auth": {
       "type": "oauth2",
       "flow": "application",
-      "tokenUrl": "https://test1.api.globalmiles.com/oauth/token",
+      "tokenUrl": "https://api.sandbox.globalmiles.com/oauth/token",
       "scopes": {},
       "x-skip-client-authentication": false
     }
   },
   "schemes": [
-    "http"
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -26,86 +26,92 @@
     "application/json"
   ],
   "paths": {
-    "/v2/ecommerce/payments": {
+    "/v2/ecommerce/orders": {
       "get": {
-        "description": "This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.",
-        "summary": "List Mile Payments",
+        "description": "This endpoint allows to get list of orders. In order to get detailed order history and reconciliation you can use this endpoint.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "List Orders",
         "tags": [
-          "Pay with Miles"
+          "Earn Miles"
         ],
-        "operationId": "V2EcommercePaymentsGet",
+        "operationId": "V2EcommerceOrdersGet",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "StoreCode",
+            "name": "filter[store_code]",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "An identifier for online store."
+            "description": "Filter for an online store."
           },
           {
-            "name": "FilterByCreatedAt",
+            "name": "filter[completed_at]",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD."
+            "description": "Filter for completed_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD."
           },
           {
-            "name": "FilterByStatus",
+            "name": "filter[status]",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Filter for status field. It is accepted a valid status value of payment."
+            "description": "Filter for status field. It is accepted a valid status value of order."
           },
           {
-            "name": "SortBy",
+            "name": "sort",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Sort for some selected fields. In order to sort descending \"-\" value will be used before the field. Valid field values are \"created_at\",  \"updated_at\", \"status\"."
+            "description": "Sort for some selected fields. In order to sort descending \"-\" value will be used before the field. Valid field values are \"completed_at\", \"created_at\",  \"updated_at\", \"status\"."
           }
         ],
         "responses": {
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ListMilePaymentResponse"
+              "$ref": "#/definitions/ListOrderResponse"
             },
             "examples": {
               "application/json": {
                 "status": "ok",
                 "result": [
                   {
-                    "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
+                    "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7",
+                    "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                    "completed_at": "2018-01-01T09:00:00",
                     "created_at": "2018-01-01T10:00:00",
                     "updated_at": "2018-01-01T10:10:00",
-                    "status": "completed",
-                    "amount": {
-                      "value": 10.0,
-                      "currency": "usd"
-                    }
+                    "status": "processed",
+                    "subtotal": 90.0,
+                    "tax": 10.2,
+                    "total": 100.2,
+                    "currency": "USD"
                   },
                   {
-                    "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
-                    "created_at": "2017-12-01T23:00:00",
-                    "updated_at": "2017-12-02T14:00:00",
+                    "transaction_token": "ot_fd7bc94b-4fe4-4c5a-89fa-85ce017c2b0b",
+                    "transaction_id": "42db67d6-fde6-47ce-81eb-121cf333e0d7",
+                    "completed_at": "2018-01-02T09:00:00",
+                    "created_at": "2018-01-02T10:00:00",
+                    "updated_at": "2018-01-02T10:10:00",
+                    "status": "processed",
+                    "subtotal": 70.0,
+                    "tax": 8.2,
+                    "total": 78.2,
+                    "currency": "USD"
+                  },
+                  {
+                    "transaction_token": "ot_e59410fb-831a-47d2-9822-9de6efd3e39e",
+                    "transaction_id": "51424457-4997-4fa2-aed0-1a71aff88294",
+                    "completed_at": "2018-01-03T09:00:00",
+                    "created_at": "2018-01-03T10:00:00",
+                    "updated_at": "2018-01-03T10:10:00",
                     "status": "refunded",
-                    "amount": {
-                      "value": 20.0,
-                      "currency": "usd"
-                    }
-                  },
-                  {
-                    "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
-                    "created_at": "2017-11-01T12:00:00",
-                    "updated_at": "2017-11-01T12:05:00",
-                    "status": "cancelled",
-                    "amount": {
-                      "value": 23.0,
-                      "currency": "usd"
-                    }
+                    "subtotal": 60.0,
+                    "tax": 7.2,
+                    "total": 67.2,
+                    "currency": "USD"
                   }
                 ]
               }
@@ -149,227 +155,9 @@
           "IsMultiContentStreaming": false
         }
       },
-      "put": {
-        "description": "This endpoint allows to complete a payment.",
-        "summary": "Complete Mile Payment",
-        "tags": [
-          "Pay with Miles"
-        ],
-        "operationId": "V2EcommercePaymentsPut",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "description": "The body of the request.",
-            "schema": {
-              "$ref": "#/definitions/CompleteMilePaymentRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/Response"
-            },
-            "examples": {
-              "application/json": {
-                "status": "ok"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
-            "schema": {}
-          },
-          "401": {
-            "description": "Unauthorized - No valid API key provided.",
-            "schema": {}
-          },
-          "402": {
-            "description": "Request Failed - The parameters were valid but the request failed.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Not Found - The requested resource doesn't exist.",
-            "schema": {}
-          },
-          "429": {
-            "description": "Too Many Requests - Too many requests hit the API too quickly.",
-            "schema": {}
-          },
-          "default": {
-            "description": "Server Error - Something went wrong.",
-            "schema": {}
-          }
-        },
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "x-unitTests": [],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      },
       "post": {
-        "description": "After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check \"Complete Mile Payment endpoint\" please.",
-        "summary": "Start Mile Payment",
-        "tags": [
-          "Pay with Miles"
-        ],
-        "operationId": "V2EcommercePaymentsPost",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "description": "The body of the request.",
-            "schema": {
-              "$ref": "#/definitions/StartMilePaymentRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/StartMilePaymentResponse"
-            },
-            "examples": {
-              "application/json": {
-                "status": "ok",
-                "result": {
-                  "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
-            "schema": {}
-          },
-          "401": {
-            "description": "Unauthorized - No valid API key provided.",
-            "schema": {}
-          },
-          "402": {
-            "description": "Request Failed - The parameters were valid but the request failed.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Not Found - The requested resource doesn't exist.",
-            "schema": {}
-          },
-          "429": {
-            "description": "Too Many Requests - Too many requests hit the API too quickly.",
-            "schema": {}
-          },
-          "default": {
-            "description": "Server Error - Something went wrong.",
-            "schema": {}
-          }
-        },
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "x-unitTests": [],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      },
-      "delete": {
-        "description": "This endpoint allows to cancel a payment.",
-        "summary": "Cancel Mile Payment",
-        "tags": [
-          "Pay with Miles"
-        ],
-        "operationId": "V2EcommercePaymentsDelete",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "description": "The body of the request.",
-            "schema": {
-              "$ref": "#/definitions/CancelMilePaymentRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/Response"
-            },
-            "examples": {
-              "application/json": {
-                "status": "ok"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
-            "schema": {}
-          },
-          "401": {
-            "description": "Unauthorized - No valid API key provided.",
-            "schema": {}
-          },
-          "402": {
-            "description": "Request Failed - The parameters were valid but the request failed.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Not Found - The requested resource doesn't exist.",
-            "schema": {}
-          },
-          "429": {
-            "description": "Too Many Requests - Too many requests hit the API too quickly.",
-            "schema": {}
-          },
-          "default": {
-            "description": "Server Error - Something went wrong.",
-            "schema": {}
-          }
-        },
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "x-unitTests": [],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      }
-    },
-    "/v2/ecommerce/orders": {
-      "post": {
-        "description": "This endpoint allows to create an order for earn miles. It may also include discounts and payments.",
-        "summary": "Order Info",
+        "description": "This endpoint allows to create an order for earn miles. It may also include discounts and payments.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "Order",
         "tags": [
           "Earn Miles"
         ],
@@ -398,7 +186,7 @@
               "application/json": {
                 "status": "ok",
                 "result": {
-                  "transaction_token": "ot_71f06a17-3021-4c42-bd38-e492a7579f65"
+                  "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7"
                 }
               }
             }
@@ -442,113 +230,9 @@
         }
       }
     },
-    "/v2/ecommerce/carts": {
-      "post": {
-        "description": "This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.",
-        "summary": "Cart Info",
-        "tags": [
-          "Earn Miles"
-        ],
-        "operationId": "V2EcommerceCartsPost",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "description": "The body of the request.",
-            "schema": {
-              "$ref": "#/definitions/CartRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/CartResponse"
-            },
-            "examples": {
-              "application/json": {
-                "status": "ok",
-                "result": {
-                  "available_point": {
-                    "value": 100.2,
-                    "currency": "usd"
-                  },
-                  "cart_discount": {
-                    "discount": 10.0,
-                    "currency": "usd",
-                    "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
-            "schema": {}
-          },
-          "401": {
-            "description": "Unauthorized - No valid API key provided.",
-            "schema": {}
-          },
-          "402": {
-            "description": "Request Failed - The parameters were valid but the request failed.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Not Found - The requested resource doesn't exist.",
-            "schema": {}
-          },
-          "429": {
-            "description": "Too Many Requests - Too many requests hit the API too quickly.",
-            "schema": {}
-          },
-          "default": {
-            "description": "Server Error - Something went wrong.",
-            "schema": {}
-          }
-        },
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "POST",
-              "uri": "/v2/ecommerce/carts",
-              "body": ""
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": false,
-            "x-testName": "Carts",
-            "x-testDescription": ""
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      }
-    },
     "/oauth/token": {
       "post": {
-        "description": "An access token will allow you to make requests for the system. We support only one type of token: client_credentials",
+        "description": "An access token will allow you to make requests for the system. We support only one type of token: client_credentials.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
         "summary": "Authentication",
         "tags": [
           "Authentication"
@@ -562,6 +246,7 @@
             "name": "Accept",
             "in": "header",
             "required": true,
+            "default": "application/json",
             "type": "string",
             "description": "It advertises which content type is able to understand."
           },
@@ -569,6 +254,7 @@
             "name": "Content-Type",
             "in": "header",
             "required": true,
+            "default": "application/json",
             "type": "string",
             "description": "It tells the client what the content type of the returned."
           },
@@ -655,14 +341,218 @@
         }
       }
     },
-    "/v2/ecommerce/payments/actions/refund": {
-      "post": {
-        "description": "This endpoint allows to refund a payment.",
-        "summary": "Refund Mile Payment",
+    "/v1/ecommerce/returns/{return_provision_token}": {
+      "get": {
+        "description": "This endpoint allows to get a return.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "Retrieve Return",
+        "tags": [
+          "Return"
+        ],
+        "operationId": "V1EcommerceReturnsByReturnProvisionTokenGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "return_provision_token",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The token value of a return."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/RetrieveReturnResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "ok",
+                "result": {
+                  "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+                  "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                  "created_at": "2018-01-01T10:00:00",
+                  "updated_at": "2018-01-01T10:10:00",
+                  "status": "completed",
+                  "amount": {
+                    "value": 10.0,
+                    "currency": "USD"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid API key provided.",
+            "schema": {}
+          },
+          "402": {
+            "description": "Request Failed - The parameters were valid but the request failed.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not Found - The requested resource doesn't exist.",
+            "schema": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Too many requests hit the API too quickly.",
+            "schema": {}
+          },
+          "default": {
+            "description": "Server Error - Something went wrong.",
+            "schema": {}
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/v2/ecommerce/payments": {
+      "get": {
+        "description": "This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "List Mile Payments",
         "tags": [
           "Pay with Miles"
         ],
-        "operationId": "V2EcommercePaymentsActionsRefundPost",
+        "operationId": "V2EcommercePaymentsGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "filter[store_code]",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Filter for an online store."
+          },
+          {
+            "name": "filter[created_at]",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD."
+          },
+          {
+            "name": "filter[status]",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Filter for status field. It is accepted a valid status value of payment."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Sort for some selected fields. In order to sort descending \"-\" value will be used before the field. Valid field values are \"created_at\",  \"updated_at\", \"status\"."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ListMilePaymentResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "ok",
+                "result": [
+                  {
+                    "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7",
+                    "created_at": "2018-01-01T10:00:00",
+                    "updated_at": "2018-01-01T10:10:00",
+                    "status": "completed",
+                    "amount": {
+                      "value": 10.0,
+                      "currency": "USD"
+                    }
+                  },
+                  {
+                    "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
+                    "created_at": "2017-12-01T23:00:00",
+                    "updated_at": "2017-12-02T14:00:00",
+                    "status": "refunded",
+                    "amount": {
+                      "value": 20.0,
+                      "currency": "USD"
+                    }
+                  },
+                  {
+                    "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
+                    "created_at": "2017-11-01T12:00:00",
+                    "updated_at": "2017-11-01T12:05:00",
+                    "status": "cancelled",
+                    "amount": {
+                      "value": 23.0,
+                      "currency": "USD"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid API key provided.",
+            "schema": {}
+          },
+          "402": {
+            "description": "Request Failed - The parameters were valid but the request failed.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not Found - The requested resource doesn't exist.",
+            "schema": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Too many requests hit the API too quickly.",
+            "schema": {}
+          },
+          "default": {
+            "description": "Server Error - Something went wrong.",
+            "schema": {}
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "put": {
+        "description": "This endpoint allows to complete a payment.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "Complete Mile Payment",
+        "tags": [
+          "Pay with Miles"
+        ],
+        "operationId": "V2EcommercePaymentsPut",
         "produces": [
           "application/json"
         ],
@@ -673,7 +563,152 @@
             "required": true,
             "description": "The body of the request.",
             "schema": {
-              "$ref": "#/definitions/RefundMilePaymentRequest"
+              "$ref": "#/definitions/CompleteMilePaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            },
+            "examples": {
+              "application/json": {
+                "status": "ok"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid API key provided.",
+            "schema": {}
+          },
+          "402": {
+            "description": "Request Failed - The parameters were valid but the request failed.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not Found - The requested resource doesn't exist.",
+            "schema": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Too many requests hit the API too quickly.",
+            "schema": {}
+          },
+          "default": {
+            "description": "Server Error - Something went wrong.",
+            "schema": {}
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "post": {
+        "description": "After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check \"Complete Mile Payment endpoint\" please.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "Start Mile Payment",
+        "tags": [
+          "Pay with Miles"
+        ],
+        "operationId": "V2EcommercePaymentsPost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "The body of the request.",
+            "schema": {
+              "$ref": "#/definitions/StartMilePaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/StartMilePaymentResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "ok",
+                "result": {
+                  "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid API key provided.",
+            "schema": {}
+          },
+          "402": {
+            "description": "Request Failed - The parameters were valid but the request failed.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not Found - The requested resource doesn't exist.",
+            "schema": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Too many requests hit the API too quickly.",
+            "schema": {}
+          },
+          "default": {
+            "description": "Server Error - Something went wrong.",
+            "schema": {}
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "delete": {
+        "description": "This endpoint allows to cancel a payment.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "Cancel Mile Payment",
+        "tags": [
+          "Pay with Miles"
+        ],
+        "operationId": "V2EcommercePaymentsDelete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "The body of the request.",
+            "schema": {
+              "$ref": "#/definitions/CancelMilePaymentRequest"
             }
           }
         ],
@@ -728,9 +763,217 @@
         }
       }
     },
+    "/v2/ecommerce/orders/{transaction_id}": {
+      "get": {
+        "description": "This endpoint allows to get an order.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "Retrieve Order",
+        "tags": [
+          "Earn Miles"
+        ],
+        "operationId": "V2EcommerceOrdersByTransactionIdGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the transaction that represents the order."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/RetrieveOrderResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "ok",
+                "result": {
+                  "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7",
+                  "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                  "completed_at": "2018-01-01T09:00:00",
+                  "created_at": "2018-01-01T10:00:00",
+                  "updated_at": "2018-01-01T10:10:00",
+                  "status": "processed",
+                  "subtotal": 90.0,
+                  "tax": 10.2,
+                  "total": 100.2,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid API key provided.",
+            "schema": {}
+          },
+          "402": {
+            "description": "Request Failed - The parameters were valid but the request failed.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not Found - The requested resource doesn't exist.",
+            "schema": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Too many requests hit the API too quickly.",
+            "schema": {}
+          },
+          "default": {
+            "description": "Server Error - Something went wrong.",
+            "schema": {}
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
     "/v2/ecommerce/returns": {
+      "get": {
+        "description": "This endpoint allows to get list of returns. In order to get detailed return history and reconciliation you can use this endpoint.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "List Returns",
+        "tags": [
+          "Return"
+        ],
+        "operationId": "V2EcommerceReturnsGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "filter[store_code]",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Filter for an online store."
+          },
+          {
+            "name": "filter[created_at]",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD."
+          },
+          {
+            "name": "filter[status]",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Filter for status field. It is accepted a valid status value of return."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Sort for some selected fields. In order to sort descending \"-\" value will be used before the field. Valid field values are \"created_at\",  \"updated_at\", \"status\"."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ListReturnResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "ok",
+                "result": [
+                  {
+                    "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+                    "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                    "created_at": "2018-01-01T10:00:00",
+                    "updated_at": "2018-01-01T10:10:00",
+                    "status": "completed",
+                    "amount": {
+                      "value": 10.0,
+                      "currency": "USD"
+                    }
+                  },
+                  {
+                    "return_provision_token": "rpt_a0d2070b-0676-4131-b315-c9d653a31505",
+                    "transaction_id": "42db67d6-fde6-47ce-81eb-121cf333e0d7",
+                    "created_at": "2018-01-02T10:00:00",
+                    "updated_at": "2018-01-02T10:10:00",
+                    "status": "cancelled",
+                    "amount": {
+                      "value": 10.0,
+                      "currency": "USD"
+                    }
+                  },
+                  {
+                    "return_provision_token": "rpt_0399bad5-fac3-45dd-88af-99604b153355",
+                    "transaction_id": "51424457-4997-4fa2-aed0-1a71aff88294",
+                    "created_at": "2018-01-03T10:00:00",
+                    "updated_at": "2018-01-03T10:10:00",
+                    "status": "completed",
+                    "residual": {
+                      "value": 5.0,
+                      "currency": "USD"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid API key provided.",
+            "schema": {}
+          },
+          "402": {
+            "description": "Request Failed - The parameters were valid but the request failed.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not Found - The requested resource doesn't exist.",
+            "schema": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Too many requests hit the API too quickly.",
+            "schema": {}
+          },
+          "default": {
+            "description": "Server Error - Something went wrong.",
+            "schema": {}
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
       "put": {
-        "description": "This endpoint allows to complete a return.",
+        "description": "This endpoint allows to complete a return.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
         "summary": "Complete Return",
         "tags": [
           "Return"
@@ -801,7 +1044,7 @@
         }
       },
       "post": {
-        "description": "This endpoint allows to start a return for a specific order.",
+        "description": "This endpoint allows to start a return for a specific order.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
         "summary": "Start Return",
         "tags": [
           "Return"
@@ -831,7 +1074,7 @@
               "application/json": {
                 "status": "ok",
                 "result": {
-                  "return_provision_token": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058"
+                  "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"
                 }
               }
             }
@@ -875,7 +1118,7 @@
         }
       },
       "delete": {
-        "description": "This endpoint allows to cancel a return.",
+        "description": "This endpoint allows to cancel a return.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
         "summary": "Cancel Return",
         "tags": [
           "Return"
@@ -945,31 +1188,1057 @@
           "IsMultiContentStreaming": false
         }
       }
+    },
+    "/v2/ecommerce/payments/actions/refund": {
+      "post": {
+        "description": "This endpoint allows to refund a payment.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "Refund Mile Payment",
+        "tags": [
+          "Pay with Miles"
+        ],
+        "operationId": "V2EcommercePaymentsActionsRefundPost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "The body of the request.",
+            "schema": {
+              "$ref": "#/definitions/RefundMilePaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            },
+            "examples": {
+              "application/json": {
+                "status": "ok"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid API key provided.",
+            "schema": {}
+          },
+          "402": {
+            "description": "Request Failed - The parameters were valid but the request failed.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not Found - The requested resource doesn't exist.",
+            "schema": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Too many requests hit the API too quickly.",
+            "schema": {}
+          },
+          "default": {
+            "description": "Server Error - Something went wrong.",
+            "schema": {}
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/v2/ecommerce/carts": {
+      "post": {
+        "description": "This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c",
+        "summary": "Cart",
+        "tags": [
+          "Earn Miles"
+        ],
+        "operationId": "V2EcommerceCartsPost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "The body of the request.",
+            "schema": {
+              "$ref": "#/definitions/CartRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CartResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "ok",
+                "result": {
+                  "available_point": {
+                    "value": 100.2,
+                    "currency": "USD"
+                  },
+                  "cart_discount": {
+                    "discount": 10.0,
+                    "currency": "USD",
+                    "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid API key provided.",
+            "schema": {}
+          },
+          "402": {
+            "description": "Request Failed - The parameters were valid but the request failed.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not Found - The requested resource doesn't exist.",
+            "schema": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Too many requests hit the API too quickly.",
+            "schema": {}
+          },
+          "default": {
+            "description": "Server Error - Something went wrong.",
+            "schema": {}
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/v2/ecommerce/carts",
+              "body": ""
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": false,
+            "x-testName": "Carts",
+            "x-testDescription": ""
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
     }
   },
   "definitions": {
-    "CompleteReturnRequest": {
-      "title": "CompleteReturnRequest",
-      "description": "Request of return for complete action.",
+    "OrderStatus": {
+      "title": "OrderStatus",
+      "description": "An order status.",
+      "example": "pending",
+      "x-enum-elements": [
+        {
+          "name": "pending",
+          "description": "Pending"
+        },
+        {
+          "name": "refunded",
+          "description": "Refunded"
+        },
+        {
+          "name": "processed",
+          "description": "Processed"
+        },
+        {
+          "name": "partially_refunded",
+          "description": "Partially Refunded"
+        }
+      ],
+      "type": "string",
+      "enum": [
+        "pending",
+        "refunded",
+        "processed",
+        "partially_refunded"
+      ]
+    },
+    "StartMilePaymentResult": {
+      "title": "StartMilePaymentResult",
+      "description": "Result object of payment for start action.",
+      "example": {
+        "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
+      },
+      "type": "object",
+      "properties": {
+        "payment_provision_token": {
+          "description": "A token represents a payment object for provisioning.",
+          "example": "\"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "payment_provision_token"
+      ]
+    },
+    "ReturnStatus": {
+      "title": "ReturnStatus",
+      "description": "A return status.",
+      "example": "started",
+      "x-enum-elements": [
+        {
+          "name": "started",
+          "description": "Started"
+        },
+        {
+          "name": "cancelled",
+          "description": "Cancelled"
+        },
+        {
+          "name": "completed",
+          "description": "Completed"
+        }
+      ],
+      "type": "string",
+      "enum": [
+        "started",
+        "cancelled",
+        "completed"
+      ]
+    },
+    "RetrieveReturnResponse": {
+      "title": "RetrieveReturnResponse",
+      "description": "Response object of return for retrieve action.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Response"
+        },
+        {
+          "example": {
+            "status": "ok",
+            "result": {
+              "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+              "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+              "created_at": "2018-01-01T10:00:00",
+              "updated_at": "2018-01-01T10:10:00",
+              "status": "completed",
+              "amount": {
+                "value": 10.0,
+                "currency": "USD"
+              }
+            }
+          },
+          "type": "object",
+          "properties": {
+            "result": {
+              "$ref": "#/definitions/Return"
+            }
+          }
+        }
+      ]
+    },
+    "StartMilePaymentResponse": {
+      "title": "StartMilePaymentResponse",
+      "description": "Response object of payment for start action.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Response"
+        },
+        {
+          "example": {
+            "status": "ok",
+            "result": {
+              "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
+            }
+          },
+          "type": "object",
+          "properties": {
+            "result": {
+              "$ref": "#/definitions/StartMilePaymentResult"
+            }
+          }
+        }
+      ]
+    },
+    "RetrieveOrderResponse": {
+      "title": "RetrieveOrderResponse",
+      "description": "Response object of order for retrieve action.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Response"
+        },
+        {
+          "example": {
+            "status": "ok",
+            "result": {
+              "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7",
+              "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+              "completed_at": "2018-01-01T09:00:00",
+              "created_at": "2018-01-01T10:00:00",
+              "updated_at": "2018-01-01T10:10:00",
+              "status": "processed",
+              "subtotal": 90.0,
+              "tax": 10.2,
+              "total": 100.2,
+              "currency": "USD"
+            }
+          },
+          "type": "object",
+          "properties": {
+            "result": {
+              "$ref": "#/definitions/BasicOrderResult"
+            }
+          }
+        }
+      ]
+    },
+    "ListReturnResponse": {
+      "title": "ListReturnResponse",
+      "description": "Response object of return for list action.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Response"
+        },
+        {
+          "example": {
+            "status": "ok",
+            "result": [
+              {
+                "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+                "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                "created_at": "2018-01-01T10:00:00",
+                "updated_at": "2018-01-01T10:10:00",
+                "status": "completed",
+                "amount": {
+                  "value": 10.0,
+                  "currency": "USD"
+                }
+              },
+              {
+                "return_provision_token": "rpt_a0d2070b-0676-4131-b315-c9d653a31505",
+                "transaction_id": "42db67d6-fde6-47ce-81eb-121cf333e0d7",
+                "created_at": "2018-01-02T10:00:00",
+                "updated_at": "2018-01-02T10:10:00",
+                "status": "cancelled",
+                "amount": {
+                  "value": 10.0,
+                  "currency": "USD"
+                }
+              },
+              {
+                "return_provision_token": "rpt_0399bad5-fac3-45dd-88af-99604b153355",
+                "transaction_id": "51424457-4997-4fa2-aed0-1a71aff88294",
+                "created_at": "2018-01-03T10:00:00",
+                "updated_at": "2018-01-03T10:10:00",
+                "status": "completed",
+                "residual": {
+                  "value": 5.0,
+                  "currency": "USD"
+                }
+              }
+            ]
+          },
+          "type": "object",
+          "properties": {
+            "result": {
+              "description": "Result object of the response.",
+              "example": [
+                {
+                  "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+                  "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                  "created_at": "2018-01-01T10:00:00",
+                  "updated_at": "2018-01-01T10:10:00",
+                  "status": "completed",
+                  "amount": {
+                    "value": 10.0,
+                    "currency": "USD"
+                  }
+                },
+                {
+                  "return_provision_token": "rpt_a0d2070b-0676-4131-b315-c9d653a31505",
+                  "transaction_id": "42db67d6-fde6-47ce-81eb-121cf333e0d7",
+                  "created_at": "2018-01-02T10:00:00",
+                  "updated_at": "2018-01-02T10:10:00",
+                  "status": "cancelled",
+                  "amount": {
+                    "value": 10.0,
+                    "currency": "USD"
+                  }
+                },
+                {
+                  "return_provision_token": "rpt_0399bad5-fac3-45dd-88af-99604b153355",
+                  "transaction_id": "51424457-4997-4fa2-aed0-1a71aff88294",
+                  "created_at": "2018-01-03T10:00:00",
+                  "updated_at": "2018-01-03T10:10:00",
+                  "status": "completed",
+                  "residual": {
+                    "value": 5.0,
+                    "currency": "USD"
+                  }
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OrderResponse": {
+      "title": "OrderResponse",
+      "description": "Response object of order.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Response"
+        },
+        {
+          "example": {
+            "status": "ok",
+            "result": {
+              "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7"
+            }
+          },
+          "type": "object",
+          "properties": {
+            "result": {
+              "$ref": "#/definitions/OrderResult"
+            }
+          }
+        }
+      ]
+    },
+    "OrderResult": {
+      "title": "OrderResult",
+      "description": "Result object of the response.",
+      "example": {
+        "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7"
+      },
+      "type": "object",
+      "properties": {
+        "transaction_token": {
+          "description": "A token represents an order object from Global Miles system.",
+          "example": "\"ort_b3b45895-f961-4cde-b9df-5b274fb757e7\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transaction_token"
+      ]
+    },
+    "CancelReturnRequest": {
+      "title": "CancelReturnRequest",
+      "description": "Request of return for cancel action.",
       "example": {
         "store_code": "ECO123858493939",
-        "return_provision_token": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058"
+        "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"
       },
       "type": "object",
       "properties": {
         "store_code": {
           "description": "An identifier for online store.",
-          "example": "ECO123858493939",
+          "example": "\"ECO123858493939\"",
           "type": "string"
         },
         "return_provision_token": {
           "description": "A token represents a return object for provisioning.",
-          "example": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058",
+          "example": "\"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef\"",
           "type": "string"
         }
       },
       "required": [
         "store_code",
+        "return_provision_token"
+      ]
+    },
+    "PaymentStatus": {
+      "title": "PaymentStatus",
+      "description": "A payment status.",
+      "example": "started",
+      "x-enum-elements": [
+        {
+          "name": "started",
+          "description": "Started"
+        },
+        {
+          "name": "completed",
+          "description": "Completed"
+        },
+        {
+          "name": "cancelled",
+          "description": "Cancelled"
+        },
+        {
+          "name": "refunded",
+          "description": "Refunded"
+        },
+        {
+          "name": "used",
+          "description": "Used"
+        }
+      ],
+      "type": "string",
+      "enum": [
+        "started",
+        "completed",
+        "cancelled",
+        "refunded",
+        "used"
+      ]
+    },
+    "RefundMilePaymentRequest": {
+      "title": "RefundMilePaymentRequest",
+      "description": "Request of payment for refund action.",
+      "example": {
+        "store_code": "ECO123858493939",
+        "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7",
+        "amount": {
+          "value": 10.0,
+          "currency": "USD"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "store_code": {
+          "description": "An identifier for online store.",
+          "example": "\"ECO123858493939\"",
+          "type": "string"
+        },
+        "payment_provision_token": {
+          "description": "A token represents a payment object for provisioning.",
+          "example": "\"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"",
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "#/definitions/Amount"
+        }
+      },
+      "required": [
+        "store_code",
+        "payment_provision_token",
+        "amount"
+      ]
+    },
+    "CancelMilePaymentRequest": {
+      "title": "CancelMilePaymentRequest",
+      "description": "Request of payment for cancel action.",
+      "example": {
+        "store_code": "ECO123858493939",
+        "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
+      },
+      "type": "object",
+      "properties": {
+        "store_code": {
+          "description": "An identifier for online store.",
+          "example": "\"ECO123858493939\"",
+          "type": "string"
+        },
+        "payment_provision_token": {
+          "description": "A token represents a payment object for provisioning.",
+          "example": "\"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "store_code",
+        "payment_provision_token"
+      ]
+    },
+    "Return": {
+      "title": "Return",
+      "description": "Representing a return.",
+      "example": {
+        "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+        "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+        "created_at": "2018-01-01T10:00:00",
+        "updated_at": "2018-01-01T10:10:00",
+        "status": "completed",
+        "amount": {
+          "value": 10.0,
+          "currency": "USD"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "return_provision_token": {
+          "description": "The token value of a return.",
+          "example": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+          "type": "string"
+        },
+        "transaction_id": {
+          "description": "The ID of the transaction that represents the order.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Create date time of return. The format is ISO 8601 date and time.",
+          "example": "\"2018-01-01T10:00:00\"",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Last update date time of return. The format is ISO 8601 date and time.",
+          "example": "\"2018-01-01T10:10:00\"",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/ReturnStatus"
+        },
+        "amount": {
+          "$ref": "#/definitions/Amount"
+        },
+        "residual": {
+          "$ref": "#/definitions/Amount"
+        }
+      },
+      "required": [
+        "return_provision_token",
+        "transaction_id",
+        "created_at",
+        "updated_at",
+        "status"
+      ]
+    },
+    "CompleteMilePaymentRequest": {
+      "title": "CompleteMilePaymentRequest",
+      "description": "Request of payment for complete action.",
+      "example": {
+        "store_code": "ECO123858493939",
+        "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
+      },
+      "type": "object",
+      "properties": {
+        "store_code": {
+          "description": "An identifier for online store.",
+          "example": "\"ECO123858493939\"",
+          "type": "string"
+        },
+        "payment_provision_token": {
+          "description": "A token represents a payment object for provisioning.",
+          "example": "\"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "store_code",
+        "payment_provision_token"
+      ]
+    },
+    "StartMilePaymentRequest": {
+      "title": "StartMilePaymentRequest",
+      "description": "Request of payment for start action.",
+      "example": {
+        "store_code": "ECO123858493939",
+        "user_token": "ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf",
+        "amount": {
+          "value": 10.0,
+          "currency": "USD"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "store_code": {
+          "description": "An identifier for online store.",
+          "example": "\"ECO123858493939\"",
+          "type": "string"
+        },
+        "user_token": {
+          "description": "A token that is representing a Global Miles user for the current session.",
+          "example": "\"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf\"",
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "#/definitions/Amount"
+        }
+      },
+      "required": [
+        "store_code",
+        "user_token",
+        "amount"
+      ]
+    },
+    "ListOrderResponse": {
+      "title": "ListOrderResponse",
+      "description": "Response object of order for list action.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Response"
+        },
+        {
+          "example": {
+            "status": "ok",
+            "result": [
+              {
+                "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7",
+                "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                "completed_at": "2018-01-01T09:00:00",
+                "created_at": "2018-01-01T10:00:00",
+                "updated_at": "2018-01-01T10:10:00",
+                "status": "processed",
+                "subtotal": 90.0,
+                "tax": 10.2,
+                "total": 100.2,
+                "currency": "USD"
+              },
+              {
+                "transaction_token": "ot_fd7bc94b-4fe4-4c5a-89fa-85ce017c2b0b",
+                "transaction_id": "42db67d6-fde6-47ce-81eb-121cf333e0d7",
+                "completed_at": "2018-01-02T09:00:00",
+                "created_at": "2018-01-02T10:00:00",
+                "updated_at": "2018-01-02T10:10:00",
+                "status": "processed",
+                "subtotal": 70.0,
+                "tax": 8.2,
+                "total": 78.2,
+                "currency": "USD"
+              },
+              {
+                "transaction_token": "ot_e59410fb-831a-47d2-9822-9de6efd3e39e",
+                "transaction_id": "51424457-4997-4fa2-aed0-1a71aff88294",
+                "completed_at": "2018-01-03T09:00:00",
+                "created_at": "2018-01-03T10:00:00",
+                "updated_at": "2018-01-03T10:10:00",
+                "status": "refunded",
+                "subtotal": 60.0,
+                "tax": 7.2,
+                "total": 67.2,
+                "currency": "USD"
+              }
+            ]
+          },
+          "type": "object",
+          "properties": {
+            "result": {
+              "description": "Result object of the response.",
+              "example": [
+                {
+                  "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7",
+                  "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                  "completed_at": "2018-01-01T09:00:00",
+                  "created_at": "2018-01-01T10:00:00",
+                  "updated_at": "2018-01-01T10:10:00",
+                  "status": "processed",
+                  "subtotal": 90.0,
+                  "tax": 10.2,
+                  "total": 100.2,
+                  "currency": "USD"
+                },
+                {
+                  "transaction_token": "ot_fd7bc94b-4fe4-4c5a-89fa-85ce017c2b0b",
+                  "transaction_id": "42db67d6-fde6-47ce-81eb-121cf333e0d7",
+                  "completed_at": "2018-01-02T09:00:00",
+                  "created_at": "2018-01-02T10:00:00",
+                  "updated_at": "2018-01-02T10:10:00",
+                  "status": "processed",
+                  "subtotal": 70.0,
+                  "tax": 8.2,
+                  "total": 78.2,
+                  "currency": "USD"
+                },
+                {
+                  "transaction_token": "ot_e59410fb-831a-47d2-9822-9de6efd3e39e",
+                  "transaction_id": "51424457-4997-4fa2-aed0-1a71aff88294",
+                  "completed_at": "2018-01-03T09:00:00",
+                  "created_at": "2018-01-03T10:00:00",
+                  "updated_at": "2018-01-03T10:10:00",
+                  "status": "refunded",
+                  "subtotal": 60.0,
+                  "tax": 7.2,
+                  "total": 67.2,
+                  "currency": "USD"
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BasicOrderResult"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Amount": {
+      "title": "Amount",
+      "description": "A complex object for amount.",
+      "example": {
+        "value": 10.0,
+        "currency": "USD"
+      },
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "A decimal value with two decimals in the string representation of amount.",
+          "example": 10.0,
+          "type": "number",
+          "format": "double"
+        },
+        "currency": {
+          "description": "ISO 4217 currency code of the amount.",
+          "example": "\"USD\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ]
+    },
+    "Response": {
+      "title": "Response",
+      "description": "A basic object of the response.",
+      "example": {
+        "status": "user_not_found",
+        "message": "User not found with given attributes"
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "The status of the response. The value is always \"ok\" for successful responses otherwise it includes error code.",
+          "example": "\"ok\"",
+          "type": "string"
+        },
+        "message": {
+          "description": "The message of the error. It is always null for successful responses.",
+          "example": "\"User not found with given attributes\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "CartDiscount": {
+      "title": "CartDiscount",
+      "description": "Representing a discount for shopping cart.",
+      "example": {
+        "discount": 10.0,
+        "currency": "USD",
+        "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
+      },
+      "type": "object",
+      "properties": {
+        "currency": {
+          "description": "ISO-4217 3-letter currency code.",
+          "example": "\"USD\"",
+          "type": "string"
+        },
+        "discount": {
+          "description": "Amount of the current discount.",
+          "example": 10.0,
+          "type": "number",
+          "format": "double"
+        },
+        "discount_provision_token": {
+          "description": "A token represents a discount object for provisioning.",
+          "example": "\"dpt_edb17503-c804-48bf-b798-1d5e7d8757c7\"",
+          "type": "string"
+        },
+        "items": {
+          "description": "An array of discounts for cart items.",
+          "example": [
+            {
+              "id": "344187961",
+              "discount": 1.0
+            },
+            {
+              "id": "344187960",
+              "discount": 0.01
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CartItemDiscount"
+          }
+        }
+      },
+      "required": [
+        "currency"
+      ]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Representing a payment.",
+      "example": {
+        "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7",
+        "created_at": "2018-01-01T10:00:00",
+        "updated_at": "2018-01-01T10:10:00",
+        "status": "completed",
+        "amount": {
+          "value": 10.0,
+          "currency": "USD"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "payment_provision_token": {
+          "description": "A token represents a payment object for provisioning.",
+          "example": "\"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Create date time of payment. The format is ISO 8601 date and time.",
+          "example": "\"2018-01-01T10:00:00\"",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Last update date time of payment. The format is ISO 8601 date and time.",
+          "example": "\"2018-01-01T10:00:00\"",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/PaymentStatus"
+        },
+        "amount": {
+          "$ref": "#/definitions/Amount"
+        }
+      },
+      "required": [
+        "payment_provision_token",
+        "created_at",
+        "updated_at",
+        "status",
+        "amount"
+      ]
+    },
+    "DiscountItem": {
+      "title": "DiscountItem",
+      "description": "Representing a discount for order.",
+      "example": {
+        "type": "loyalty_discount",
+        "amount": 1.0,
+        "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
+      },
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/DiscountType"
+        },
+        "amount": {
+          "description": "Amount of the current discount.",
+          "example": 1.0,
+          "type": "number",
+          "format": "double"
+        },
+        "discount_provision_token": {
+          "description": "A token represents a discount object for provisioning.",
+          "example": "\"dpt_edb17503-c804-48bf-b798-1d5e7d8757c7\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "amount"
+      ]
+    },
+    "CartItemDiscount": {
+      "title": "CartItemDiscount",
+      "description": "Representing a discount for shopping cart item.",
+      "example": {
+        "id": "344187961",
+        "discount": 1.0
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "An identifier to reference this product.",
+          "example": "\"344187961\"",
+          "type": "string"
+        },
+        "discount": {
+          "description": "Amount of the current discount.",
+          "example": 1.0,
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "required": [
+        "id",
+        "discount"
+      ]
+    },
+    "CartItem": {
+      "title": "CartItem",
+      "description": "Representing a shopping cart item.",
+      "example": {
+        "id": "344187961",
+        "quantity": 1,
+        "price": 20.0
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "An identifier to reference this product. Universal product code.",
+          "example": "\"344187961\"",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "The quantity of the item.",
+          "example": 1,
+          "type": "number",
+          "format": "double"
+        },
+        "price": {
+          "description": "The price of the item.",
+          "example": 20.0,
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "required": [
+        "id",
+        "quantity",
+        "price"
+      ]
+    },
+    "StartReturnResult": {
+      "title": "StartReturnResult",
+      "description": "Result object of return for start action.",
+      "example": {
+        "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"
+      },
+      "type": "object",
+      "properties": {
+        "return_provision_token": {
+          "description": "A token represents a return object for provisioning.",
+          "example": "\"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef\"",
+          "type": "string"
+        }
+      },
+      "required": [
         "return_provision_token"
       ]
     },
@@ -984,7 +2253,7 @@
           "example": {
             "status": "ok",
             "result": {
-              "return_provision_token": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058"
+              "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"
             }
           },
           "type": "object",
@@ -992,342 +2261,33 @@
             "result": {
               "$ref": "#/definitions/StartReturnResult"
             }
-          },
-          "required": [
-            "result"
-          ]
-        }
-      ]
-    },
-    "StartReturnRequest": {
-      "title": "StartReturnRequest",
-      "description": "Request of return for start action.",
-      "example": {
-        "store_code": "ECO123858493939",
-        "transaction_id": "cf01b6c3-74c9-4e69-a779-9742571abff6",
-        "amount": {
-          "value": 10.0,
-          "currency": "usd"
-        }
-      },
-      "type": "object",
-      "properties": {
-        "store_code": {
-          "description": "An identifier for online store.",
-          "example": "ECO123858493939",
-          "type": "string"
-        },
-        "transaction_id": {
-          "description": "The ID of the transaction that represents the order.",
-          "example": "cf01b6c3-74c9-4e69-a779-9742571abff6",
-          "type": "string"
-        },
-        "amount": {
-          "$ref": "#/definitions/Amount"
-        }
-      },
-      "required": [
-        "store_code",
-        "transaction_id",
-        "amount"
-      ]
-    },
-    "DiscountType": {
-      "title": "DiscountType",
-      "description": "A type of discount.",
-      "example": "loyalty_discount",
-      "x-enum-elements": [
-        {
-          "name": "loyalty_discount",
-          "description": "This type indicates a discount by Global Miles."
-        },
-        {
-          "name": "other",
-          "description": "Other type of discounts."
-        }
-      ],
-      "type": "string",
-      "enum": [
-        "loyalty_discount",
-        "other"
-      ]
-    },
-    "StartReturnResult": {
-      "title": "StartReturnResult",
-      "description": "Result object of return for start action.",
-      "example": {
-        "return_provision_token": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058"
-      },
-      "type": "object",
-      "properties": {
-        "return_provision_token": {
-          "description": "A token represents a return object for provisioning.",
-          "example": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058",
-          "type": "string"
-        }
-      },
-      "required": [
-        "return_provision_token"
-      ]
-    },
-    "CartResponse": {
-      "title": "CartResponse",
-      "description": "Response object of the cart.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/Response"
-        },
-        {
-          "example": {
-            "status": "ok",
-            "result": {
-              "available_amount": {
-                "value": 100.2,
-                "currency": "usd"
-              },
-              "cart_discount": {
-                "discount": 10.0,
-                "currency": "usd",
-                "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
-              }
-            }
-          },
-          "type": "object",
-          "properties": {
-            "result": {
-              "$ref": "#/definitions/CartResult"
-            }
           }
         }
       ]
     },
-    "ListMilePaymentResponse": {
-      "title": "ListMilePaymentResponse",
-      "description": "Response object of payment for list action.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/Response"
-        },
-        {
-          "example": {
-            "status": "ok",
-            "result": [
-              {
-                "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-                "created_at": "2018-01-01T10:00:00",
-                "updated_at": "2018-01-01T10:10:00",
-                "status": "completed",
-                "amount": {
-                  "value": 10.0,
-                  "currency": "usd"
-                }
-              },
-              {
-                "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
-                "created_at": "2017-12-01T23:00:00",
-                "updated_at": "2017-12-02T14:00:00",
-                "status": "refunded",
-                "amount": {
-                  "value": 20.0,
-                  "currency": "usd"
-                }
-              },
-              {
-                "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
-                "created_at": "2017-11-01T12:00:00",
-                "updated_at": "2017-11-01T12:05:00",
-                "status": "cancelled",
-                "amount": {
-                  "value": 23.0,
-                  "currency": "usd"
-                }
-              }
-            ]
-          },
-          "type": "object",
-          "properties": {
-            "result": {
-              "description": "Result object of the response.",
-              "example": [
-                {
-                  "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-                  "created_at": "2018-01-01T10:00:00",
-                  "updated_at": "2018-01-01T10:10:00",
-                  "status": "completed",
-                  "amount": {
-                    "value": 10.0,
-                    "currency": "usd"
-                  }
-                },
-                {
-                  "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
-                  "created_at": "2017-12-01T23:00:00",
-                  "updated_at": "2017-12-02T14:00:00",
-                  "status": "refunded",
-                  "amount": {
-                    "value": 20.0,
-                    "currency": "usd"
-                  }
-                },
-                {
-                  "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
-                  "created_at": "2017-11-01T12:00:00",
-                  "updated_at": "2017-11-01T12:05:00",
-                  "status": "cancelled",
-                  "amount": {
-                    "value": 23.0,
-                    "currency": "usd"
-                  }
-                }
-              ],
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Payment"
-              }
-            }
-          }
-        }
-      ]
-    },
-    "OrderResult": {
-      "title": "OrderResult",
+    "CartResult": {
+      "title": "CartResult",
       "description": "Result object of the response.",
       "example": {
-        "transaction_token": "ot_71f06a17-3021-4c42-bd38-e492a7579f65"
+        "available_amount": {
+          "value": 100.2,
+          "currency": "USD"
+        },
+        "cart_discount": {
+          "discount": 10.0,
+          "currency": "USD",
+          "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
+        }
       },
       "type": "object",
       "properties": {
-        "transaction_token": {
-          "description": "A token represents an order object from Global Miles system.",
-          "example": "\"ot_71f06a17-3021-4c42-bd38-e492a7579f65\"",
-          "type": "string"
+        "available_amount": {
+          "$ref": "#/definitions/Amount"
+        },
+        "cart_discount": {
+          "$ref": "#/definitions/CartDiscount"
         }
-      },
-      "required": [
-        "transaction_token"
-      ]
-    },
-    "OrderResponse": {
-      "title": "OrderResponse",
-      "description": "Response object of order.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/Response"
-        },
-        {
-          "example": {
-            "status": "ok",
-            "result": {
-              "transaction_token": "ot_71f06a17-3021-4c42-bd38-e492a7579f65"
-            }
-          },
-          "type": "object",
-          "properties": {
-            "result": {
-              "$ref": "#/definitions/OrderResult"
-            }
-          },
-          "required": [
-            "result"
-          ]
-        }
-      ]
-    },
-    "OrderItem": {
-      "title": "OrderItem",
-      "description": "Representing an order item.",
-      "example": {
-        "id": "344187960",
-        "quantity": 2.2,
-        "price": 0.91
-      },
-      "type": "object",
-      "properties": {
-        "id": {
-          "description": "An identifier to reference this product.",
-          "example": "344187960",
-          "type": "string"
-        },
-        "quantity": {
-          "description": "The quantity of the item.",
-          "example": 1.0,
-          "type": "number",
-          "format": "double"
-        },
-        "price": {
-          "description": "The price of the item.",
-          "example": 0.91,
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "required": [
-        "id",
-        "quantity",
-        "price"
-      ]
-    },
-    "PaymentItem": {
-      "title": "PaymentItem",
-      "description": "Representing a payment for order.",
-      "example": {
-        "type": "mile_payment",
-        "amount": 50.0,
-        "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
-      },
-      "type": "object",
-      "properties": {
-        "type": {
-          "$ref": "#/definitions/PaymentType"
-        },
-        "amount": {
-          "description": "Amount of current payment.",
-          "example": 50.0,
-          "type": "number",
-          "format": "double"
-        },
-        "payment_provision_token": {
-          "description": "A token represents a payment object for provisioning.",
-          "example": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type",
-        "amount"
-      ]
-    },
-    "OAuthResponse": {
-      "title": "OAuthResponse",
-      "description": "Representing an OAuth response.",
-      "example": {
-        "access_token": "{{access_token}}",
-        "token_type": "bearer",
-        "created_at": "1496737098"
-      },
-      "type": "object",
-      "properties": {
-        "access_token": {
-          "description": "An access token from the authorization server.",
-          "example": "{{access_token}}",
-          "type": "string"
-        },
-        "token_type": {
-          "description": "The type of token this is, typically just the string \"bearer\".",
-          "example": "bearer",
-          "type": "string"
-        },
-        "created_at": {
-          "description": "The time in unix time format when the access token was created.",
-          "example": "1496737098",
-          "type": "string"
-        }
-      },
-      "required": [
-        "access_token",
-        "token_type",
-        "created_at"
-      ]
+      }
     },
     "OAuthRequest": {
       "title": "OAuthRequest",
@@ -1352,7 +2312,8 @@
         "grant_type": {
           "description": "Type of the OAuth flows. We support only one type of token: client_credentials",
           "example": "client_credentials",
-          "type": "string"
+          "type": "string",
+          "default": "client_credentials"
         }
       },
       "required": [
@@ -1361,14 +2322,405 @@
         "grant_type"
       ]
     },
-    "Order": {
-      "title": "Order",
-      "description": "Representing an order.",
+    "OAuthResponse": {
+      "title": "OAuthResponse",
+      "description": "Representing an OAuth response.",
+      "example": {
+        "access_token": "{{access_token}}",
+        "token_type": "bearer",
+        "created_at": "1496737098"
+      },
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "description": "An access token from the authorization server.",
+          "example": "{{access_token}}",
+          "type": "string"
+        },
+        "token_type": {
+          "description": "The type of token this is, typically just the string \"bearer\".",
+          "example": "\"bearer\"",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "The time in unix time format when the access token was created.",
+          "example": "\"1496737098\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "access_token",
+        "token_type",
+        "created_at"
+      ]
+    },
+    "PaymentItem": {
+      "title": "PaymentItem",
+      "description": "Representing a payment for order.",
+      "example": {
+        "type": "mile_payment",
+        "amount": 50.0,
+        "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
+      },
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/PaymentType"
+        },
+        "amount": {
+          "description": "Amount of current payment.",
+          "example": 50.0,
+          "type": "number",
+          "format": "double"
+        },
+        "payment_provision_token": {
+          "description": "A token represents a payment object for provisioning.",
+          "example": "\"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "amount"
+      ]
+    },
+    "CartRequest": {
+      "title": "CartRequest",
+      "description": "Request of the cart object.",
+      "example": {
+        "store_code": "ECO123858493939",
+        "user_token": "b69c3393-54eb-471c-907d-8d4ed405f88e",
+        "cart": {
+          "subtotal": 90.0,
+          "tax": 10.2,
+          "total": 100.2,
+          "currency": "USD",
+          "items": [
+            {
+              "id": "344187961",
+              "quantity": 1,
+              "price": 20.0
+            },
+            {
+              "id": "344187960",
+              "quantity": 2.2,
+              "price": 0.91
+            },
+            {
+              "id": "344187965",
+              "quantity": 5,
+              "price": 10.0
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "properties": {
+        "user_token": {
+          "description": "A token that is representing a Global Miles user for the current session.",
+          "example": "\"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf\"",
+          "type": "string"
+        },
+        "store_code": {
+          "description": "An identifier for online store.",
+          "example": "\"ECO123858493939\"",
+          "type": "string"
+        },
+        "cart": {
+          "$ref": "#/definitions/Cart"
+        }
+      },
+      "required": [
+        "user_token",
+        "store_code",
+        "cart"
+      ]
+    },
+    "OrderItem": {
+      "title": "OrderItem",
+      "description": "Representing an order item.",
+      "example": {
+        "id": "344187960",
+        "quantity": 2.2,
+        "price": 0.91
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "An identifier to reference this product.",
+          "example": "\"344187960\"",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "The quantity of the item.",
+          "example": 2.2,
+          "type": "number",
+          "format": "double"
+        },
+        "price": {
+          "description": "The price of the item.",
+          "example": 0.91,
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "required": [
+        "id",
+        "quantity",
+        "price"
+      ]
+    },
+    "OrderRequest": {
+      "title": "OrderRequest",
+      "description": "Request of order object.",
+      "example": {
+        "store_code": "ECO123858493939",
+        "user_token": "ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf",
+        "order": {
+          "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+          "completed_at": "2018-01-01T10:00:00",
+          "subtotal": 90.0,
+          "tax": 10.2,
+          "total": 100.2,
+          "currency": "USD",
+          "items": [
+            {
+              "id": "344187961",
+              "quantity": 1,
+              "price": 20.0
+            },
+            {
+              "id": "344187960",
+              "quantity": 2.2,
+              "price": 0.91
+            },
+            {
+              "id": "344187965",
+              "quantity": 5,
+              "price": 10.0
+            }
+          ],
+          "discounts": [
+            {
+              "type": "other",
+              "amount": 1.5
+            },
+            {
+              "type": "loyalty_discount",
+              "amount": 1.0,
+              "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
+            }
+          ],
+          "payments": [
+            {
+              "type": "cash",
+              "amount": 25.5
+            },
+            {
+              "type": "mile_payment",
+              "amount": 50.0,
+              "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "properties": {
+        "store_code": {
+          "description": "An identifier for online store.",
+          "example": "\"ECO123858493939\"",
+          "type": "string"
+        },
+        "user_token": {
+          "description": "A token that is representing a Global Miles user for the current session.",
+          "example": "\"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf\"",
+          "type": "string"
+        },
+        "order": {
+          "$ref": "#/definitions/Order"
+        }
+      },
+      "required": [
+        "store_code",
+        "user_token",
+        "order"
+      ]
+    },
+    "BasicOrderResult": {
+      "title": "BasicOrderResult",
+      "description": "Representing an order in list result.",
+      "example": {
+        "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7",
+        "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+        "completed_at": "2018-01-01T09:00:00",
+        "created_at": "2018-01-01T10:00:00",
+        "updated_at": "2018-01-01T10:10:00",
+        "status": "processed",
+        "subtotal": 90.0,
+        "tax": 10.2,
+        "total": 100.2,
+        "currency": "USD"
+      },
+      "type": "object",
+      "properties": {
+        "transaction_token": {
+          "description": "A token represents an order object from Global Miles system.",
+          "example": "\"ort_b3b45895-f961-4cde-b9df-5b274fb757e7\"",
+          "type": "string"
+        },
+        "transaction_id": {
+          "description": "The ID of the transaction that represents the order.",
+          "example": "\"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\"",
+          "type": "string"
+        },
+        "completed_at": {
+          "description": "The date and time when the order was completed in partner side.",
+          "example": "\"2018-01-01T09:00:00\"",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Create date time of order. The format is ISO 8601 date and time.",
+          "example": "\"2018-01-01T10:00:00\"",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Last update date time of order. The format is ISO 8601 date and time.",
+          "example": "\"2018-01-01T10:10:00\"",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/OrderStatus"
+        },
+        "subtotal": {
+          "description": "Total value of all order items without tax.",
+          "example": 90.0,
+          "type": "number",
+          "format": "double"
+        },
+        "tax": {
+          "description": "The amount of tax.",
+          "example": 10.2,
+          "type": "number",
+          "format": "double"
+        },
+        "total": {
+          "description": "Total amount of order.",
+          "example": 100.2,
+          "type": "number",
+          "format": "double"
+        },
+        "currency": {
+          "description": "ISO-4217 3-letter currency code.",
+          "example": "\"USD\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transaction_token",
+        "transaction_id",
+        "completed_at",
+        "created_at",
+        "updated_at",
+        "status",
+        "subtotal",
+        "tax",
+        "total",
+        "currency"
+      ]
+    },
+    "Cart": {
+      "title": "Cart",
+      "description": "Representing a shopping cart.",
       "example": {
         "subtotal": 90.0,
         "tax": 10.2,
         "total": 100.2,
-        "currency": "usd",
+        "currency": "USD",
+        "items": [
+          {
+            "id": "344187961",
+            "quantity": 1,
+            "price": 20.0
+          },
+          {
+            "id": "344187960",
+            "quantity": 2.2,
+            "price": 0.91
+          },
+          {
+            "id": "344187965",
+            "quantity": 5,
+            "price": 10.0
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "subtotal": {
+          "description": "Total value of all cart items without tax.",
+          "example": 90.0,
+          "type": "number",
+          "format": "double"
+        },
+        "tax": {
+          "description": "The amount of tax.",
+          "example": 10.2,
+          "type": "number",
+          "format": "double"
+        },
+        "total": {
+          "description": "Total amount of cart.",
+          "example": 100.2,
+          "type": "number",
+          "format": "double"
+        },
+        "currency": {
+          "description": "ISO-4217 3-letter currency code.",
+          "example": "\"USD\"",
+          "type": "string"
+        },
+        "items": {
+          "description": "An array of cart items.",
+          "example": [
+            {
+              "id": "344187961",
+              "quantity": 1,
+              "price": 20.0
+            },
+            {
+              "id": "344187960",
+              "quantity": 2.2,
+              "price": 0.91
+            },
+            {
+              "id": "344187965",
+              "quantity": 5,
+              "price": 10.0
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CartItem"
+          }
+        }
+      },
+      "required": [
+        "subtotal",
+        "tax",
+        "total",
+        "currency"
+      ]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Representing an order.",
+      "example": {
+        "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+        "completed_at": "2018-01-01T10:00:00",
+        "subtotal": 90.0,
+        "tax": 10.2,
+        "total": 100.2,
+        "currency": "USD",
         "items": [
           {
             "id": "344187961",
@@ -1394,7 +2746,7 @@
           {
             "type": "mile_payment",
             "amount": 50.0,
-            "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
+            "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
           }
         ],
         "discounts": [
@@ -1405,12 +2757,22 @@
           {
             "type": "loyalty_discount",
             "amount": 1.0,
-            "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
+            "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
           }
         ]
       },
       "type": "object",
       "properties": {
+        "transaction_id": {
+          "description": "The ID of the transaction that represents the order.",
+          "example": "\"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\"",
+          "type": "string"
+        },
+        "completed_at": {
+          "description": "The date and time when the order was completed in partner side.",
+          "example": "\"2018-01-01T10:00:00\"",
+          "type": "string"
+        },
         "subtotal": {
           "description": "Total value of all order items without tax.",
           "example": 90.0,
@@ -1431,7 +2793,7 @@
         },
         "currency": {
           "description": "ISO-4217 3-letter currency code.",
-          "example": "usd",
+          "example": "\"USD\"",
           "type": "string"
         },
         "items": {
@@ -1468,7 +2830,7 @@
             {
               "type": "loyalty_discount",
               "amount": 1.0,
-              "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
+              "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
             }
           ],
           "type": "array",
@@ -1486,7 +2848,7 @@
             {
               "type": "mile_payment",
               "amount": 50.0,
-              "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
+              "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
             }
           ],
           "type": "array",
@@ -1496,10 +2858,120 @@
         }
       },
       "required": [
+        "transaction_id",
+        "completed_at",
         "subtotal",
         "tax",
         "total",
         "currency"
+      ]
+    },
+    "CartResponse": {
+      "title": "CartResponse",
+      "description": "Response object of the cart.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Response"
+        },
+        {
+          "example": {
+            "status": "ok",
+            "result": {
+              "available_amount": {
+                "value": 100.2,
+                "currency": "USD"
+              },
+              "cart_discount": {
+                "discount": 10.0,
+                "currency": "USD",
+                "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
+              }
+            }
+          },
+          "type": "object",
+          "properties": {
+            "result": {
+              "$ref": "#/definitions/CartResult"
+            }
+          }
+        }
+      ]
+    },
+    "DiscountType": {
+      "title": "DiscountType",
+      "description": "A type of discount.",
+      "example": "loyalty_discount",
+      "x-enum-elements": [
+        {
+          "name": "loyalty_discount",
+          "description": "This type indicates a discount by Global Miles."
+        },
+        {
+          "name": "other",
+          "description": "Other type of discounts."
+        }
+      ],
+      "type": "string",
+      "enum": [
+        "loyalty_discount",
+        "other"
+      ]
+    },
+    "StartReturnRequest": {
+      "title": "StartReturnRequest",
+      "description": "Request of return for start action.",
+      "example": {
+        "store_code": "ECO123858493939",
+        "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+        "amount": {
+          "value": 10.0,
+          "currency": "USD"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "store_code": {
+          "description": "An identifier for online store.",
+          "example": "\"ECO123858493939\"",
+          "type": "string"
+        },
+        "transaction_id": {
+          "description": "The ID of the transaction that represents the order.",
+          "example": "\"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\"",
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "#/definitions/Amount"
+        }
+      },
+      "required": [
+        "store_code",
+        "transaction_id"
+      ]
+    },
+    "CompleteReturnRequest": {
+      "title": "CompleteReturnRequest",
+      "description": "Request of return for complete action.",
+      "example": {
+        "store_code": "ECO123858493939",
+        "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"
+      },
+      "type": "object",
+      "properties": {
+        "store_code": {
+          "description": "An identifier for online store.",
+          "example": "\"ECO123858493939\"",
+          "type": "string"
+        },
+        "return_provision_token": {
+          "description": "A token represents a return object for provisioning.",
+          "example": "\"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "store_code",
+        "return_provision_token"
       ]
     },
     "PaymentType": {
@@ -1557,429 +3029,9 @@
         "other"
       ]
     },
-    "CartResult": {
-      "title": "CartResult",
-      "description": "Result object of the response.",
-      "example": {
-        "available_amount": {
-          "value": 100.2,
-          "currency": "usd"
-        },
-        "cart_discount": {
-          "discount": 10.0,
-          "currency": "usd",
-          "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
-        }
-      },
-      "type": "object",
-      "properties": {
-        "available_amount": {
-          "$ref": "#/definitions/Amount"
-        },
-        "cart_discount": {
-          "$ref": "#/definitions/CartDiscount"
-        }
-      }
-    },
-    "CartItem": {
-      "title": "CartItem",
-      "description": "Representing a shopping cart item.",
-      "example": {
-        "id": "344187961",
-        "quantity": 1,
-        "price": 20.0
-      },
-      "type": "object",
-      "properties": {
-        "id": {
-          "description": "An identifier to reference this product. Universal product code.",
-          "example": "344187961",
-          "type": "string"
-        },
-        "quantity": {
-          "description": "The quantity of the item.",
-          "example": 1.0,
-          "type": "number",
-          "format": "double"
-        },
-        "price": {
-          "description": "The price of the item.",
-          "example": 20.0,
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "required": [
-        "id",
-        "quantity",
-        "price"
-      ]
-    },
-    "Cart": {
-      "title": "Cart",
-      "description": "Representing a shopping cart.",
-      "example": {
-        "subtotal": 90.0,
-        "tax": 10.2,
-        "total": 100.2,
-        "currency": "usd",
-        "items": [
-          {
-            "id": "344187961",
-            "quantity": 1,
-            "price": 20.0
-          },
-          {
-            "id": "344187960",
-            "quantity": 2.2,
-            "price": 0.91
-          },
-          {
-            "id": "344187965",
-            "quantity": 5,
-            "price": 10.0
-          }
-        ]
-      },
-      "type": "object",
-      "properties": {
-        "currency": {
-          "description": "ISO-4217 3-letter currency code.",
-          "example": "usd",
-          "type": "string"
-        },
-        "subtotal": {
-          "description": "Total value of all cart items without tax.",
-          "example": 90.0,
-          "type": "number",
-          "format": "double"
-        },
-        "tax": {
-          "description": "The amount of tax.",
-          "example": 10.2,
-          "type": "number",
-          "format": "double"
-        },
-        "total": {
-          "description": "Total amount of cart.",
-          "example": 100.2,
-          "type": "number",
-          "format": "double"
-        },
-        "items": {
-          "description": "An array of cart items.",
-          "example": [
-            {
-              "id": "344187961",
-              "quantity": 1,
-              "price": 20.0
-            },
-            {
-              "id": "344187960",
-              "quantity": 2.2,
-              "price": 0.91
-            },
-            {
-              "id": "344187965",
-              "quantity": 5,
-              "price": 10.0
-            }
-          ],
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CartItem"
-          }
-        }
-      },
-      "required": [
-        "currency",
-        "subtotal",
-        "tax",
-        "total"
-      ]
-    },
-    "CartItemDiscount": {
-      "title": "CartItemDiscount",
-      "description": "Representing a discount for shopping cart item.",
-      "example": {
-        "id": "344187961",
-        "discount": 1.0
-      },
-      "type": "object",
-      "properties": {
-        "id": {
-          "description": "An identifier to reference this product.",
-          "example": "344187961",
-          "type": "string"
-        },
-        "discount": {
-          "description": "Amount of the current discount.",
-          "example": 1.0,
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "required": [
-        "id",
-        "discount"
-      ]
-    },
-    "DiscountItem": {
-      "title": "DiscountItem",
-      "description": "Representing a discount for order.",
-      "example": {
-        "type": "loyalty_discount",
-        "amount": 1.0,
-        "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
-      },
-      "type": "object",
-      "properties": {
-        "type": {
-          "$ref": "#/definitions/DiscountType"
-        },
-        "amount": {
-          "description": "Amount of the current discount.",
-          "example": 1.0,
-          "type": "number",
-          "format": "double"
-        },
-        "discount_provision_token": {
-          "description": "A token represents a discount object for provisioning.",
-          "example": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type",
-        "amount"
-      ]
-    },
-    "OrderRequest": {
-      "title": "OrderRequest",
-      "description": "Request of order object.",
-      "example": {
-        "store_code": "ECO123858493939",
-        "user_token": "ut_b69c3393-54eb-471c-907d-8d4ed405f88e",
-        "transaction_id": "cf01b6c3-74c9-4e69-a779-9742571abff6",
-        "order": {
-          "subtotal": 90.0,
-          "tax": 10.2,
-          "total": 100.2,
-          "currency": "usd",
-          "items": [
-            {
-              "id": "344187961",
-              "quantity": 1,
-              "price": 20.0
-            },
-            {
-              "id": "344187960",
-              "quantity": 2.2,
-              "price": 0.91
-            },
-            {
-              "id": "344187965",
-              "quantity": 5,
-              "price": 10.0
-            }
-          ],
-          "discounts": [
-            {
-              "type": "other",
-              "amount": 1.5
-            },
-            {
-              "type": "loyalty_discount",
-              "amount": 1.0,
-              "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
-            }
-          ],
-          "payments": [
-            {
-              "type": "cash",
-              "amount": 25.5
-            },
-            {
-              "type": "mile_payment",
-              "amount": 50.0,
-              "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
-            }
-          ]
-        }
-      },
-      "type": "object",
-      "properties": {
-        "store_code": {
-          "description": "An identifier for online store.",
-          "example": "ECO123858493939",
-          "type": "string"
-        },
-        "user_token": {
-          "description": "A token that is representing a Global Miles user for the current session.",
-          "example": "ut_b69c3393-54eb-471c-907d-8d4ed405f88e",
-          "type": "string"
-        },
-        "transaction_id": {
-          "description": "The ID of the transaction that represents the order.",
-          "example": "cf01b6c3-74c9-4e69-a779-9742571abff6",
-          "type": "string"
-        },
-        "order": {
-          "$ref": "#/definitions/Order"
-        },
-        "shift_allowance": {
-          "description": "It specifies how many days later the miles should be given to the user.",
-          "example": 0,
-          "type": "integer",
-          "default": 0,
-          "format": "int32"
-        }
-      },
-      "required": [
-        "store_code",
-        "user_token",
-        "transaction_id",
-        "order"
-      ]
-    },
-    "CartRequest": {
-      "title": "CartRequest",
-      "description": "Request of the card object.",
-      "example": {
-        "store_code": "ECO123858493939",
-        "user_token": "b69c3393-54eb-471c-907d-8d4ed405f88e",
-        "cart": {
-          "subtotal": 90.0,
-          "tax": 10.2,
-          "total": 100.2,
-          "currency": "usd",
-          "items": [
-            {
-              "id": "344187961",
-              "quantity": 1,
-              "price": 20.0
-            },
-            {
-              "id": "344187960",
-              "quantity": 2.2,
-              "price": 0.91
-            },
-            {
-              "id": "344187965",
-              "quantity": 5,
-              "price": 10.0
-            }
-          ]
-        }
-      },
-      "type": "object",
-      "properties": {
-        "user_token": {
-          "description": "A token that is representing a Global Miles user for the current session.",
-          "example": "ut_b69c3393-54eb-471c-907d-8d4ed405f88e",
-          "type": "string"
-        },
-        "store_code": {
-          "description": "An identifier for online store.",
-          "example": "ECO123858493939",
-          "type": "string"
-        },
-        "cart": {
-          "$ref": "#/definitions/Cart"
-        }
-      },
-      "required": [
-        "user_token",
-        "store_code",
-        "cart"
-      ]
-    },
-    "Response": {
-      "title": "Response",
-      "description": "A basic object of the response.",
-      "example": {
-        "status": "user_not_found",
-        "message": "User not found with given attributes"
-      },
-      "type": "object",
-      "properties": {
-        "status": {
-          "description": "The status of the response. The value is always \"ok\" for successful responses otherwise it includes error code.",
-          "example": "ok",
-          "type": "string"
-        },
-        "message": {
-          "description": "The message of the error. It is always null for successful responses.",
-          "example": "User not found with given attributes",
-          "type": "string"
-        }
-      },
-      "required": [
-        "status"
-      ]
-    },
-    "Amount": {
-      "title": "Amount",
-      "description": "A complex object for amount.",
-      "example": {
-        "value": 10.0,
-        "currency": "usd"
-      },
-      "type": "object",
-      "properties": {
-        "value": {
-          "description": "A decimal value with two decimals in the string representation of amount.",
-          "example": 10.0,
-          "type": "number",
-          "format": "double"
-        },
-        "currency": {
-          "description": "ISO 4217 currency code of the amount.",
-          "example": "usd",
-          "type": "string"
-        }
-      },
-      "required": [
-        "value",
-        "currency"
-      ]
-    },
-    "StartMilePaymentRequest": {
-      "title": "StartMilePaymentRequest",
-      "description": "Request of payment for start action.",
-      "example": {
-        "store_code": "ECO123858493939",
-        "user_token": "ut_b69c3393-54eb-471c-907d-8d4ed405f88e",
-        "amount": {
-          "value": 10.0,
-          "currency": "usd"
-        }
-      },
-      "type": "object",
-      "properties": {
-        "store_code": {
-          "description": "An identifier for online store.",
-          "example": "ECO123858493939",
-          "type": "string"
-        },
-        "user_token": {
-          "description": "A token that is representing a Global Miles user for the current session.",
-          "example": "ut_b69c3393-54eb-471c-907d-8d4ed405f88e",
-          "type": "string"
-        },
-        "amount": {
-          "$ref": "#/definitions/Amount"
-        }
-      },
-      "required": [
-        "store_code",
-        "user_token",
-        "amount"
-      ]
-    },
-    "StartMilePaymentResponse": {
-      "title": "StartMilePaymentResponse",
-      "description": "Response object of payment for start action.",
+    "ListMilePaymentResponse": {
+      "title": "ListMilePaymentResponse",
+      "description": "Response object of payment for list action.",
       "allOf": [
         {
           "$ref": "#/definitions/Response"
@@ -1987,269 +3039,82 @@
         {
           "example": {
             "status": "ok",
-            "result": {
-              "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
-            }
+            "result": [
+              {
+                "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7",
+                "created_at": "2018-01-01T10:00:00",
+                "updated_at": "2018-01-01T10:10:00",
+                "status": "completed",
+                "amount": {
+                  "value": 10.0,
+                  "currency": "USD"
+                }
+              },
+              {
+                "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
+                "created_at": "2017-12-01T23:00:00",
+                "updated_at": "2017-12-02T14:00:00",
+                "status": "refunded",
+                "amount": {
+                  "value": 20.0,
+                  "currency": "USD"
+                }
+              },
+              {
+                "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
+                "created_at": "2017-11-01T12:00:00",
+                "updated_at": "2017-11-01T12:05:00",
+                "status": "cancelled",
+                "amount": {
+                  "value": 23.0,
+                  "currency": "USD"
+                }
+              }
+            ]
           },
           "type": "object",
           "properties": {
             "result": {
-              "$ref": "#/definitions/StartMilePaymentResult"
+              "description": "Result object of the response.",
+              "example": [
+                {
+                  "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7",
+                  "created_at": "2018-01-01T10:00:00",
+                  "updated_at": "2018-01-01T10:10:00",
+                  "status": "completed",
+                  "amount": {
+                    "value": 10.0,
+                    "currency": "USD"
+                  }
+                },
+                {
+                  "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
+                  "created_at": "2017-12-01T23:00:00",
+                  "updated_at": "2017-12-02T14:00:00",
+                  "status": "refunded",
+                  "amount": {
+                    "value": 20.0,
+                    "currency": "USD"
+                  }
+                },
+                {
+                  "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
+                  "created_at": "2017-11-01T12:00:00",
+                  "updated_at": "2017-11-01T12:05:00",
+                  "status": "cancelled",
+                  "amount": {
+                    "value": 23.0,
+                    "currency": "USD"
+                  }
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Payment"
+              }
             }
-          },
-          "required": [
-            "result"
-          ]
-        }
-      ]
-    },
-    "StartMilePaymentResult": {
-      "title": "StartMilePaymentResult",
-      "description": "Result object of payment for start action.",
-      "example": {
-        "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
-      },
-      "type": "object",
-      "properties": {
-        "payment_provision_token": {
-          "description": "A token represents a payment object for provisioning.",
-          "example": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-          "type": "string"
-        }
-      },
-      "required": [
-        "payment_provision_token"
-      ]
-    },
-    "CompleteMilePaymentRequest": {
-      "title": "CompleteMilePaymentRequest",
-      "description": "Request of payment for complete action.",
-      "example": {
-        "store_code": "ECO123858493939",
-        "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
-      },
-      "type": "object",
-      "properties": {
-        "store_code": {
-          "description": "An identifier for online store.",
-          "example": "ECO123858493939",
-          "type": "string"
-        },
-        "payment_provision_token": {
-          "description": "A token represents a payment object for provisioning.",
-          "example": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-          "type": "string"
-        }
-      },
-      "required": [
-        "store_code",
-        "payment_provision_token"
-      ]
-    },
-    "CancelMilePaymentRequest": {
-      "title": "CancelMilePaymentRequest",
-      "description": "Request of payment for cancel action.",
-      "example": {
-        "store_code": "ECO123858493939",
-        "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
-      },
-      "type": "object",
-      "properties": {
-        "store_code": {
-          "description": "An identifier for online store.",
-          "example": "ECO123858493939",
-          "type": "string"
-        },
-        "payment_provision_token": {
-          "description": "A token represents a payment object for provisioning.",
-          "example": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-          "type": "string"
-        }
-      },
-      "required": [
-        "store_code",
-        "payment_provision_token"
-      ]
-    },
-    "RefundMilePaymentRequest": {
-      "title": "RefundMilePaymentRequest",
-      "description": "Request of payment for refund action.",
-      "example": {
-        "store_code": "ECO123858493939",
-        "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-        "amount": {
-          "value": 10.0,
-          "currency": "usd"
-        }
-      },
-      "type": "object",
-      "properties": {
-        "store_code": {
-          "description": "An identifier for online store.",
-          "example": "ECO123858493939",
-          "type": "string"
-        },
-        "payment_provision_token": {
-          "description": "A token represents a payment object for provisioning.",
-          "example": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-          "type": "string"
-        },
-        "amount": {
-          "$ref": "#/definitions/Amount"
-        }
-      },
-      "required": [
-        "store_code",
-        "payment_provision_token",
-        "amount"
-      ]
-    },
-    "PaymentStatus": {
-      "title": "PaymentStatus",
-      "description": "A payment status.",
-      "example": "started",
-      "x-enum-elements": [
-        {
-          "name": "started",
-          "description": "Started"
-        },
-        {
-          "name": "completed",
-          "description": "Completed"
-        },
-        {
-          "name": "cancelled",
-          "description": "Cancelled"
-        },
-        {
-          "name": "refunded",
-          "description": "Refunded"
-        }
-      ],
-      "type": "string",
-      "enum": [
-        "started",
-        "completed",
-        "cancelled",
-        "refunded"
-      ]
-    },
-    "Payment": {
-      "title": "Payment",
-      "description": "Representing a payment.",
-      "example": {
-        "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-        "created_at": "2018-01-01T10:00:00",
-        "updated_at": "2018-01-01T10:10:00",
-        "status": "completed",
-        "amount": {
-          "value": 10.0,
-          "currency": "usd"
-        }
-      },
-      "type": "object",
-      "properties": {
-        "payment_provision_token": {
-          "description": "A token represents a payment object for provisioning.",
-          "example": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
-          "type": "string"
-        },
-        "created_at": {
-          "description": "Create date time of payment. The format is ISO 8601 date and time.",
-          "example": "\"2018-01-01T10:00:00\"",
-          "type": "string"
-        },
-        "updated_at": {
-          "description": "Last update date time of payment. The format is ISO 8601 date and time.",
-          "example": "\"2018-01-01T10:00:00\"",
-          "type": "string"
-        },
-        "status": {
-          "$ref": "#/definitions/PaymentStatus"
-        },
-        "amount": {
-          "$ref": "#/definitions/Amount"
-        }
-      },
-      "required": [
-        "payment_provision_token",
-        "created_at",
-        "updated_at",
-        "status",
-        "amount"
-      ]
-    },
-    "CancelReturnRequest": {
-      "title": "CancelReturnRequest",
-      "description": "Request of return for cancel action.",
-      "example": {
-        "store_code": "ECO123858493939",
-        "return_provision_token": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058"
-      },
-      "type": "object",
-      "properties": {
-        "store_code": {
-          "description": "An identifier for online store.",
-          "example": "ECO123858493939",
-          "type": "string"
-        },
-        "return_provision_token": {
-          "description": "A token represents a return object for provisioning.",
-          "example": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058",
-          "type": "string"
-        }
-      },
-      "required": [
-        "store_code",
-        "return_provision_token"
-      ]
-    },
-    "CartDiscount": {
-      "title": "CartDiscount",
-      "description": "Representing a discount for shopping cart.",
-      "example": {
-        "discount": 10.0,
-        "currency": "usd",
-        "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
-      },
-      "type": "object",
-      "properties": {
-        "discount": {
-          "description": "Amount of the current discount.",
-          "example": 1.0,
-          "type": "number",
-          "format": "double"
-        },
-        "currency": {
-          "description": "ISO-4217 3-letter currency code.",
-          "example": "usd",
-          "type": "string"
-        },
-        "discount_provision_token": {
-          "description": "A token represents a discount object for provisioning.",
-          "example": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4",
-          "type": "string"
-        },
-        "items": {
-          "description": "An array of discounts for cart items.",
-          "example": [
-            {
-              "id": "344187961",
-              "discount": 1.0
-            },
-            {
-              "id": "344187960",
-              "discount": 0.01
-            }
-          ],
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CartItemDiscount"
           }
         }
-      },
-      "required": [
-        "currency"
       ]
     }
   }
