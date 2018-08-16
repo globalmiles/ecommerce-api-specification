@@ -1,8 +1,8 @@
-﻿FORMAT: 1A
-HOST: https://test1.api.globalmiles.com
+FORMAT: 1A
+HOST: https://api.sandbox.globalmiles.com
 
-# Global Miles Ecommerce API
-API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.
+# Global Miles E-commerce API
+API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.
 
 ## Authentication
 This API uses OAuth v2 Client Credentials Grant for its authentication.
@@ -10,68 +10,78 @@ This API uses OAuth v2 Client Credentials Grant for its authentication.
 The properties required for this OAuth implentation are as follows:
 + Access Token Url - /oauth/token
 
-# Group Pay with Miles
+# Group Earn Miles
 
-## V2 Ecommerce Payments [/v2/ecommerce/payments]
+## V2 Ecommerce Orders [/v2/ecommerce/orders]
 
-### List Mile Payments [GET]
-This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.
+### List Orders [GET]
+This endpoint allows to get list of orders. In order to get detailed order history and reconciliation you can use this endpoint.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
 + Attributes
-    + StoreCode (string, required)
+    + filter[store_code] (string, required)
 
-        An identifier for online store.
+        Filter for an online store.
 
-        + Sample: filter[store_code]=ECO123858493939
-    + FilterByCreatedAt (string, required)
+        + Sample: ECO123858493939
+    + filter[completed_at] (string, required)
 
-        Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD...YYYY-MM-DD.
+        Filter for completed_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD.
 
-        + Sample: filter[created_at]=2017-01-01...2018-01-01
-    + FilterByStatus (string, optional)
+        + Sample: 2017-01-01..2019-01-01
+    + filter[status] (string, optional)
 
-        Filter for status field. It is accepted a valid status value of payment.
+        Filter for status field. It is accepted a valid status value of order.
 
-        + Sample: filter[status]=completed
-    + SortBy (string, optional)
+        + Sample: processed
+    + sort (string, optional)
 
-        Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".
+        Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "completed_at", "created_at",  "updated_at", "status".
 
-        + Sample: sort=-created_at
+        + Sample: -completed_at
 
 + Response 200 (application/json)
-    + Attributes (ListMilePaymentResponse)
+    + Attributes (ListOrderResponse)
 
     + Body
 
             {
               "status": "ok",
               "result": [{
-                "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517",
+                "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7",
+                "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                "completed_at": "2018-01-01T09:00:00",
                 "created_at": "2018-01-01T10:00:00",
                 "updated_at": "2018-01-01T10:10:00",
-                "status": "completed",
-                "amount": {
-                  "value": 10.00,
-                  "currency": "usd"
-                }
+                "status": "processed",
+                "subtotal": 90.00,
+                "tax": 10.20,
+                "total": 100.20,
+                "currency": "USD"
               }, {
-                "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
-                "created_at": "2017-12-01T23:00:00",
-                "updated_at": "2017-12-02T14:00:00",
+                "transaction_token": "ot_fd7bc94b-4fe4-4c5a-89fa-85ce017c2b0b",
+                "transaction_id": "42db67d6-fde6-47ce-81eb-121cf333e0d7",
+                "completed_at": "2018-01-02T09:00:00",
+                "created_at": "2018-01-02T10:00:00",
+                "updated_at": "2018-01-02T10:10:00",
+                "status": "processed",
+                "subtotal": 70.00,
+                "tax": 8.20,
+                "total": 78.20,
+                "currency": "USD"
+              }, {
+                "transaction_token": "ot_e59410fb-831a-47d2-9822-9de6efd3e39e",
+                "transaction_id": "51424457-4997-4fa2-aed0-1a71aff88294",
+                "completed_at": "2018-01-03T09:00:00",
+                "created_at": "2018-01-03T10:00:00",
+                "updated_at": "2018-01-03T10:10:00",
                 "status": "refunded",
-                "amount": {
-                  "value": 20.00,
-                  "currency": "usd"
-                }
-              }, {
-                "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
-                "created_at": "2017-11-01T12:00:00",
-                "updated_at": "2017-11-01T12:05:00",
-                "status": "cancelled",
-                "amount": {
-                  "value": 23.00,
-                  "currency": "usd"
-                }
+                "subtotal": 60.00,
+                "tax": 7.20,
+                "total": 67.20,
+                "currency": "USD"
               }]
             }
 
@@ -118,140 +128,26 @@ This endpoint allows to get list of payments. In order to get detailed payment h
 
 
 
-### Cancel Mile Payment [DELETE]
-This endpoint allows to cancel a payment.
+### Order [POST]
+This endpoint allows to create an order for earn miles. It may also include discounts and payments.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
 
 + Request (application/json)
-    + Attributes (CancelMilePaymentRequest)
+    + Attributes (OrderRequest)
 
 
 + Response 200 (application/json)
-    + Attributes (Response)
-
-    + Body
-
-            {
-              "status": "ok"
-            }
-
-
-+ Response 400 
-
-        Bad Request    - The request was unacceptable, often due to missing a required parameter.
-
-
-
-
-+ Response 401 
-
-        Unauthorized - No valid API key provided.
-
-
-
-
-+ Response 402 
-
-        Request Failed - The parameters were valid but the request failed.
-
-
-
-
-+ Response 404 
-
-        Not Found - The requested resource doesn't exist.
-
-
-
-
-+ Response 429 
-
-        Too Many Requests - Too many requests hit the API too quickly.
-
-
-
-
-+ Response 500 
-
-        Server Error - Something went wrong.
-
-
-
-
-### Complete Mile Payment [PUT]
-This endpoint allows to complete a payment.
-
-+ Request (application/json)
-    + Attributes (CompleteMilePaymentRequest)
-
-
-+ Response 200 (application/json)
-    + Attributes (Response)
-
-    + Body
-
-            {
-              "status": "ok"
-            }
-
-
-+ Response 400 
-
-        Bad Request    - The request was unacceptable, often due to missing a required parameter.
-
-
-
-
-+ Response 401 
-
-        Unauthorized - No valid API key provided.
-
-
-
-
-+ Response 402 
-
-        Request Failed - The parameters were valid but the request failed.
-
-
-
-
-+ Response 404 
-
-        Not Found - The requested resource doesn't exist.
-
-
-
-
-+ Response 429 
-
-        Too Many Requests - Too many requests hit the API too quickly.
-
-
-
-
-+ Response 500 
-
-        Server Error - Something went wrong.
-
-
-
-
-### Start Mile Payment [POST]
-After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check "Complete Mile Payment endpoint" please.
-
-+ Request (application/json)
-    + Attributes (StartMilePaymentRequest)
-
-
-+ Response 200 (application/json)
-    + Attributes (StartMilePaymentResponse)
+    + Attributes (OrderResponse)
 
     + Body
 
             {
               "status": "ok",
               "result": {
-                "payment_provision_token": "ppt_66feace2-873d-4a8b-9fdc-9eac06b07517"
+                "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7"
               }
             }
 
@@ -299,89 +195,40 @@ After successful authentication and retrieving needed token, this endpoint allow
 
 
 
-## V2 Ecommerce Payments Actions Refund [/v2/ecommerce/payments/actions/refund]
+## V2 Ecommerce Orders By Transaction Id [/v2/ecommerce/orders/{transaction_id}]
 
-### Refund Mile Payment [POST]
-This endpoint allows to refund a payment.
++ Parameters
+    + transaction_id (string, required)
 
-+ Request (application/json)
-    + Attributes (RefundMilePaymentRequest)
+        The ID of the transaction that represents the order.
 
+        + Sample: 6c1a75f2-d7de-4ac1-80e0-60ac83f7e083
 
-+ Response 200 (application/json)
-    + Attributes (Response)
-
-    + Body
-
-            {
-              "status": "ok"
-            }
-
-
-+ Response 400 
-
-        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+### Retrieve Order [GET]
+This endpoint allows to get an order.
 
 
 
-
-+ Response 401 
-
-        Unauthorized - No valid API key provided.
-
-
-
-
-+ Response 402 
-
-        Request Failed - The parameters were valid but the request failed.
-
-
-
-
-+ Response 404 
-
-        Not Found - The requested resource doesn't exist.
-
-
-
-
-+ Response 429 
-
-        Too Many Requests - Too many requests hit the API too quickly.
-
-
-
-
-+ Response 500 
-
-        Server Error - Something went wrong.
-
-
-
-
-
-
-# Group Earn Miles
-
-## V2 Ecommerce Orders [/v2/ecommerce/orders]
-
-### Order Info [POST]
-This endpoint allows to create an order for earn miles. It may also include discounts and payments.
-
-+ Request (application/json)
-    + Attributes (OrderRequest)
-
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
 
 + Response 200 (application/json)
-    + Attributes (OrderResponse)
+    + Attributes (RetrieveOrderResponse)
 
     + Body
 
             {
               "status": "ok",
               "result": {
-                "transaction_token": "ot_71f06a17-3021-4c42-bd38-e492a7579f65"
+                "transaction_token": "ort_b3b45895-f961-4cde-b9df-5b274fb757e7",
+                "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                "completed_at": "2018-01-01T09:00:00",
+                "created_at": "2018-01-01T10:00:00",
+                "updated_at": "2018-01-01T10:10:00",
+                "status": "processed",
+                "subtotal": 90.00,
+                "tax": 10.20,
+                "total": 100.20,
+                "currency": "USD"
               }
             }
 
@@ -431,8 +278,12 @@ This endpoint allows to create an order for earn miles. It may also include disc
 
 ## V2 Ecommerce Carts [/v2/ecommerce/carts]
 
-### Cart Info [POST]
+### Cart [POST]
 This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
 
 + Request (application/json)
     + Attributes (CartRequest)
@@ -448,12 +299,12 @@ This endpoint allows to get available amount of money, based on miles of user an
               "result": {
                 "available_point": {
                   "value": 100.20,
-                  "currency": "usd"
+                  "currency": "USD"
                 },
                 "cart_discount": {
                   "discount": 10.00,
-                  "currency": "usd",
-                  "discount_provision_token": "dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4"
+                  "currency": "USD",
+                  "discount_provision_token": "dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"
                 }
               }
             }
@@ -508,7 +359,11 @@ This endpoint allows to get available amount of money, based on miles of user an
 ## Oauth Token [/oauth/token]
 
 ### Authentication [POST]
-An access token will allow you to make requests for the system. We support only one type of token: client_credentials
+An access token will allow you to make requests for the system. We support only one type of token: client_credentials.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
 
 + Request (application/json)
     + Headers
@@ -584,25 +439,106 @@ An access token will allow you to make requests for the system. We support only 
 
 # Group Return
 
-## V2 Ecommerce Returns [/v2/ecommerce/returns]
+## V1 Ecommerce Returns [/v1/ecommerce/returns/{return_provision_token}]
 
-### Start Return [POST]
-This endpoint allows to start a return for a specific order.
++ Parameters
+    + return_provision_token (string, required)
 
-+ Request (application/json)
-    + Attributes (StartReturnRequest)
+        The token value of a return.
 
+        + Sample: rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef
+
+### Retrieve Return [GET]
+This endpoint allows to get a return.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
 
 + Response 200 (application/json)
-    + Attributes (StartReturnResponse)
+    + Attributes (RetrieveReturnResponse)
 
     + Body
 
             {
               "status": "ok",
               "result": {
-                "return_provision_token": "rpt_e0563e09-e1b2-4144-a236-30ea76b58058"
+                "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+                "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                "created_at": "2018-01-01T10:00:00",
+                "updated_at": "2018-01-01T10:10:00",
+                "status": "completed",
+                "amount": {
+                  "value": 10.00,
+                  "currency": "USD"
+                }
               }
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+## V2 Ecommerce Returns [/v2/ecommerce/returns]
+
+### Cancel Return [DELETE]
+This endpoint allows to cancel a return.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
+
++ Request (application/json)
+    + Attributes (CancelReturnRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
             }
 
 
@@ -650,6 +586,10 @@ This endpoint allows to start a return for a specific order.
 
 ### Complete Return [PUT]
 This endpoint allows to complete a return.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
 
 + Request (application/json)
     + Attributes (CompleteReturnRequest)
@@ -707,11 +647,504 @@ This endpoint allows to complete a return.
 
 
 
-### Cancel Return [DELETE]
-This endpoint allows to cancel a return.
+### Start Return [POST]
+This endpoint allows to start a return for a specific order.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
 
 + Request (application/json)
-    + Attributes (CancelReturnRequest)
+    + Attributes (StartReturnRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (StartReturnResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": {
+                "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"
+              }
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+## V2 Ecommerce Returns [/v2/ecommerce/returns{?filter[store_code],filter[created_at],filter[status],sort}]
+
+### List Returns [GET]
+This endpoint allows to get list of returns. In order to get detailed return history and reconciliation you can use this endpoint.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
++ Parameters
+    + filter[store_code] (string, required)
+
+        Filter for an online store.
+
+        + Sample: ECO123858493939
+    + filter[created_at] (string, required)
+
+        Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD.
+
+        + Sample: 2017-01-01..2018-01-01
+    + filter[status] (string, optional)
+
+        Filter for status field. It is accepted a valid status value of return.
+
+        + Sample: completed
+    + sort (string, optional)
+
+        Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".
+
+        + Sample: -created_at
+
++ Response 200 (application/json)
+    + Attributes (ListReturnResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": [{
+                "return_provision_token": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+                "transaction_id": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                "created_at": "2018-01-01T10:00:00",
+                "updated_at": "2018-01-01T10:10:00",
+                "status": "completed",
+                "amount": {
+                  "value": 10.00,
+                  "currency": "USD"
+                }
+              }, {
+                "return_provision_token": "rpt_a0d2070b-0676-4131-b315-c9d653a31505",
+                "transaction_id": "42db67d6-fde6-47ce-81eb-121cf333e0d7",
+                "created_at": "2018-01-02T10:00:00",
+                "updated_at": "2018-01-02T10:10:00",
+                "status": "cancelled",
+                "amount": {
+                  "value": 10.00,
+                  "currency": "USD"
+                }
+              }, {
+                "return_provision_token": "rpt_0399bad5-fac3-45dd-88af-99604b153355",
+                "transaction_id": "51424457-4997-4fa2-aed0-1a71aff88294",
+                "created_at": "2018-01-03T10:00:00",
+                "updated_at": "2018-01-03T10:10:00",
+                "status": "completed",
+                "residual": {
+                  "value": 5.00,
+                  "currency": "USD"
+                }
+              }]
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+
+# Group Pay with Miles
+
+## V2 Ecommerce Payments [/v2/ecommerce/payments]
+
+### List Mile Payments [GET]
+This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
++ Attributes
+    + filter[store_code] (string, required)
+
+        Filter for an online store.
+
+        + Sample: ECO123858493939
+    + filter[created_at] (string, required)
+
+        Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD.
+
+        + Sample: 2017-01-01..2019-01-01
+    + filter[status] (string, optional)
+
+        Filter for status field. It is accepted a valid status value of payment.
+
+        + Sample: completed
+    + sort (string, optional)
+
+        Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".
+
+        + Sample: created_at
+
++ Response 200 (application/json)
+    + Attributes (ListMilePaymentResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": [{
+                "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7",
+                "created_at": "2018-01-01T10:00:00",
+                "updated_at": "2018-01-01T10:10:00",
+                "status": "completed",
+                "amount": {
+                  "value": 10.00,
+                  "currency": "USD"
+                }
+              }, {
+                "payment_provision_token": "ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10",
+                "created_at": "2017-12-01T23:00:00",
+                "updated_at": "2017-12-02T14:00:00",
+                "status": "refunded",
+                "amount": {
+                  "value": 20.00,
+                  "currency": "USD"
+                }
+              }, {
+                "payment_provision_token": "ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5",
+                "created_at": "2017-11-01T12:00:00",
+                "updated_at": "2017-11-01T12:05:00",
+                "status": "cancelled",
+                "amount": {
+                  "value": 23.00,
+                  "currency": "USD"
+                }
+              }]
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+### Start Mile Payment [POST]
+After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check "Complete Mile Payment endpoint" please.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
+
++ Request (application/json)
+    + Attributes (StartMilePaymentRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (StartMilePaymentResponse)
+
+    + Body
+
+            {
+              "status": "ok",
+              "result": {
+                "payment_provision_token": "ppt_4c558b3d-7146-4043-b559-4599434e2ad7"
+              }
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+### Complete Mile Payment [PUT]
+This endpoint allows to complete a payment.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
+
++ Request (application/json)
+    + Attributes (CompleteMilePaymentRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+### Cancel Mile Payment [DELETE]
+This endpoint allows to cancel a payment.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
+
++ Request (application/json)
+    + Attributes (CancelMilePaymentRequest)
+
+
++ Response 200 (application/json)
+    + Attributes (Response)
+
+    + Body
+
+            {
+              "status": "ok"
+            }
+
+
++ Response 400 
+
+        Bad Request    - The request was unacceptable, often due to missing a required parameter.
+
+
+
+
++ Response 401 
+
+        Unauthorized - No valid API key provided.
+
+
+
+
++ Response 402 
+
+        Request Failed - The parameters were valid but the request failed.
+
+
+
+
++ Response 404 
+
+        Not Found - The requested resource doesn't exist.
+
+
+
+
++ Response 429 
+
+        Too Many Requests - Too many requests hit the API too quickly.
+
+
+
+
++ Response 500 
+
+        Server Error - Something went wrong.
+
+
+
+
+
+## V2 Ecommerce Payments Actions Refund [/v2/ecommerce/payments/actions/refund]
+
+### Refund Mile Payment [POST]
+This endpoint allows to refund a payment.
+
+
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c
+
++ Request (application/json)
+    + Attributes (RefundMilePaymentRequest)
 
 
 + Response 200 (application/json)
@@ -770,72 +1203,228 @@ This endpoint allows to cancel a return.
 
 # Data Structures
 
-## CompleteReturnRequest (object)
-Request of return for complete action.
+## StartMilePaymentResult (object)
+Result object of payment for start action.
 
 ### Properties
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `return_provision_token`: `rpt_e0563e09-e1b2-4144-a236-30ea76b58058` (string, required) - A token represents a return object for provisioning.
++ `payment_provision_token`: `"ppt_4c558b3d-7146-4043-b559-4599434e2ad7"` (string, required) - A token represents a payment object for provisioning.
 
 
-## StartReturnResponse (Response)
-Response object of return for start action.
-
-### Properties
-+ `result` (StartReturnResult, required) - Result object of the response.
-
-
-## StartReturnRequest (object)
-Request of return for start action.
+## RetrieveReturnResponse (Response)
+Response object of return for retrieve action.
 
 ### Properties
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `transaction_id`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (string, required) - The ID of the transaction that represents the order.
-+ `amount`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (Amount, required) - An amount of the return.
++ `result` (Return, optional) - Result object of the response.
 
 
-## StartReturnResult (object)
-Result object of return for start action.
+## StartMilePaymentResponse (Response)
+Response object of payment for start action.
 
 ### Properties
-+ `return_provision_token`: `rpt_e0563e09-e1b2-4144-a236-30ea76b58058` (string, required) - A token represents a return object for provisioning.
++ `result` (StartMilePaymentResult, optional) - Result object of the response.
 
 
-## CartResponse (Response)
-Response object of the cart.
-
-### Properties
-+ `result` (CartResult, optional) - Result object of the response.
-
-
-## ListMilePaymentResponse (Response)
-Response object of payment for list action.
+## RetrieveOrderResponse (Response)
+Response object of order for retrieve action.
 
 ### Properties
-+ `result` (array[Payment], optional) - Result object of the response.
++ `result` (BasicOrderResult, optional) - Result object of the response.
 
 
-## OrderResult (object)
-Result object of the response.
+## ListReturnResponse (Response)
+Response object of return for list action.
 
 ### Properties
-+ `transaction_token`: `"ot_71f06a17-3021-4c42-bd38-e492a7579f65"` (string, required) - A token represents an order object from Global Miles system.
++ `result` (array[Return], optional) - Result object of the response.
 
 
 ## OrderResponse (Response)
 Response object of order.
 
 ### Properties
-+ `result` (OrderResult, required) - Result object of the response.
++ `result` (OrderResult, optional) - Result object of the response.
 
 
-## OrderItem (object)
-Representing an order item.
+## OrderResult (object)
+Result object of the response.
 
 ### Properties
-+ `id`: `344187960` (string, required) - An identifier to reference this product.
-+ `quantity`: `1.0` (number, required) - The quantity of the item.
-+ `price`: `0.91` (number, required) - The price of the item.
++ `transaction_token`: `"ort_b3b45895-f961-4cde-b9df-5b274fb757e7"` (string, required) - A token represents an order object from Global Miles system.
+
+
+## CancelReturnRequest (object)
+Request of return for cancel action.
+
+### Properties
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `return_provision_token`: `"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"` (string, required) - A token represents a return object for provisioning.
+
+
+## RefundMilePaymentRequest (object)
+Request of payment for refund action.
+
+### Properties
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `payment_provision_token`: `"ppt_4c558b3d-7146-4043-b559-4599434e2ad7"` (string, required) - A token represents a payment object for provisioning.
++ `amount`: `"ppt_4c558b3d-7146-4043-b559-4599434e2ad7"` (Amount, required) - An amount of the payment.
+
+
+## CancelMilePaymentRequest (object)
+Request of payment for cancel action.
+
+### Properties
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `payment_provision_token`: `"ppt_4c558b3d-7146-4043-b559-4599434e2ad7"` (string, required) - A token represents a payment object for provisioning.
+
+
+## Return (object)
+Representing a return.
+
+### Properties
++ `return_provision_token`: `rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef` (string, required) - The token value of a return.
++ `transaction_id` (string, required) - The ID of the transaction that represents the order.
++ `created_at`: `"2018-01-01T10:00:00"` (string, required) - Create date time of return. The format is ISO 8601 date and time.
++ `updated_at`: `"2018-01-01T10:10:00"` (string, required) - Last update date time of return. The format is ISO 8601 date and time.
++ `status`: `"2018-01-01T10:10:00"` (enum[string], required) - The status of return.
+    + `started`
+    + `cancelled`
+    + `completed`
++ `amount`: `"2018-01-01T10:10:00"` (Amount, optional) - An amount of return.
++ `residual`: `"2018-01-01T10:10:00"` (Amount, optional) - A residual amount of return.
+
+
+## CompleteMilePaymentRequest (object)
+Request of payment for complete action.
+
+### Properties
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `payment_provision_token`: `"ppt_4c558b3d-7146-4043-b559-4599434e2ad7"` (string, required) - A token represents a payment object for provisioning.
+
+
+## StartMilePaymentRequest (object)
+Request of payment for start action.
+
+### Properties
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `user_token`: `"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf"` (string, required) - A token that is representing a Global Miles user for the current session.
++ `amount`: `"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf"` (Amount, required) - An amount of payment.
+
+
+## ListOrderResponse (Response)
+Response object of order for list action.
+
+### Properties
++ `result` (array[BasicOrderResult], optional) - Result object of the response.
+
+
+## Amount (object)
+A complex object for amount.
+
+### Properties
++ `value`: `10.00` (number, required) - A decimal value with two decimals in the string representation of amount.
++ `currency`: `"USD"` (string, required) - ISO 4217 currency code of the amount.
+
+
+## Response (object)
+A basic object of the response.
+
+### Properties
++ `status`: `"ok"` (string, required) - The status of the response. The value is always "ok" for successful responses otherwise it includes error code.
++ `message`: `"User not found with given attributes"` (string, optional) - The message of the error. It is always null for successful responses.
+
+
+## CartDiscount (object)
+Representing a discount for shopping cart.
+
+### Properties
++ `currency`: `"USD"` (string, required) - ISO-4217 3-letter currency code.
++ `discount`: `10.00` (number, optional) - Amount of the current discount.
++ `discount_provision_token`: `"dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"` (string, optional) - A token represents a discount object for provisioning.
++ `items`: `"dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"` (array[CartItemDiscount], optional) - An array of discounts for cart items.
+
+
+## Payment (object)
+Representing a payment.
+
+### Properties
++ `payment_provision_token`: `"ppt_4c558b3d-7146-4043-b559-4599434e2ad7"` (string, required) - A token represents a payment object for provisioning.
++ `created_at`: `"2018-01-01T10:00:00"` (string, required) - Create date time of payment. The format is ISO 8601 date and time.
++ `updated_at`: `"2018-01-01T10:00:00"` (string, required) - Last update date time of payment. The format is ISO 8601 date and time.
++ `status`: `"2018-01-01T10:00:00"` (enum[string], required) - The status of payment.
+    + `started`
+    + `completed`
+    + `cancelled`
+    + `refunded`
+    + `used`
++ `amount`: `"2018-01-01T10:00:00"` (Amount, required) - An amount of payment.
+
+
+## DiscountItem (object)
+Representing a discount for order.
+
+### Properties
++ `type` (enum[string], required) - Type of the discount.
+    + `loyalty_discount`
+    + `other`
++ `amount`: `1.0` (number, required) - Amount of the current discount.
++ `discount_provision_token`: `"dpt_edb17503-c804-48bf-b798-1d5e7d8757c7"` (string, optional) - A token represents a discount object for provisioning.
+
+
+## CartItemDiscount (object)
+Representing a discount for shopping cart item.
+
+### Properties
++ `id`: `"344187961"` (string, required) - An identifier to reference this product.
++ `discount`: `1.00` (number, required) - Amount of the current discount.
+
+
+## CartItem (object)
+Representing a shopping cart item.
+
+### Properties
++ `id`: `"344187961"` (string, required) - An identifier to reference this product. Universal product code.
++ `quantity`: `1` (number, required) - The quantity of the item.
++ `price`: `20.00` (number, required) - The price of the item.
+
+
+## StartReturnResult (object)
+Result object of return for start action.
+
+### Properties
++ `return_provision_token`: `"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"` (string, required) - A token represents a return object for provisioning.
+
+
+## StartReturnResponse (Response)
+Response object of return for start action.
+
+### Properties
++ `result` (StartReturnResult, optional) - Result object of the response.
+
+
+## CartResult (object)
+Result object of the response.
+
+### Properties
++ `available_amount` (Amount, optional) - The available amount of money for payment.
++ `cart_discount` (CartDiscount, optional) - A discount object for cart.
+
+
+## OAuthRequest (object)
+Representing an OAuth request.
+
+### Properties
++ `client_id`: `{{client_id}}` (string, required) - ID of the client which is provided by Global Miles.
++ `client_secret`: `{{client_secret}}` (string, required) - Secret of the client which is provided by Global Miles.
++ `grant_type`: `client_credentials` (string, required) - Type of the OAuth flows. We support only one type of token: client_credentials
+
+
+## OAuthResponse (object)
+Representing an OAuth response.
+
+### Properties
++ `access_token`: `{{access_token}}` (string, required) - An access token from the authorization server.
++ `token_type`: `"bearer"` (string, required) - The type of token this is, typically just the string "bearer".
++ `created_at`: `"1496737098"` (string, required) - The time in unix time format when the access token was created.
 
 
 ## PaymentItem (object)
@@ -853,200 +1442,109 @@ Representing a payment for order.
     + `mile_payment`
     + `other`
 + `amount`: `50.00` (number, required) - Amount of current payment.
-+ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, optional) - A token represents a payment object for provisioning.
++ `payment_provision_token`: `"ppt_4c558b3d-7146-4043-b559-4599434e2ad7"` (string, optional) - A token represents a payment object for provisioning.
 
 
-## OAuthResponse (object)
-Representing an OAuth response.
-
-### Properties
-+ `access_token`: `{{access_token}}` (string, required) - An access token from the authorization server.
-+ `token_type`: `bearer` (string, required) - The type of token this is, typically just the string "bearer".
-+ `created_at`: `1496737098` (string, required) - The time in unix time format when the access token was created.
-
-
-## OAuthRequest (object)
-Representing an OAuth request.
+## CartRequest (object)
+Request of the cart object.
 
 ### Properties
-+ `client_id`: `{{client_id}}` (string, required) - ID of the client which is provided by Global Miles.
-+ `client_secret`: `{{client_secret}}` (string, required) - Secret of the client which is provided by Global Miles.
-+ `grant_type`: `client_credentials` (string, required) - Type of the OAuth flows. We support only one type of token: client_credentials
++ `user_token`: `"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf"` (string, required) - A token that is representing a Global Miles user for the current session.
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `cart`: `"ECO123858493939"` (Cart, required) - A complex object for cart.
 
 
-## Order (object)
-Representing an order.
-
-### Properties
-+ `subtotal`: `90.00` (number, required) - Total value of all order items without tax.
-+ `tax`: `10.20` (number, required) - The amount of tax.
-+ `total`: `100.20` (number, required) - Total amount of order.
-+ `currency`: `usd` (string, required) - ISO-4217 3-letter currency code.
-+ `items`: `usd` (array[OrderItem], optional) - An array of order items.
-+ `discounts`: `usd` (array[DiscountItem], optional) - An array of discount items.
-+ `payments`: `usd` (array[PaymentItem], optional) - An array of payment items.
-
-
-## CartResult (object)
-Result object of the response.
+## OrderItem (object)
+Representing an order item.
 
 ### Properties
-+ `available_amount` (Amount, optional) - The available amount of money for payment.
-+ `cart_discount` (CartDiscount, optional) - A discount object for cart.
-
-
-## CartItem (object)
-Representing a shopping cart item.
-
-### Properties
-+ `id`: `344187961` (string, required) - An identifier to reference this product. Universal product code.
-+ `quantity`: `1.0` (number, required) - The quantity of the item.
-+ `price`: `20.00` (number, required) - The price of the item.
-
-
-## Cart (object)
-Representing a shopping cart.
-
-### Properties
-+ `currency`: `usd` (string, required) - ISO-4217 3-letter currency code.
-+ `subtotal`: `90.00` (number, required) - Total value of all cart items without tax.
-+ `tax`: `10.20` (number, required) - The amount of tax.
-+ `total`: `100.20` (number, required) - Total amount of cart.
-+ `items`: `100.20` (array[CartItem], optional) - An array of cart items.
-
-
-## CartItemDiscount (object)
-Representing a discount for shopping cart item.
-
-### Properties
-+ `id`: `344187961` (string, required) - An identifier to reference this product.
-+ `discount`: `1.00` (number, required) - Amount of the current discount.
-
-
-## DiscountItem (object)
-Representing a discount for order.
-
-### Properties
-+ `type` (enum[string], required) - Type of the discount.
-    + `loyalty_discount`
-    + `other`
-+ `amount`: `1.0` (number, required) - Amount of the current discount.
-+ `discount_provision_token`: `dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4` (string, optional) - A token represents a discount object for provisioning.
++ `id`: `"344187960"` (string, required) - An identifier to reference this product.
++ `quantity`: `2.2` (number, required) - The quantity of the item.
++ `price`: `0.91` (number, required) - The price of the item.
 
 
 ## OrderRequest (object)
 Request of order object.
 
 ### Properties
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `user_token`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (string, required) - A token that is representing a Global Miles user for the current session.
-+ `transaction_id`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (string, required) - The ID of the transaction that represents the order.
-+ `order`: `cf01b6c3-74c9-4e69-a779-9742571abff6` (Order, required) - A complex object for order.
-+ `shift_allowance`: `0` (number, optional) - It specifies how many days later the miles should be given to the user.
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `user_token`: `"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf"` (string, required) - A token that is representing a Global Miles user for the current session.
++ `order`: `"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf"` (Order, required) - A complex object for order.
 
 
-## CartRequest (object)
-Request of the card object.
+## BasicOrderResult (object)
+Representing an order in list result.
 
 ### Properties
-+ `user_token`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (string, required) - A token that is representing a Global Miles user for the current session.
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `cart`: `ECO123858493939` (Cart, required) - A complex object for cart.
-
-
-## Response (object)
-A basic object of the response.
-
-### Properties
-+ `status`: `ok` (string, required) - The status of the response. The value is always "ok" for successful responses otherwise it includes error code.
-+ `message`: `User not found with given attributes` (string, optional) - The message of the error. It is always null for successful responses.
-
-
-## Amount (object)
-A complex object for amount.
-
-### Properties
-+ `value`: `10.00` (number, required) - A decimal value with two decimals in the string representation of amount.
-+ `currency`: `usd` (string, required) - ISO 4217 currency code of the amount.
-
-
-## StartMilePaymentRequest (object)
-Request of payment for start action.
-
-### Properties
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `user_token`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (string, required) - A token that is representing a Global Miles user for the current session.
-+ `amount`: `ut_b69c3393-54eb-471c-907d-8d4ed405f88e` (Amount, required) - An amount of payment.
-
-
-## StartMilePaymentResponse (Response)
-Response object of payment for start action.
-
-### Properties
-+ `result` (StartMilePaymentResult, required) - Result object of the response.
-
-
-## StartMilePaymentResult (object)
-Result object of payment for start action.
-
-### Properties
-+ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
-
-
-## CompleteMilePaymentRequest (object)
-Request of payment for complete action.
-
-### Properties
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
-
-
-## CancelMilePaymentRequest (object)
-Request of payment for cancel action.
-
-### Properties
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
-
-
-## RefundMilePaymentRequest (object)
-Request of payment for refund action.
-
-### Properties
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
-+ `amount`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (Amount, required) - An amount of the payment.
-
-
-## Payment (object)
-Representing a payment.
-
-### Properties
-+ `payment_provision_token`: `ppt_66feace2-873d-4a8b-9fdc-9eac06b07517` (string, required) - A token represents a payment object for provisioning.
-+ `created_at`: `"2018-01-01T10:00:00"` (string, required) - Create date time of payment. The format is ISO 8601 date and time.
-+ `updated_at`: `"2018-01-01T10:00:00"` (string, required) - Last update date time of payment. The format is ISO 8601 date and time.
-+ `status`: `"2018-01-01T10:00:00"` (enum[string], required) - The status of payment.
-    + `started`
-    + `completed`
-    + `cancelled`
++ `transaction_token`: `"ort_b3b45895-f961-4cde-b9df-5b274fb757e7"` (string, required) - A token represents an order object from Global Miles system.
++ `transaction_id`: `"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083"` (string, required) - The ID of the transaction that represents the order.
++ `completed_at`: `"2018-01-01T09:00:00"` (string, required) - The date and time when the order was completed in partner side.
++ `created_at`: `"2018-01-01T10:00:00"` (string, required) - Create date time of order. The format is ISO 8601 date and time.
++ `updated_at`: `"2018-01-01T10:10:00"` (string, required) - Last update date time of order. The format is ISO 8601 date and time.
++ `status`: `"2018-01-01T10:10:00"` (enum[string], required) - The status of order.
+    + `pending`
     + `refunded`
-+ `amount`: `"2018-01-01T10:00:00"` (Amount, required) - An amount of payment.
+    + `processed`
+    + `partially_refunded`
++ `subtotal`: `90.00` (number, required) - Total value of all order items without tax.
++ `tax`: `10.20` (number, required) - The amount of tax.
++ `total`: `100.20` (number, required) - Total amount of order.
++ `currency`: `"USD"` (string, required) - ISO-4217 3-letter currency code.
 
 
-## CancelReturnRequest (object)
-Request of return for cancel action.
-
-### Properties
-+ `store_code`: `ECO123858493939` (string, required) - An identifier for online store.
-+ `return_provision_token`: `rpt_e0563e09-e1b2-4144-a236-30ea76b58058` (string, required) - A token represents a return object for provisioning.
-
-
-## CartDiscount (object)
-Representing a discount for shopping cart.
+## Cart (object)
+Representing a shopping cart.
 
 ### Properties
-+ `discount`: `1.00` (number, optional) - Amount of the current discount.
-+ `currency`: `usd` (string, required) - ISO-4217 3-letter currency code.
-+ `discount_provision_token`: `dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4` (string, optional) - A token represents a discount object for provisioning.
-+ `items`: `dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4` (array[CartItemDiscount], optional) - An array of discounts for cart items.
++ `subtotal`: `90.00` (number, required) - Total value of all cart items without tax.
++ `tax`: `10.20` (number, required) - The amount of tax.
++ `total`: `100.20` (number, required) - Total amount of cart.
++ `currency`: `"USD"` (string, required) - ISO-4217 3-letter currency code.
++ `items`: `"USD"` (array[CartItem], optional) - An array of cart items.
+
+
+## Order (object)
+Representing an order.
+
+### Properties
++ `transaction_id`: `"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083"` (string, required) - The ID of the transaction that represents the order.
++ `completed_at`: `"2018-01-01T10:00:00"` (string, required) - The date and time when the order was completed in partner side.
++ `subtotal`: `90.00` (number, required) - Total value of all order items without tax.
++ `tax`: `10.20` (number, required) - The amount of tax.
++ `total`: `100.20` (number, required) - Total amount of order.
++ `currency`: `"USD"` (string, required) - ISO-4217 3-letter currency code.
++ `items`: `"USD"` (array[OrderItem], optional) - An array of order items.
++ `discounts`: `"USD"` (array[DiscountItem], optional) - An array of discount items.
++ `payments`: `"USD"` (array[PaymentItem], optional) - An array of payment items.
+
+
+## CartResponse (Response)
+Response object of the cart.
+
+### Properties
++ `result` (CartResult, optional) - Result object of the response.
+
+
+## StartReturnRequest (object)
+Request of return for start action.
+
+### Properties
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `transaction_id`: `"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083"` (string, required) - The ID of the transaction that represents the order.
++ `amount`: `"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083"` (Amount, optional) - An amount of the return.
+
+
+## CompleteReturnRequest (object)
+Request of return for complete action.
+
+### Properties
++ `store_code`: `"ECO123858493939"` (string, required) - An identifier for online store.
++ `return_provision_token`: `"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef"` (string, required) - A token represents a return object for provisioning.
+
+
+## ListMilePaymentResponse (Response)
+Response object of payment for list action.
+
+### Properties
++ `result` (array[Payment], optional) - Result object of the response.
 

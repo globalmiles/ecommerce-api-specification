@@ -1,0 +1,3087 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="https://api.sandbox.globalmiles.com/wsdl" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema xmlns:tns="https://api.sandbox.globalmiles.com/schemas" targetNamespace="https://api.sandbox.globalmiles.com/schemas" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:simpleType name="OrderStatus">
+        <xs:annotation>
+          <xs:documentation>An order status.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="pending">
+            <xs:annotation>
+              <xs:documentation>Pending</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="refunded">
+            <xs:annotation>
+              <xs:documentation>Refunded</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="processed">
+            <xs:annotation>
+              <xs:documentation>Processed</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="partially_refunded">
+            <xs:annotation>
+              <xs:documentation>Partially Refunded</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="StartMilePaymentResult">
+        <xs:annotation>
+          <xs:documentation>Result object of payment for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="ReturnStatus">
+        <xs:annotation>
+          <xs:documentation>A return status.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="started">
+            <xs:annotation>
+              <xs:documentation>Started</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="cancelled">
+            <xs:annotation>
+              <xs:documentation>Cancelled</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="completed">
+            <xs:annotation>
+              <xs:documentation>Completed</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="RetrieveReturnResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of return for retrieve action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="tns:Return">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="StartMilePaymentResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of payment for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="tns:StartMilePaymentResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RetrieveOrderResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of order for retrieve action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="tns:BasicOrderResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ListReturnResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of return for list action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="result" type="tns:Return">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="OrderResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of order.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="tns:OrderResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="OrderResult">
+        <xs:annotation>
+          <xs:documentation>Result object of the response.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="transaction_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents an order object from Global Miles system.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelReturnRequest">
+        <xs:annotation>
+          <xs:documentation>Request of return for cancel action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="return_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a return object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="PaymentStatus">
+        <xs:annotation>
+          <xs:documentation>A payment status.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="started">
+            <xs:annotation>
+              <xs:documentation>Started</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="completed">
+            <xs:annotation>
+              <xs:documentation>Completed</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="cancelled">
+            <xs:annotation>
+              <xs:documentation>Cancelled</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="refunded">
+            <xs:annotation>
+              <xs:documentation>Refunded</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="used">
+            <xs:annotation>
+              <xs:documentation>Used</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="RefundMilePaymentRequest">
+        <xs:annotation>
+          <xs:documentation>Request of payment for refund action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of the payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelMilePaymentRequest">
+        <xs:annotation>
+          <xs:documentation>Request of payment for cancel action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Return">
+        <xs:annotation>
+          <xs:documentation>Representing a return.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="return_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The token value of a return.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="transaction_id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The ID of the transaction that represents the order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="created_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Create date time of return. The format is ISO 8601 date and time.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="updated_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Last update date time of return. The format is ISO 8601 date and time.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="status" type="tns:ReturnStatus">
+            <xs:annotation>
+              <xs:documentation>The status of return.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of return.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="residual" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>A residual amount of return.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CompleteMilePaymentRequest">
+        <xs:annotation>
+          <xs:documentation>Request of payment for complete action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StartMilePaymentRequest">
+        <xs:annotation>
+          <xs:documentation>Request of payment for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="user_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token that is representing a Global Miles user for the current session.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListOrderResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of order for list action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="result" type="tns:BasicOrderResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="Amount">
+        <xs:annotation>
+          <xs:documentation>A complex object for amount.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="value">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A decimal value with two decimals in the string representation of amount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO 4217 currency code of the amount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Response">
+        <xs:annotation>
+          <xs:documentation>A basic object of the response.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="status">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The status of the response. The value is always "ok" for successful responses otherwise it includes error code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="message">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The message of the error. It is always null for successful responses.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartDiscount">
+        <xs:annotation>
+          <xs:documentation>Representing a discount for shopping cart.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO-4217 3-letter currency code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="discount">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Amount of the current discount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="discount_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a discount object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="items" type="tns:CartItemDiscount">
+            <xs:annotation>
+              <xs:documentation>An array of discounts for cart items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Payment">
+        <xs:annotation>
+          <xs:documentation>Representing a payment.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="created_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Create date time of payment. The format is ISO 8601 date and time.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="updated_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Last update date time of payment. The format is ISO 8601 date and time.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="status" type="tns:PaymentStatus">
+            <xs:annotation>
+              <xs:documentation>The status of payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DiscountItem">
+        <xs:annotation>
+          <xs:documentation>Representing a discount for order.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="type" type="tns:DiscountType">
+            <xs:annotation>
+              <xs:documentation>Type of the discount.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Amount of the current discount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="discount_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a discount object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartItemDiscount">
+        <xs:annotation>
+          <xs:documentation>Representing a discount for shopping cart item.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier to reference this product.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="discount">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Amount of the current discount.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartItem">
+        <xs:annotation>
+          <xs:documentation>Representing a shopping cart item.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier to reference this product. Universal product code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="quantity">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The quantity of the item.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="price">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The price of the item.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StartReturnResult">
+        <xs:annotation>
+          <xs:documentation>Result object of return for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="return_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a return object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StartReturnResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of return for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="tns:StartReturnResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="CartResult">
+        <xs:annotation>
+          <xs:documentation>Result object of the response.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="available_amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>The available amount of money for payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="cart_discount" type="tns:CartDiscount">
+            <xs:annotation>
+              <xs:documentation>A discount object for cart.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OAuthRequest">
+        <xs:annotation>
+          <xs:documentation>Representing an OAuth request.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="client_id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ID of the client which is provided by Global Miles.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="client_secret">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Secret of the client which is provided by Global Miles.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" default="client_credentials" name="grant_type">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Type of the OAuth flows. We support only one type of token: client_credentials</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OAuthResponse">
+        <xs:annotation>
+          <xs:documentation>Representing an OAuth response.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="access_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An access token from the authorization server.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="token_type">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The type of token this is, typically just the string "bearer".</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="created_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The time in unix time format when the access token was created.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaymentItem">
+        <xs:annotation>
+          <xs:documentation>Representing a payment for order.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="type" type="tns:PaymentType">
+            <xs:annotation>
+              <xs:documentation>A type of payment.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="amount">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Amount of current payment.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="payment_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a payment object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartRequest">
+        <xs:annotation>
+          <xs:documentation>Request of the cart object.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="user_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token that is representing a Global Miles user for the current session.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="cart" type="tns:Cart">
+            <xs:annotation>
+              <xs:documentation>A complex object for cart.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OrderItem">
+        <xs:annotation>
+          <xs:documentation>Representing an order item.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier to reference this product.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="quantity">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The quantity of the item.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="price">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The price of the item.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OrderRequest">
+        <xs:annotation>
+          <xs:documentation>Request of order object.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="user_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token that is representing a Global Miles user for the current session.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="order" type="tns:Order">
+            <xs:annotation>
+              <xs:documentation>A complex object for order.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="BasicOrderResult">
+        <xs:annotation>
+          <xs:documentation>Representing an order in list result.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="transaction_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents an order object from Global Miles system.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="transaction_id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The ID of the transaction that represents the order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="completed_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The date and time when the order was completed in partner side.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="created_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Create date time of order. The format is ISO 8601 date and time.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="updated_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Last update date time of order. The format is ISO 8601 date and time.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="status" type="tns:OrderStatus">
+            <xs:annotation>
+              <xs:documentation>The status of order.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="subtotal">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total value of all order items without tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="tax">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The amount of tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="total">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total amount of order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO-4217 3-letter currency code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Cart">
+        <xs:annotation>
+          <xs:documentation>Representing a shopping cart.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="subtotal">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total value of all cart items without tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="tax">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The amount of tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="total">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total amount of cart.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO-4217 3-letter currency code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="items" type="tns:CartItem">
+            <xs:annotation>
+              <xs:documentation>An array of cart items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Order">
+        <xs:annotation>
+          <xs:documentation>Representing an order.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="transaction_id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The ID of the transaction that represents the order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="completed_at">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The date and time when the order was completed in partner side.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="subtotal">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total value of all order items without tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="tax">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The amount of tax.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="total">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total amount of order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:double" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="currency">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>ISO-4217 3-letter currency code.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="items" type="tns:OrderItem">
+            <xs:annotation>
+              <xs:documentation>An array of order items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="discounts" type="tns:DiscountItem">
+            <xs:annotation>
+              <xs:documentation>An array of discount items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="payments" type="tns:PaymentItem">
+            <xs:annotation>
+              <xs:documentation>An array of payment items.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CartResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of the cart.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="tns:CartResult">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:simpleType name="DiscountType">
+        <xs:annotation>
+          <xs:documentation>A type of discount.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="loyalty_discount">
+            <xs:annotation>
+              <xs:documentation>This type indicates a discount by Global Miles.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="other">
+            <xs:annotation>
+              <xs:documentation>Other type of discounts.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="StartReturnRequest">
+        <xs:annotation>
+          <xs:documentation>Request of return for start action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="transaction_id">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>The ID of the transaction that represents the order.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="amount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>An amount of the return.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CompleteReturnRequest">
+        <xs:annotation>
+          <xs:documentation>Request of return for complete action.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="store_code">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>An identifier for online store.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="return_provision_token">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>A token represents a return object for provisioning.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="PaymentType">
+        <xs:annotation>
+          <xs:documentation>A type of payment.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="credit_card">
+            <xs:annotation>
+              <xs:documentation>Credit Card</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="debit_card">
+            <xs:annotation>
+              <xs:documentation>Debit Card</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="bank_transfer">
+            <xs:annotation>
+              <xs:documentation>Bank Transfers / Electronic Funds Transfer (EFT)</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="cash">
+            <xs:annotation>
+              <xs:documentation>Cash</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="digital_wallet">
+            <xs:annotation>
+              <xs:documentation>Digital Wallet</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="mobile_payment">
+            <xs:annotation>
+              <xs:documentation>Mobile Payment</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="gift_card">
+            <xs:annotation>
+              <xs:documentation>Gitf Card</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="mile_payment">
+            <xs:annotation>
+              <xs:documentation>Pay with miles provided by Global Miles</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="other">
+            <xs:annotation>
+              <xs:documentation>Other</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="ListMilePaymentResponse">
+        <xs:annotation>
+          <xs:documentation>Response object of payment for list action.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="result" type="tns:Payment">
+                <xs:annotation>
+                  <xs:documentation>Result object of the response.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="GET_ListOrders_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="filter[store_code]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for an online store.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="1" name="filter[completed_at]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for completed_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="filter[status]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for status field. It is accepted a valid status value of order.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="sort">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "completed_at", "created_at",  "updated_at", "status".</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GET_ListOrders_OutputMessage" type="tns:ListOrderResponse" />
+      <xs:element name="GET_ListOrders_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListOrders_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListOrders_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListOrders_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListOrders_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListOrders_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Authentication_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" default="application/json" name="Accept">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>It advertises which content type is able to understand.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="1" default="application/json" name="Content-Type">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>It tells the client what the content type of the returned.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="1" name="Body" type="tns:OAuthRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="POST_Authentication_OutputMessage" type="tns:OAuthResponse" />
+      <xs:element name="POST_Authentication_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Authentication_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Authentication_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Authentication_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Authentication_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Authentication_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Order_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:OrderRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="POST_Order_OutputMessage" type="tns:OrderResponse" />
+      <xs:element name="POST_Order_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Order_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Order_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Order_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Order_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Order_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveReturn_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="return_provision_token">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>The token value of a return.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GET_RetrieveReturn_OutputMessage" type="tns:RetrieveReturnResponse" />
+      <xs:element name="GET_RetrieveReturn_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveReturn_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveReturn_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveReturn_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveReturn_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveReturn_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListMilePayments_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="filter[store_code]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for an online store.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="1" name="filter[created_at]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="filter[status]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for status field. It is accepted a valid status value of payment.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="sort">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GET_ListMilePayments_OutputMessage" type="tns:ListMilePaymentResponse" />
+      <xs:element name="GET_ListMilePayments_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListMilePayments_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListMilePayments_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListMilePayments_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListMilePayments_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListMilePayments_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveOrder_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="transaction_id">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>The ID of the transaction that represents the order.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GET_RetrieveOrder_OutputMessage" type="tns:RetrieveOrderResponse" />
+      <xs:element name="GET_RetrieveOrder_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveOrder_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveOrder_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveOrder_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveOrder_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_RetrieveOrder_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelReturn_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:CancelReturnRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DELETE_CancelReturn_OutputMessage" type="tns:Response" />
+      <xs:element name="DELETE_CancelReturn_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelReturn_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelReturn_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelReturn_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelReturn_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelReturn_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteReturn_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:CompleteReturnRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PUT_CompleteReturn_OutputMessage" type="tns:Response" />
+      <xs:element name="PUT_CompleteReturn_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteReturn_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteReturn_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteReturn_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteReturn_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteReturn_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartReturn_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:StartReturnRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="POST_StartReturn_OutputMessage" type="tns:StartReturnResponse" />
+      <xs:element name="POST_StartReturn_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartReturn_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartReturn_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartReturn_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartReturn_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartReturn_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartMilePayment_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:StartMilePaymentRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="POST_StartMilePayment_OutputMessage" type="tns:StartMilePaymentResponse" />
+      <xs:element name="POST_StartMilePayment_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartMilePayment_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartMilePayment_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartMilePayment_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartMilePayment_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_StartMilePayment_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteMilePayment_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:CompleteMilePaymentRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PUT_CompleteMilePayment_OutputMessage" type="tns:Response" />
+      <xs:element name="PUT_CompleteMilePayment_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteMilePayment_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteMilePayment_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteMilePayment_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteMilePayment_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PUT_CompleteMilePayment_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelMilePayment_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:CancelMilePaymentRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DELETE_CancelMilePayment_OutputMessage" type="tns:Response" />
+      <xs:element name="DELETE_CancelMilePayment_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelMilePayment_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelMilePayment_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelMilePayment_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelMilePayment_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DELETE_CancelMilePayment_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListReturns_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="filter[store_code]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for an online store.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="1" name="filter[created_at]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for created_at field. It is accepted a valid date range value. The format is YYYY-MM-DD..YYYY-MM-DD.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="filter[status]">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Filter for status field. It is accepted a valid status value of return.</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="sort">
+              <xs:simpleType>
+                <xs:annotation>
+                  <xs:documentation>Sort for some selected fields. In order to sort descending "-" value will be used before the field. Valid field values are "created_at",  "updated_at", "status".</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:string" />
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GET_ListReturns_OutputMessage" type="tns:ListReturnResponse" />
+      <xs:element name="GET_ListReturns_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListReturns_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListReturns_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListReturns_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListReturns_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GET_ListReturns_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_RefundMilePayment_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:RefundMilePaymentRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="POST_RefundMilePayment_OutputMessage" type="tns:Response" />
+      <xs:element name="POST_RefundMilePayment_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_RefundMilePayment_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_RefundMilePayment_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_RefundMilePayment_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_RefundMilePayment_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_RefundMilePayment_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Cart_InputMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" name="Body" type="tns:CartRequest">
+              <xs:annotation>
+                <xs:documentation>The body of the request.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="POST_Cart_OutputMessage" type="tns:CartResponse" />
+      <xs:element name="POST_Cart_400">
+        <xs:annotation>
+          <xs:documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Cart_401">
+        <xs:annotation>
+          <xs:documentation>Unauthorized - No valid API key provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Cart_402">
+        <xs:annotation>
+          <xs:documentation>Request Failed - The parameters were valid but the request failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Cart_404">
+        <xs:annotation>
+          <xs:documentation>Not Found - The requested resource doesn't exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Cart_429">
+        <xs:annotation>
+          <xs:documentation>Too Many Requests - Too many requests hit the API too quickly.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POST_Cart_500">
+        <xs:annotation>
+          <xs:documentation>Server Error - Something went wrong.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="GET_ListOrders_InputMessage">
+    <part name="GET_ListOrders_InputMessage" xmlns:q1="https://api.sandbox.globalmiles.com/schemas" element="q1:GET_ListOrders_InputMessage" />
+  </message>
+  <message name="GET_ListOrders_OutputMessage">
+    <part name="GET_ListOrders_OutputMessage" xmlns:q2="https://api.sandbox.globalmiles.com/schemas" element="q2:GET_ListOrders_OutputMessage" />
+  </message>
+  <message name="GET_ListOrders_400">
+    <part name="GET_ListOrders_400" xmlns:q3="https://api.sandbox.globalmiles.com/wsdl" element="q3:GET_ListOrders_400" />
+  </message>
+  <message name="GET_ListOrders_401">
+    <part name="GET_ListOrders_401" xmlns:q4="https://api.sandbox.globalmiles.com/wsdl" element="q4:GET_ListOrders_401" />
+  </message>
+  <message name="GET_ListOrders_402">
+    <part name="GET_ListOrders_402" xmlns:q5="https://api.sandbox.globalmiles.com/wsdl" element="q5:GET_ListOrders_402" />
+  </message>
+  <message name="GET_ListOrders_404">
+    <part name="GET_ListOrders_404" xmlns:q6="https://api.sandbox.globalmiles.com/wsdl" element="q6:GET_ListOrders_404" />
+  </message>
+  <message name="GET_ListOrders_429">
+    <part name="GET_ListOrders_429" xmlns:q7="https://api.sandbox.globalmiles.com/wsdl" element="q7:GET_ListOrders_429" />
+  </message>
+  <message name="GET_ListOrders_500">
+    <part name="GET_ListOrders_500" xmlns:q8="https://api.sandbox.globalmiles.com/wsdl" element="q8:GET_ListOrders_500" />
+  </message>
+  <message name="POST_Authentication_InputMessage">
+    <part name="POST_Authentication_InputMessage" xmlns:q9="https://api.sandbox.globalmiles.com/schemas" element="q9:POST_Authentication_InputMessage" />
+  </message>
+  <message name="POST_Authentication_OutputMessage">
+    <part name="POST_Authentication_OutputMessage" xmlns:q10="https://api.sandbox.globalmiles.com/schemas" element="q10:POST_Authentication_OutputMessage" />
+  </message>
+  <message name="POST_Authentication_400">
+    <part name="POST_Authentication_400" xmlns:q11="https://api.sandbox.globalmiles.com/wsdl" element="q11:POST_Authentication_400" />
+  </message>
+  <message name="POST_Authentication_401">
+    <part name="POST_Authentication_401" xmlns:q12="https://api.sandbox.globalmiles.com/wsdl" element="q12:POST_Authentication_401" />
+  </message>
+  <message name="POST_Authentication_402">
+    <part name="POST_Authentication_402" xmlns:q13="https://api.sandbox.globalmiles.com/wsdl" element="q13:POST_Authentication_402" />
+  </message>
+  <message name="POST_Authentication_404">
+    <part name="POST_Authentication_404" xmlns:q14="https://api.sandbox.globalmiles.com/wsdl" element="q14:POST_Authentication_404" />
+  </message>
+  <message name="POST_Authentication_429">
+    <part name="POST_Authentication_429" xmlns:q15="https://api.sandbox.globalmiles.com/wsdl" element="q15:POST_Authentication_429" />
+  </message>
+  <message name="POST_Authentication_500">
+    <part name="POST_Authentication_500" xmlns:q16="https://api.sandbox.globalmiles.com/wsdl" element="q16:POST_Authentication_500" />
+  </message>
+  <message name="POST_Order_InputMessage">
+    <part name="POST_Order_InputMessage" xmlns:q17="https://api.sandbox.globalmiles.com/schemas" element="q17:POST_Order_InputMessage" />
+  </message>
+  <message name="POST_Order_OutputMessage">
+    <part name="POST_Order_OutputMessage" xmlns:q18="https://api.sandbox.globalmiles.com/schemas" element="q18:POST_Order_OutputMessage" />
+  </message>
+  <message name="POST_Order_400">
+    <part name="POST_Order_400" xmlns:q19="https://api.sandbox.globalmiles.com/wsdl" element="q19:POST_Order_400" />
+  </message>
+  <message name="POST_Order_401">
+    <part name="POST_Order_401" xmlns:q20="https://api.sandbox.globalmiles.com/wsdl" element="q20:POST_Order_401" />
+  </message>
+  <message name="POST_Order_402">
+    <part name="POST_Order_402" xmlns:q21="https://api.sandbox.globalmiles.com/wsdl" element="q21:POST_Order_402" />
+  </message>
+  <message name="POST_Order_404">
+    <part name="POST_Order_404" xmlns:q22="https://api.sandbox.globalmiles.com/wsdl" element="q22:POST_Order_404" />
+  </message>
+  <message name="POST_Order_429">
+    <part name="POST_Order_429" xmlns:q23="https://api.sandbox.globalmiles.com/wsdl" element="q23:POST_Order_429" />
+  </message>
+  <message name="POST_Order_500">
+    <part name="POST_Order_500" xmlns:q24="https://api.sandbox.globalmiles.com/wsdl" element="q24:POST_Order_500" />
+  </message>
+  <message name="GET_RetrieveReturn_InputMessage">
+    <part name="GET_RetrieveReturn_InputMessage" xmlns:q25="https://api.sandbox.globalmiles.com/schemas" element="q25:GET_RetrieveReturn_InputMessage" />
+  </message>
+  <message name="GET_RetrieveReturn_OutputMessage">
+    <part name="GET_RetrieveReturn_OutputMessage" xmlns:q26="https://api.sandbox.globalmiles.com/schemas" element="q26:GET_RetrieveReturn_OutputMessage" />
+  </message>
+  <message name="GET_RetrieveReturn_400">
+    <part name="GET_RetrieveReturn_400" xmlns:q27="https://api.sandbox.globalmiles.com/wsdl" element="q27:GET_RetrieveReturn_400" />
+  </message>
+  <message name="GET_RetrieveReturn_401">
+    <part name="GET_RetrieveReturn_401" xmlns:q28="https://api.sandbox.globalmiles.com/wsdl" element="q28:GET_RetrieveReturn_401" />
+  </message>
+  <message name="GET_RetrieveReturn_402">
+    <part name="GET_RetrieveReturn_402" xmlns:q29="https://api.sandbox.globalmiles.com/wsdl" element="q29:GET_RetrieveReturn_402" />
+  </message>
+  <message name="GET_RetrieveReturn_404">
+    <part name="GET_RetrieveReturn_404" xmlns:q30="https://api.sandbox.globalmiles.com/wsdl" element="q30:GET_RetrieveReturn_404" />
+  </message>
+  <message name="GET_RetrieveReturn_429">
+    <part name="GET_RetrieveReturn_429" xmlns:q31="https://api.sandbox.globalmiles.com/wsdl" element="q31:GET_RetrieveReturn_429" />
+  </message>
+  <message name="GET_RetrieveReturn_500">
+    <part name="GET_RetrieveReturn_500" xmlns:q32="https://api.sandbox.globalmiles.com/wsdl" element="q32:GET_RetrieveReturn_500" />
+  </message>
+  <message name="GET_ListMilePayments_InputMessage">
+    <part name="GET_ListMilePayments_InputMessage" xmlns:q33="https://api.sandbox.globalmiles.com/schemas" element="q33:GET_ListMilePayments_InputMessage" />
+  </message>
+  <message name="GET_ListMilePayments_OutputMessage">
+    <part name="GET_ListMilePayments_OutputMessage" xmlns:q34="https://api.sandbox.globalmiles.com/schemas" element="q34:GET_ListMilePayments_OutputMessage" />
+  </message>
+  <message name="GET_ListMilePayments_400">
+    <part name="GET_ListMilePayments_400" xmlns:q35="https://api.sandbox.globalmiles.com/wsdl" element="q35:GET_ListMilePayments_400" />
+  </message>
+  <message name="GET_ListMilePayments_401">
+    <part name="GET_ListMilePayments_401" xmlns:q36="https://api.sandbox.globalmiles.com/wsdl" element="q36:GET_ListMilePayments_401" />
+  </message>
+  <message name="GET_ListMilePayments_402">
+    <part name="GET_ListMilePayments_402" xmlns:q37="https://api.sandbox.globalmiles.com/wsdl" element="q37:GET_ListMilePayments_402" />
+  </message>
+  <message name="GET_ListMilePayments_404">
+    <part name="GET_ListMilePayments_404" xmlns:q38="https://api.sandbox.globalmiles.com/wsdl" element="q38:GET_ListMilePayments_404" />
+  </message>
+  <message name="GET_ListMilePayments_429">
+    <part name="GET_ListMilePayments_429" xmlns:q39="https://api.sandbox.globalmiles.com/wsdl" element="q39:GET_ListMilePayments_429" />
+  </message>
+  <message name="GET_ListMilePayments_500">
+    <part name="GET_ListMilePayments_500" xmlns:q40="https://api.sandbox.globalmiles.com/wsdl" element="q40:GET_ListMilePayments_500" />
+  </message>
+  <message name="GET_RetrieveOrder_InputMessage">
+    <part name="GET_RetrieveOrder_InputMessage" xmlns:q41="https://api.sandbox.globalmiles.com/schemas" element="q41:GET_RetrieveOrder_InputMessage" />
+  </message>
+  <message name="GET_RetrieveOrder_OutputMessage">
+    <part name="GET_RetrieveOrder_OutputMessage" xmlns:q42="https://api.sandbox.globalmiles.com/schemas" element="q42:GET_RetrieveOrder_OutputMessage" />
+  </message>
+  <message name="GET_RetrieveOrder_400">
+    <part name="GET_RetrieveOrder_400" xmlns:q43="https://api.sandbox.globalmiles.com/wsdl" element="q43:GET_RetrieveOrder_400" />
+  </message>
+  <message name="GET_RetrieveOrder_401">
+    <part name="GET_RetrieveOrder_401" xmlns:q44="https://api.sandbox.globalmiles.com/wsdl" element="q44:GET_RetrieveOrder_401" />
+  </message>
+  <message name="GET_RetrieveOrder_402">
+    <part name="GET_RetrieveOrder_402" xmlns:q45="https://api.sandbox.globalmiles.com/wsdl" element="q45:GET_RetrieveOrder_402" />
+  </message>
+  <message name="GET_RetrieveOrder_404">
+    <part name="GET_RetrieveOrder_404" xmlns:q46="https://api.sandbox.globalmiles.com/wsdl" element="q46:GET_RetrieveOrder_404" />
+  </message>
+  <message name="GET_RetrieveOrder_429">
+    <part name="GET_RetrieveOrder_429" xmlns:q47="https://api.sandbox.globalmiles.com/wsdl" element="q47:GET_RetrieveOrder_429" />
+  </message>
+  <message name="GET_RetrieveOrder_500">
+    <part name="GET_RetrieveOrder_500" xmlns:q48="https://api.sandbox.globalmiles.com/wsdl" element="q48:GET_RetrieveOrder_500" />
+  </message>
+  <message name="DELETE_CancelReturn_InputMessage">
+    <part name="DELETE_CancelReturn_InputMessage" xmlns:q49="https://api.sandbox.globalmiles.com/schemas" element="q49:DELETE_CancelReturn_InputMessage" />
+  </message>
+  <message name="DELETE_CancelReturn_OutputMessage">
+    <part name="DELETE_CancelReturn_OutputMessage" xmlns:q50="https://api.sandbox.globalmiles.com/schemas" element="q50:DELETE_CancelReturn_OutputMessage" />
+  </message>
+  <message name="DELETE_CancelReturn_400">
+    <part name="DELETE_CancelReturn_400" xmlns:q51="https://api.sandbox.globalmiles.com/wsdl" element="q51:DELETE_CancelReturn_400" />
+  </message>
+  <message name="DELETE_CancelReturn_401">
+    <part name="DELETE_CancelReturn_401" xmlns:q52="https://api.sandbox.globalmiles.com/wsdl" element="q52:DELETE_CancelReturn_401" />
+  </message>
+  <message name="DELETE_CancelReturn_402">
+    <part name="DELETE_CancelReturn_402" xmlns:q53="https://api.sandbox.globalmiles.com/wsdl" element="q53:DELETE_CancelReturn_402" />
+  </message>
+  <message name="DELETE_CancelReturn_404">
+    <part name="DELETE_CancelReturn_404" xmlns:q54="https://api.sandbox.globalmiles.com/wsdl" element="q54:DELETE_CancelReturn_404" />
+  </message>
+  <message name="DELETE_CancelReturn_429">
+    <part name="DELETE_CancelReturn_429" xmlns:q55="https://api.sandbox.globalmiles.com/wsdl" element="q55:DELETE_CancelReturn_429" />
+  </message>
+  <message name="DELETE_CancelReturn_500">
+    <part name="DELETE_CancelReturn_500" xmlns:q56="https://api.sandbox.globalmiles.com/wsdl" element="q56:DELETE_CancelReturn_500" />
+  </message>
+  <message name="PUT_CompleteReturn_InputMessage">
+    <part name="PUT_CompleteReturn_InputMessage" xmlns:q57="https://api.sandbox.globalmiles.com/schemas" element="q57:PUT_CompleteReturn_InputMessage" />
+  </message>
+  <message name="PUT_CompleteReturn_OutputMessage">
+    <part name="PUT_CompleteReturn_OutputMessage" xmlns:q58="https://api.sandbox.globalmiles.com/schemas" element="q58:PUT_CompleteReturn_OutputMessage" />
+  </message>
+  <message name="PUT_CompleteReturn_400">
+    <part name="PUT_CompleteReturn_400" xmlns:q59="https://api.sandbox.globalmiles.com/wsdl" element="q59:PUT_CompleteReturn_400" />
+  </message>
+  <message name="PUT_CompleteReturn_401">
+    <part name="PUT_CompleteReturn_401" xmlns:q60="https://api.sandbox.globalmiles.com/wsdl" element="q60:PUT_CompleteReturn_401" />
+  </message>
+  <message name="PUT_CompleteReturn_402">
+    <part name="PUT_CompleteReturn_402" xmlns:q61="https://api.sandbox.globalmiles.com/wsdl" element="q61:PUT_CompleteReturn_402" />
+  </message>
+  <message name="PUT_CompleteReturn_404">
+    <part name="PUT_CompleteReturn_404" xmlns:q62="https://api.sandbox.globalmiles.com/wsdl" element="q62:PUT_CompleteReturn_404" />
+  </message>
+  <message name="PUT_CompleteReturn_429">
+    <part name="PUT_CompleteReturn_429" xmlns:q63="https://api.sandbox.globalmiles.com/wsdl" element="q63:PUT_CompleteReturn_429" />
+  </message>
+  <message name="PUT_CompleteReturn_500">
+    <part name="PUT_CompleteReturn_500" xmlns:q64="https://api.sandbox.globalmiles.com/wsdl" element="q64:PUT_CompleteReturn_500" />
+  </message>
+  <message name="POST_StartReturn_InputMessage">
+    <part name="POST_StartReturn_InputMessage" xmlns:q65="https://api.sandbox.globalmiles.com/schemas" element="q65:POST_StartReturn_InputMessage" />
+  </message>
+  <message name="POST_StartReturn_OutputMessage">
+    <part name="POST_StartReturn_OutputMessage" xmlns:q66="https://api.sandbox.globalmiles.com/schemas" element="q66:POST_StartReturn_OutputMessage" />
+  </message>
+  <message name="POST_StartReturn_400">
+    <part name="POST_StartReturn_400" xmlns:q67="https://api.sandbox.globalmiles.com/wsdl" element="q67:POST_StartReturn_400" />
+  </message>
+  <message name="POST_StartReturn_401">
+    <part name="POST_StartReturn_401" xmlns:q68="https://api.sandbox.globalmiles.com/wsdl" element="q68:POST_StartReturn_401" />
+  </message>
+  <message name="POST_StartReturn_402">
+    <part name="POST_StartReturn_402" xmlns:q69="https://api.sandbox.globalmiles.com/wsdl" element="q69:POST_StartReturn_402" />
+  </message>
+  <message name="POST_StartReturn_404">
+    <part name="POST_StartReturn_404" xmlns:q70="https://api.sandbox.globalmiles.com/wsdl" element="q70:POST_StartReturn_404" />
+  </message>
+  <message name="POST_StartReturn_429">
+    <part name="POST_StartReturn_429" xmlns:q71="https://api.sandbox.globalmiles.com/wsdl" element="q71:POST_StartReturn_429" />
+  </message>
+  <message name="POST_StartReturn_500">
+    <part name="POST_StartReturn_500" xmlns:q72="https://api.sandbox.globalmiles.com/wsdl" element="q72:POST_StartReturn_500" />
+  </message>
+  <message name="POST_StartMilePayment_InputMessage">
+    <part name="POST_StartMilePayment_InputMessage" xmlns:q73="https://api.sandbox.globalmiles.com/schemas" element="q73:POST_StartMilePayment_InputMessage" />
+  </message>
+  <message name="POST_StartMilePayment_OutputMessage">
+    <part name="POST_StartMilePayment_OutputMessage" xmlns:q74="https://api.sandbox.globalmiles.com/schemas" element="q74:POST_StartMilePayment_OutputMessage" />
+  </message>
+  <message name="POST_StartMilePayment_400">
+    <part name="POST_StartMilePayment_400" xmlns:q75="https://api.sandbox.globalmiles.com/wsdl" element="q75:POST_StartMilePayment_400" />
+  </message>
+  <message name="POST_StartMilePayment_401">
+    <part name="POST_StartMilePayment_401" xmlns:q76="https://api.sandbox.globalmiles.com/wsdl" element="q76:POST_StartMilePayment_401" />
+  </message>
+  <message name="POST_StartMilePayment_402">
+    <part name="POST_StartMilePayment_402" xmlns:q77="https://api.sandbox.globalmiles.com/wsdl" element="q77:POST_StartMilePayment_402" />
+  </message>
+  <message name="POST_StartMilePayment_404">
+    <part name="POST_StartMilePayment_404" xmlns:q78="https://api.sandbox.globalmiles.com/wsdl" element="q78:POST_StartMilePayment_404" />
+  </message>
+  <message name="POST_StartMilePayment_429">
+    <part name="POST_StartMilePayment_429" xmlns:q79="https://api.sandbox.globalmiles.com/wsdl" element="q79:POST_StartMilePayment_429" />
+  </message>
+  <message name="POST_StartMilePayment_500">
+    <part name="POST_StartMilePayment_500" xmlns:q80="https://api.sandbox.globalmiles.com/wsdl" element="q80:POST_StartMilePayment_500" />
+  </message>
+  <message name="PUT_CompleteMilePayment_InputMessage">
+    <part name="PUT_CompleteMilePayment_InputMessage" xmlns:q81="https://api.sandbox.globalmiles.com/schemas" element="q81:PUT_CompleteMilePayment_InputMessage" />
+  </message>
+  <message name="PUT_CompleteMilePayment_OutputMessage">
+    <part name="PUT_CompleteMilePayment_OutputMessage" xmlns:q82="https://api.sandbox.globalmiles.com/schemas" element="q82:PUT_CompleteMilePayment_OutputMessage" />
+  </message>
+  <message name="PUT_CompleteMilePayment_400">
+    <part name="PUT_CompleteMilePayment_400" xmlns:q83="https://api.sandbox.globalmiles.com/wsdl" element="q83:PUT_CompleteMilePayment_400" />
+  </message>
+  <message name="PUT_CompleteMilePayment_401">
+    <part name="PUT_CompleteMilePayment_401" xmlns:q84="https://api.sandbox.globalmiles.com/wsdl" element="q84:PUT_CompleteMilePayment_401" />
+  </message>
+  <message name="PUT_CompleteMilePayment_402">
+    <part name="PUT_CompleteMilePayment_402" xmlns:q85="https://api.sandbox.globalmiles.com/wsdl" element="q85:PUT_CompleteMilePayment_402" />
+  </message>
+  <message name="PUT_CompleteMilePayment_404">
+    <part name="PUT_CompleteMilePayment_404" xmlns:q86="https://api.sandbox.globalmiles.com/wsdl" element="q86:PUT_CompleteMilePayment_404" />
+  </message>
+  <message name="PUT_CompleteMilePayment_429">
+    <part name="PUT_CompleteMilePayment_429" xmlns:q87="https://api.sandbox.globalmiles.com/wsdl" element="q87:PUT_CompleteMilePayment_429" />
+  </message>
+  <message name="PUT_CompleteMilePayment_500">
+    <part name="PUT_CompleteMilePayment_500" xmlns:q88="https://api.sandbox.globalmiles.com/wsdl" element="q88:PUT_CompleteMilePayment_500" />
+  </message>
+  <message name="DELETE_CancelMilePayment_InputMessage">
+    <part name="DELETE_CancelMilePayment_InputMessage" xmlns:q89="https://api.sandbox.globalmiles.com/schemas" element="q89:DELETE_CancelMilePayment_InputMessage" />
+  </message>
+  <message name="DELETE_CancelMilePayment_OutputMessage">
+    <part name="DELETE_CancelMilePayment_OutputMessage" xmlns:q90="https://api.sandbox.globalmiles.com/schemas" element="q90:DELETE_CancelMilePayment_OutputMessage" />
+  </message>
+  <message name="DELETE_CancelMilePayment_400">
+    <part name="DELETE_CancelMilePayment_400" xmlns:q91="https://api.sandbox.globalmiles.com/wsdl" element="q91:DELETE_CancelMilePayment_400" />
+  </message>
+  <message name="DELETE_CancelMilePayment_401">
+    <part name="DELETE_CancelMilePayment_401" xmlns:q92="https://api.sandbox.globalmiles.com/wsdl" element="q92:DELETE_CancelMilePayment_401" />
+  </message>
+  <message name="DELETE_CancelMilePayment_402">
+    <part name="DELETE_CancelMilePayment_402" xmlns:q93="https://api.sandbox.globalmiles.com/wsdl" element="q93:DELETE_CancelMilePayment_402" />
+  </message>
+  <message name="DELETE_CancelMilePayment_404">
+    <part name="DELETE_CancelMilePayment_404" xmlns:q94="https://api.sandbox.globalmiles.com/wsdl" element="q94:DELETE_CancelMilePayment_404" />
+  </message>
+  <message name="DELETE_CancelMilePayment_429">
+    <part name="DELETE_CancelMilePayment_429" xmlns:q95="https://api.sandbox.globalmiles.com/wsdl" element="q95:DELETE_CancelMilePayment_429" />
+  </message>
+  <message name="DELETE_CancelMilePayment_500">
+    <part name="DELETE_CancelMilePayment_500" xmlns:q96="https://api.sandbox.globalmiles.com/wsdl" element="q96:DELETE_CancelMilePayment_500" />
+  </message>
+  <message name="GET_ListReturns_InputMessage">
+    <part name="GET_ListReturns_InputMessage" xmlns:q97="https://api.sandbox.globalmiles.com/schemas" element="q97:GET_ListReturns_InputMessage" />
+  </message>
+  <message name="GET_ListReturns_OutputMessage">
+    <part name="GET_ListReturns_OutputMessage" xmlns:q98="https://api.sandbox.globalmiles.com/schemas" element="q98:GET_ListReturns_OutputMessage" />
+  </message>
+  <message name="GET_ListReturns_400">
+    <part name="GET_ListReturns_400" xmlns:q99="https://api.sandbox.globalmiles.com/wsdl" element="q99:GET_ListReturns_400" />
+  </message>
+  <message name="GET_ListReturns_401">
+    <part name="GET_ListReturns_401" xmlns:q100="https://api.sandbox.globalmiles.com/wsdl" element="q100:GET_ListReturns_401" />
+  </message>
+  <message name="GET_ListReturns_402">
+    <part name="GET_ListReturns_402" xmlns:q101="https://api.sandbox.globalmiles.com/wsdl" element="q101:GET_ListReturns_402" />
+  </message>
+  <message name="GET_ListReturns_404">
+    <part name="GET_ListReturns_404" xmlns:q102="https://api.sandbox.globalmiles.com/wsdl" element="q102:GET_ListReturns_404" />
+  </message>
+  <message name="GET_ListReturns_429">
+    <part name="GET_ListReturns_429" xmlns:q103="https://api.sandbox.globalmiles.com/wsdl" element="q103:GET_ListReturns_429" />
+  </message>
+  <message name="GET_ListReturns_500">
+    <part name="GET_ListReturns_500" xmlns:q104="https://api.sandbox.globalmiles.com/wsdl" element="q104:GET_ListReturns_500" />
+  </message>
+  <message name="POST_RefundMilePayment_InputMessage">
+    <part name="POST_RefundMilePayment_InputMessage" xmlns:q105="https://api.sandbox.globalmiles.com/schemas" element="q105:POST_RefundMilePayment_InputMessage" />
+  </message>
+  <message name="POST_RefundMilePayment_OutputMessage">
+    <part name="POST_RefundMilePayment_OutputMessage" xmlns:q106="https://api.sandbox.globalmiles.com/schemas" element="q106:POST_RefundMilePayment_OutputMessage" />
+  </message>
+  <message name="POST_RefundMilePayment_400">
+    <part name="POST_RefundMilePayment_400" xmlns:q107="https://api.sandbox.globalmiles.com/wsdl" element="q107:POST_RefundMilePayment_400" />
+  </message>
+  <message name="POST_RefundMilePayment_401">
+    <part name="POST_RefundMilePayment_401" xmlns:q108="https://api.sandbox.globalmiles.com/wsdl" element="q108:POST_RefundMilePayment_401" />
+  </message>
+  <message name="POST_RefundMilePayment_402">
+    <part name="POST_RefundMilePayment_402" xmlns:q109="https://api.sandbox.globalmiles.com/wsdl" element="q109:POST_RefundMilePayment_402" />
+  </message>
+  <message name="POST_RefundMilePayment_404">
+    <part name="POST_RefundMilePayment_404" xmlns:q110="https://api.sandbox.globalmiles.com/wsdl" element="q110:POST_RefundMilePayment_404" />
+  </message>
+  <message name="POST_RefundMilePayment_429">
+    <part name="POST_RefundMilePayment_429" xmlns:q111="https://api.sandbox.globalmiles.com/wsdl" element="q111:POST_RefundMilePayment_429" />
+  </message>
+  <message name="POST_RefundMilePayment_500">
+    <part name="POST_RefundMilePayment_500" xmlns:q112="https://api.sandbox.globalmiles.com/wsdl" element="q112:POST_RefundMilePayment_500" />
+  </message>
+  <message name="POST_Cart_InputMessage">
+    <part name="POST_Cart_InputMessage" xmlns:q113="https://api.sandbox.globalmiles.com/schemas" element="q113:POST_Cart_InputMessage" />
+  </message>
+  <message name="POST_Cart_OutputMessage">
+    <part name="POST_Cart_OutputMessage" xmlns:q114="https://api.sandbox.globalmiles.com/schemas" element="q114:POST_Cart_OutputMessage" />
+  </message>
+  <message name="POST_Cart_400">
+    <part name="POST_Cart_400" xmlns:q115="https://api.sandbox.globalmiles.com/wsdl" element="q115:POST_Cart_400" />
+  </message>
+  <message name="POST_Cart_401">
+    <part name="POST_Cart_401" xmlns:q116="https://api.sandbox.globalmiles.com/wsdl" element="q116:POST_Cart_401" />
+  </message>
+  <message name="POST_Cart_402">
+    <part name="POST_Cart_402" xmlns:q117="https://api.sandbox.globalmiles.com/wsdl" element="q117:POST_Cart_402" />
+  </message>
+  <message name="POST_Cart_404">
+    <part name="POST_Cart_404" xmlns:q118="https://api.sandbox.globalmiles.com/wsdl" element="q118:POST_Cart_404" />
+  </message>
+  <message name="POST_Cart_429">
+    <part name="POST_Cart_429" xmlns:q119="https://api.sandbox.globalmiles.com/wsdl" element="q119:POST_Cart_429" />
+  </message>
+  <message name="POST_Cart_500">
+    <part name="POST_Cart_500" xmlns:q120="https://api.sandbox.globalmiles.com/wsdl" element="q120:POST_Cart_500" />
+  </message>
+  <portType name="Global_x0020_Miles_x0020_E-commerce_x0020_API_PortType">
+    <operation name="GET_ListOrders">
+      <documentation>This endpoint allows to get list of orders. In order to get detailed order history and reconciliation you can use this endpoint.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q121="https://api.sandbox.globalmiles.com/wsdl" message="q121:GET_ListOrders_InputMessage" />
+      <output xmlns:q122="https://api.sandbox.globalmiles.com/wsdl" message="q122:GET_ListOrders_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="GET_ListOrders_400" xmlns:q123="https://api.sandbox.globalmiles.com/wsdl" message="q123:GET_ListOrders_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="GET_ListOrders_401" xmlns:q124="https://api.sandbox.globalmiles.com/wsdl" message="q124:GET_ListOrders_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="GET_ListOrders_402" xmlns:q125="https://api.sandbox.globalmiles.com/wsdl" message="q125:GET_ListOrders_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="GET_ListOrders_404" xmlns:q126="https://api.sandbox.globalmiles.com/wsdl" message="q126:GET_ListOrders_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="GET_ListOrders_429" xmlns:q127="https://api.sandbox.globalmiles.com/wsdl" message="q127:GET_ListOrders_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="GET_ListOrders_500" xmlns:q128="https://api.sandbox.globalmiles.com/wsdl" message="q128:GET_ListOrders_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="POST_Authentication">
+      <documentation>An access token will allow you to make requests for the system. We support only one type of token: client_credentials.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q129="https://api.sandbox.globalmiles.com/wsdl" message="q129:POST_Authentication_InputMessage" />
+      <output xmlns:q130="https://api.sandbox.globalmiles.com/wsdl" message="q130:POST_Authentication_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="POST_Authentication_400" xmlns:q131="https://api.sandbox.globalmiles.com/wsdl" message="q131:POST_Authentication_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="POST_Authentication_401" xmlns:q132="https://api.sandbox.globalmiles.com/wsdl" message="q132:POST_Authentication_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="POST_Authentication_402" xmlns:q133="https://api.sandbox.globalmiles.com/wsdl" message="q133:POST_Authentication_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="POST_Authentication_404" xmlns:q134="https://api.sandbox.globalmiles.com/wsdl" message="q134:POST_Authentication_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="POST_Authentication_429" xmlns:q135="https://api.sandbox.globalmiles.com/wsdl" message="q135:POST_Authentication_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="POST_Authentication_500" xmlns:q136="https://api.sandbox.globalmiles.com/wsdl" message="q136:POST_Authentication_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="POST_Order">
+      <documentation>This endpoint allows to create an order for earn miles. It may also include discounts and payments.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q137="https://api.sandbox.globalmiles.com/wsdl" message="q137:POST_Order_InputMessage" />
+      <output xmlns:q138="https://api.sandbox.globalmiles.com/wsdl" message="q138:POST_Order_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="POST_Order_400" xmlns:q139="https://api.sandbox.globalmiles.com/wsdl" message="q139:POST_Order_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="POST_Order_401" xmlns:q140="https://api.sandbox.globalmiles.com/wsdl" message="q140:POST_Order_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="POST_Order_402" xmlns:q141="https://api.sandbox.globalmiles.com/wsdl" message="q141:POST_Order_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="POST_Order_404" xmlns:q142="https://api.sandbox.globalmiles.com/wsdl" message="q142:POST_Order_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="POST_Order_429" xmlns:q143="https://api.sandbox.globalmiles.com/wsdl" message="q143:POST_Order_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="POST_Order_500" xmlns:q144="https://api.sandbox.globalmiles.com/wsdl" message="q144:POST_Order_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="GET_RetrieveReturn">
+      <documentation>This endpoint allows to get a return.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q145="https://api.sandbox.globalmiles.com/wsdl" message="q145:GET_RetrieveReturn_InputMessage" />
+      <output xmlns:q146="https://api.sandbox.globalmiles.com/wsdl" message="q146:GET_RetrieveReturn_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="GET_RetrieveReturn_400" xmlns:q147="https://api.sandbox.globalmiles.com/wsdl" message="q147:GET_RetrieveReturn_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="GET_RetrieveReturn_401" xmlns:q148="https://api.sandbox.globalmiles.com/wsdl" message="q148:GET_RetrieveReturn_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="GET_RetrieveReturn_402" xmlns:q149="https://api.sandbox.globalmiles.com/wsdl" message="q149:GET_RetrieveReturn_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="GET_RetrieveReturn_404" xmlns:q150="https://api.sandbox.globalmiles.com/wsdl" message="q150:GET_RetrieveReturn_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="GET_RetrieveReturn_429" xmlns:q151="https://api.sandbox.globalmiles.com/wsdl" message="q151:GET_RetrieveReturn_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="GET_RetrieveReturn_500" xmlns:q152="https://api.sandbox.globalmiles.com/wsdl" message="q152:GET_RetrieveReturn_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="GET_ListMilePayments">
+      <documentation>This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q153="https://api.sandbox.globalmiles.com/wsdl" message="q153:GET_ListMilePayments_InputMessage" />
+      <output xmlns:q154="https://api.sandbox.globalmiles.com/wsdl" message="q154:GET_ListMilePayments_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="GET_ListMilePayments_400" xmlns:q155="https://api.sandbox.globalmiles.com/wsdl" message="q155:GET_ListMilePayments_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="GET_ListMilePayments_401" xmlns:q156="https://api.sandbox.globalmiles.com/wsdl" message="q156:GET_ListMilePayments_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="GET_ListMilePayments_402" xmlns:q157="https://api.sandbox.globalmiles.com/wsdl" message="q157:GET_ListMilePayments_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="GET_ListMilePayments_404" xmlns:q158="https://api.sandbox.globalmiles.com/wsdl" message="q158:GET_ListMilePayments_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="GET_ListMilePayments_429" xmlns:q159="https://api.sandbox.globalmiles.com/wsdl" message="q159:GET_ListMilePayments_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="GET_ListMilePayments_500" xmlns:q160="https://api.sandbox.globalmiles.com/wsdl" message="q160:GET_ListMilePayments_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="GET_RetrieveOrder">
+      <documentation>This endpoint allows to get an order.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q161="https://api.sandbox.globalmiles.com/wsdl" message="q161:GET_RetrieveOrder_InputMessage" />
+      <output xmlns:q162="https://api.sandbox.globalmiles.com/wsdl" message="q162:GET_RetrieveOrder_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="GET_RetrieveOrder_400" xmlns:q163="https://api.sandbox.globalmiles.com/wsdl" message="q163:GET_RetrieveOrder_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="GET_RetrieveOrder_401" xmlns:q164="https://api.sandbox.globalmiles.com/wsdl" message="q164:GET_RetrieveOrder_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="GET_RetrieveOrder_402" xmlns:q165="https://api.sandbox.globalmiles.com/wsdl" message="q165:GET_RetrieveOrder_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="GET_RetrieveOrder_404" xmlns:q166="https://api.sandbox.globalmiles.com/wsdl" message="q166:GET_RetrieveOrder_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="GET_RetrieveOrder_429" xmlns:q167="https://api.sandbox.globalmiles.com/wsdl" message="q167:GET_RetrieveOrder_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="GET_RetrieveOrder_500" xmlns:q168="https://api.sandbox.globalmiles.com/wsdl" message="q168:GET_RetrieveOrder_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="DELETE_CancelReturn">
+      <documentation>This endpoint allows to cancel a return.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q169="https://api.sandbox.globalmiles.com/wsdl" message="q169:DELETE_CancelReturn_InputMessage" />
+      <output xmlns:q170="https://api.sandbox.globalmiles.com/wsdl" message="q170:DELETE_CancelReturn_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="DELETE_CancelReturn_400" xmlns:q171="https://api.sandbox.globalmiles.com/wsdl" message="q171:DELETE_CancelReturn_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="DELETE_CancelReturn_401" xmlns:q172="https://api.sandbox.globalmiles.com/wsdl" message="q172:DELETE_CancelReturn_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="DELETE_CancelReturn_402" xmlns:q173="https://api.sandbox.globalmiles.com/wsdl" message="q173:DELETE_CancelReturn_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="DELETE_CancelReturn_404" xmlns:q174="https://api.sandbox.globalmiles.com/wsdl" message="q174:DELETE_CancelReturn_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="DELETE_CancelReturn_429" xmlns:q175="https://api.sandbox.globalmiles.com/wsdl" message="q175:DELETE_CancelReturn_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="DELETE_CancelReturn_500" xmlns:q176="https://api.sandbox.globalmiles.com/wsdl" message="q176:DELETE_CancelReturn_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="PUT_CompleteReturn">
+      <documentation>This endpoint allows to complete a return.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q177="https://api.sandbox.globalmiles.com/wsdl" message="q177:PUT_CompleteReturn_InputMessage" />
+      <output xmlns:q178="https://api.sandbox.globalmiles.com/wsdl" message="q178:PUT_CompleteReturn_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="PUT_CompleteReturn_400" xmlns:q179="https://api.sandbox.globalmiles.com/wsdl" message="q179:PUT_CompleteReturn_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="PUT_CompleteReturn_401" xmlns:q180="https://api.sandbox.globalmiles.com/wsdl" message="q180:PUT_CompleteReturn_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="PUT_CompleteReturn_402" xmlns:q181="https://api.sandbox.globalmiles.com/wsdl" message="q181:PUT_CompleteReturn_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="PUT_CompleteReturn_404" xmlns:q182="https://api.sandbox.globalmiles.com/wsdl" message="q182:PUT_CompleteReturn_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="PUT_CompleteReturn_429" xmlns:q183="https://api.sandbox.globalmiles.com/wsdl" message="q183:PUT_CompleteReturn_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="PUT_CompleteReturn_500" xmlns:q184="https://api.sandbox.globalmiles.com/wsdl" message="q184:PUT_CompleteReturn_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="POST_StartReturn">
+      <documentation>This endpoint allows to start a return for a specific order.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q185="https://api.sandbox.globalmiles.com/wsdl" message="q185:POST_StartReturn_InputMessage" />
+      <output xmlns:q186="https://api.sandbox.globalmiles.com/wsdl" message="q186:POST_StartReturn_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="POST_StartReturn_400" xmlns:q187="https://api.sandbox.globalmiles.com/wsdl" message="q187:POST_StartReturn_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="POST_StartReturn_401" xmlns:q188="https://api.sandbox.globalmiles.com/wsdl" message="q188:POST_StartReturn_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="POST_StartReturn_402" xmlns:q189="https://api.sandbox.globalmiles.com/wsdl" message="q189:POST_StartReturn_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="POST_StartReturn_404" xmlns:q190="https://api.sandbox.globalmiles.com/wsdl" message="q190:POST_StartReturn_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="POST_StartReturn_429" xmlns:q191="https://api.sandbox.globalmiles.com/wsdl" message="q191:POST_StartReturn_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="POST_StartReturn_500" xmlns:q192="https://api.sandbox.globalmiles.com/wsdl" message="q192:POST_StartReturn_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="POST_StartMilePayment">
+      <documentation>After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check "Complete Mile Payment endpoint" please.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q193="https://api.sandbox.globalmiles.com/wsdl" message="q193:POST_StartMilePayment_InputMessage" />
+      <output xmlns:q194="https://api.sandbox.globalmiles.com/wsdl" message="q194:POST_StartMilePayment_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="POST_StartMilePayment_400" xmlns:q195="https://api.sandbox.globalmiles.com/wsdl" message="q195:POST_StartMilePayment_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="POST_StartMilePayment_401" xmlns:q196="https://api.sandbox.globalmiles.com/wsdl" message="q196:POST_StartMilePayment_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="POST_StartMilePayment_402" xmlns:q197="https://api.sandbox.globalmiles.com/wsdl" message="q197:POST_StartMilePayment_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="POST_StartMilePayment_404" xmlns:q198="https://api.sandbox.globalmiles.com/wsdl" message="q198:POST_StartMilePayment_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="POST_StartMilePayment_429" xmlns:q199="https://api.sandbox.globalmiles.com/wsdl" message="q199:POST_StartMilePayment_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="POST_StartMilePayment_500" xmlns:q200="https://api.sandbox.globalmiles.com/wsdl" message="q200:POST_StartMilePayment_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="PUT_CompleteMilePayment">
+      <documentation>This endpoint allows to complete a payment.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q201="https://api.sandbox.globalmiles.com/wsdl" message="q201:PUT_CompleteMilePayment_InputMessage" />
+      <output xmlns:q202="https://api.sandbox.globalmiles.com/wsdl" message="q202:PUT_CompleteMilePayment_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="PUT_CompleteMilePayment_400" xmlns:q203="https://api.sandbox.globalmiles.com/wsdl" message="q203:PUT_CompleteMilePayment_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="PUT_CompleteMilePayment_401" xmlns:q204="https://api.sandbox.globalmiles.com/wsdl" message="q204:PUT_CompleteMilePayment_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="PUT_CompleteMilePayment_402" xmlns:q205="https://api.sandbox.globalmiles.com/wsdl" message="q205:PUT_CompleteMilePayment_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="PUT_CompleteMilePayment_404" xmlns:q206="https://api.sandbox.globalmiles.com/wsdl" message="q206:PUT_CompleteMilePayment_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="PUT_CompleteMilePayment_429" xmlns:q207="https://api.sandbox.globalmiles.com/wsdl" message="q207:PUT_CompleteMilePayment_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="PUT_CompleteMilePayment_500" xmlns:q208="https://api.sandbox.globalmiles.com/wsdl" message="q208:PUT_CompleteMilePayment_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="DELETE_CancelMilePayment">
+      <documentation>This endpoint allows to cancel a payment.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q209="https://api.sandbox.globalmiles.com/wsdl" message="q209:DELETE_CancelMilePayment_InputMessage" />
+      <output xmlns:q210="https://api.sandbox.globalmiles.com/wsdl" message="q210:DELETE_CancelMilePayment_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="DELETE_CancelMilePayment_400" xmlns:q211="https://api.sandbox.globalmiles.com/wsdl" message="q211:DELETE_CancelMilePayment_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="DELETE_CancelMilePayment_401" xmlns:q212="https://api.sandbox.globalmiles.com/wsdl" message="q212:DELETE_CancelMilePayment_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="DELETE_CancelMilePayment_402" xmlns:q213="https://api.sandbox.globalmiles.com/wsdl" message="q213:DELETE_CancelMilePayment_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="DELETE_CancelMilePayment_404" xmlns:q214="https://api.sandbox.globalmiles.com/wsdl" message="q214:DELETE_CancelMilePayment_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="DELETE_CancelMilePayment_429" xmlns:q215="https://api.sandbox.globalmiles.com/wsdl" message="q215:DELETE_CancelMilePayment_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="DELETE_CancelMilePayment_500" xmlns:q216="https://api.sandbox.globalmiles.com/wsdl" message="q216:DELETE_CancelMilePayment_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="GET_ListReturns">
+      <documentation>This endpoint allows to get list of returns. In order to get detailed return history and reconciliation you can use this endpoint.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q217="https://api.sandbox.globalmiles.com/wsdl" message="q217:GET_ListReturns_InputMessage" />
+      <output xmlns:q218="https://api.sandbox.globalmiles.com/wsdl" message="q218:GET_ListReturns_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="GET_ListReturns_400" xmlns:q219="https://api.sandbox.globalmiles.com/wsdl" message="q219:GET_ListReturns_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="GET_ListReturns_401" xmlns:q220="https://api.sandbox.globalmiles.com/wsdl" message="q220:GET_ListReturns_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="GET_ListReturns_402" xmlns:q221="https://api.sandbox.globalmiles.com/wsdl" message="q221:GET_ListReturns_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="GET_ListReturns_404" xmlns:q222="https://api.sandbox.globalmiles.com/wsdl" message="q222:GET_ListReturns_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="GET_ListReturns_429" xmlns:q223="https://api.sandbox.globalmiles.com/wsdl" message="q223:GET_ListReturns_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="GET_ListReturns_500" xmlns:q224="https://api.sandbox.globalmiles.com/wsdl" message="q224:GET_ListReturns_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="POST_RefundMilePayment">
+      <documentation>This endpoint allows to refund a payment.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q225="https://api.sandbox.globalmiles.com/wsdl" message="q225:POST_RefundMilePayment_InputMessage" />
+      <output xmlns:q226="https://api.sandbox.globalmiles.com/wsdl" message="q226:POST_RefundMilePayment_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="POST_RefundMilePayment_400" xmlns:q227="https://api.sandbox.globalmiles.com/wsdl" message="q227:POST_RefundMilePayment_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="POST_RefundMilePayment_401" xmlns:q228="https://api.sandbox.globalmiles.com/wsdl" message="q228:POST_RefundMilePayment_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="POST_RefundMilePayment_402" xmlns:q229="https://api.sandbox.globalmiles.com/wsdl" message="q229:POST_RefundMilePayment_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="POST_RefundMilePayment_404" xmlns:q230="https://api.sandbox.globalmiles.com/wsdl" message="q230:POST_RefundMilePayment_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="POST_RefundMilePayment_429" xmlns:q231="https://api.sandbox.globalmiles.com/wsdl" message="q231:POST_RefundMilePayment_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="POST_RefundMilePayment_500" xmlns:q232="https://api.sandbox.globalmiles.com/wsdl" message="q232:POST_RefundMilePayment_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+    <operation name="POST_Cart">
+      <documentation>This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.
+
+You can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c</documentation>
+      <input xmlns:q233="https://api.sandbox.globalmiles.com/wsdl" message="q233:POST_Cart_InputMessage" />
+      <output xmlns:q234="https://api.sandbox.globalmiles.com/wsdl" message="q234:POST_Cart_OutputMessage">
+        <documentation></documentation>
+      </output>
+      <fault name="POST_Cart_400" xmlns:q235="https://api.sandbox.globalmiles.com/wsdl" message="q235:POST_Cart_400">
+        <documentation>Bad Request	- The request was unacceptable, often due to missing a required parameter.</documentation>
+      </fault>
+      <fault name="POST_Cart_401" xmlns:q236="https://api.sandbox.globalmiles.com/wsdl" message="q236:POST_Cart_401">
+        <documentation>Unauthorized - No valid API key provided.</documentation>
+      </fault>
+      <fault name="POST_Cart_402" xmlns:q237="https://api.sandbox.globalmiles.com/wsdl" message="q237:POST_Cart_402">
+        <documentation>Request Failed - The parameters were valid but the request failed.</documentation>
+      </fault>
+      <fault name="POST_Cart_404" xmlns:q238="https://api.sandbox.globalmiles.com/wsdl" message="q238:POST_Cart_404">
+        <documentation>Not Found - The requested resource doesn't exist.</documentation>
+      </fault>
+      <fault name="POST_Cart_429" xmlns:q239="https://api.sandbox.globalmiles.com/wsdl" message="q239:POST_Cart_429">
+        <documentation>Too Many Requests - Too many requests hit the API too quickly.</documentation>
+      </fault>
+      <fault name="POST_Cart_500" xmlns:q240="https://api.sandbox.globalmiles.com/wsdl" message="q240:POST_Cart_500">
+        <documentation>Server Error - Something went wrong.</documentation>
+      </fault>
+    </operation>
+  </portType>
+  <binding name="Global_x0020_Miles_x0020_E-commerce_x0020_API_Binding" xmlns:q241="https://api.sandbox.globalmiles.com/wsdl" type="q241:Global_x0020_Miles_x0020_E-commerce_x0020_API_PortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="GET_ListOrders">
+      <soap:operation soapAction="GET_ListOrders" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="GET_ListOrders_400">
+        <soap:fault use="literal" name="GET_ListOrders_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListOrders_401">
+        <soap:fault use="literal" name="GET_ListOrders_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListOrders_402">
+        <soap:fault use="literal" name="GET_ListOrders_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListOrders_404">
+        <soap:fault use="literal" name="GET_ListOrders_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListOrders_429">
+        <soap:fault use="literal" name="GET_ListOrders_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListOrders_500">
+        <soap:fault use="literal" name="GET_ListOrders_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="POST_Authentication">
+      <soap:operation soapAction="POST_Authentication" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="POST_Authentication_400">
+        <soap:fault use="literal" name="POST_Authentication_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Authentication_401">
+        <soap:fault use="literal" name="POST_Authentication_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Authentication_402">
+        <soap:fault use="literal" name="POST_Authentication_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Authentication_404">
+        <soap:fault use="literal" name="POST_Authentication_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Authentication_429">
+        <soap:fault use="literal" name="POST_Authentication_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Authentication_500">
+        <soap:fault use="literal" name="POST_Authentication_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="POST_Order">
+      <soap:operation soapAction="POST_Order" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="POST_Order_400">
+        <soap:fault use="literal" name="POST_Order_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Order_401">
+        <soap:fault use="literal" name="POST_Order_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Order_402">
+        <soap:fault use="literal" name="POST_Order_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Order_404">
+        <soap:fault use="literal" name="POST_Order_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Order_429">
+        <soap:fault use="literal" name="POST_Order_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Order_500">
+        <soap:fault use="literal" name="POST_Order_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="GET_RetrieveReturn">
+      <soap:operation soapAction="GET_RetrieveReturn" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="GET_RetrieveReturn_400">
+        <soap:fault use="literal" name="GET_RetrieveReturn_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveReturn_401">
+        <soap:fault use="literal" name="GET_RetrieveReturn_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveReturn_402">
+        <soap:fault use="literal" name="GET_RetrieveReturn_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveReturn_404">
+        <soap:fault use="literal" name="GET_RetrieveReturn_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveReturn_429">
+        <soap:fault use="literal" name="GET_RetrieveReturn_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveReturn_500">
+        <soap:fault use="literal" name="GET_RetrieveReturn_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="GET_ListMilePayments">
+      <soap:operation soapAction="GET_ListMilePayments" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="GET_ListMilePayments_400">
+        <soap:fault use="literal" name="GET_ListMilePayments_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListMilePayments_401">
+        <soap:fault use="literal" name="GET_ListMilePayments_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListMilePayments_402">
+        <soap:fault use="literal" name="GET_ListMilePayments_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListMilePayments_404">
+        <soap:fault use="literal" name="GET_ListMilePayments_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListMilePayments_429">
+        <soap:fault use="literal" name="GET_ListMilePayments_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListMilePayments_500">
+        <soap:fault use="literal" name="GET_ListMilePayments_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="GET_RetrieveOrder">
+      <soap:operation soapAction="GET_RetrieveOrder" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="GET_RetrieveOrder_400">
+        <soap:fault use="literal" name="GET_RetrieveOrder_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveOrder_401">
+        <soap:fault use="literal" name="GET_RetrieveOrder_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveOrder_402">
+        <soap:fault use="literal" name="GET_RetrieveOrder_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveOrder_404">
+        <soap:fault use="literal" name="GET_RetrieveOrder_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveOrder_429">
+        <soap:fault use="literal" name="GET_RetrieveOrder_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_RetrieveOrder_500">
+        <soap:fault use="literal" name="GET_RetrieveOrder_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="DELETE_CancelReturn">
+      <soap:operation soapAction="DELETE_CancelReturn" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="DELETE_CancelReturn_400">
+        <soap:fault use="literal" name="DELETE_CancelReturn_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelReturn_401">
+        <soap:fault use="literal" name="DELETE_CancelReturn_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelReturn_402">
+        <soap:fault use="literal" name="DELETE_CancelReturn_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelReturn_404">
+        <soap:fault use="literal" name="DELETE_CancelReturn_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelReturn_429">
+        <soap:fault use="literal" name="DELETE_CancelReturn_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelReturn_500">
+        <soap:fault use="literal" name="DELETE_CancelReturn_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="PUT_CompleteReturn">
+      <soap:operation soapAction="PUT_CompleteReturn" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="PUT_CompleteReturn_400">
+        <soap:fault use="literal" name="PUT_CompleteReturn_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteReturn_401">
+        <soap:fault use="literal" name="PUT_CompleteReturn_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteReturn_402">
+        <soap:fault use="literal" name="PUT_CompleteReturn_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteReturn_404">
+        <soap:fault use="literal" name="PUT_CompleteReturn_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteReturn_429">
+        <soap:fault use="literal" name="PUT_CompleteReturn_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteReturn_500">
+        <soap:fault use="literal" name="PUT_CompleteReturn_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="POST_StartReturn">
+      <soap:operation soapAction="POST_StartReturn" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="POST_StartReturn_400">
+        <soap:fault use="literal" name="POST_StartReturn_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartReturn_401">
+        <soap:fault use="literal" name="POST_StartReturn_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartReturn_402">
+        <soap:fault use="literal" name="POST_StartReturn_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartReturn_404">
+        <soap:fault use="literal" name="POST_StartReturn_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartReturn_429">
+        <soap:fault use="literal" name="POST_StartReturn_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartReturn_500">
+        <soap:fault use="literal" name="POST_StartReturn_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="POST_StartMilePayment">
+      <soap:operation soapAction="POST_StartMilePayment" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="POST_StartMilePayment_400">
+        <soap:fault use="literal" name="POST_StartMilePayment_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartMilePayment_401">
+        <soap:fault use="literal" name="POST_StartMilePayment_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartMilePayment_402">
+        <soap:fault use="literal" name="POST_StartMilePayment_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartMilePayment_404">
+        <soap:fault use="literal" name="POST_StartMilePayment_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartMilePayment_429">
+        <soap:fault use="literal" name="POST_StartMilePayment_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_StartMilePayment_500">
+        <soap:fault use="literal" name="POST_StartMilePayment_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="PUT_CompleteMilePayment">
+      <soap:operation soapAction="PUT_CompleteMilePayment" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="PUT_CompleteMilePayment_400">
+        <soap:fault use="literal" name="PUT_CompleteMilePayment_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteMilePayment_401">
+        <soap:fault use="literal" name="PUT_CompleteMilePayment_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteMilePayment_402">
+        <soap:fault use="literal" name="PUT_CompleteMilePayment_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteMilePayment_404">
+        <soap:fault use="literal" name="PUT_CompleteMilePayment_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteMilePayment_429">
+        <soap:fault use="literal" name="PUT_CompleteMilePayment_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="PUT_CompleteMilePayment_500">
+        <soap:fault use="literal" name="PUT_CompleteMilePayment_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="DELETE_CancelMilePayment">
+      <soap:operation soapAction="DELETE_CancelMilePayment" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="DELETE_CancelMilePayment_400">
+        <soap:fault use="literal" name="DELETE_CancelMilePayment_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelMilePayment_401">
+        <soap:fault use="literal" name="DELETE_CancelMilePayment_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelMilePayment_402">
+        <soap:fault use="literal" name="DELETE_CancelMilePayment_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelMilePayment_404">
+        <soap:fault use="literal" name="DELETE_CancelMilePayment_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelMilePayment_429">
+        <soap:fault use="literal" name="DELETE_CancelMilePayment_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="DELETE_CancelMilePayment_500">
+        <soap:fault use="literal" name="DELETE_CancelMilePayment_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="GET_ListReturns">
+      <soap:operation soapAction="GET_ListReturns" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="GET_ListReturns_400">
+        <soap:fault use="literal" name="GET_ListReturns_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListReturns_401">
+        <soap:fault use="literal" name="GET_ListReturns_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListReturns_402">
+        <soap:fault use="literal" name="GET_ListReturns_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListReturns_404">
+        <soap:fault use="literal" name="GET_ListReturns_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListReturns_429">
+        <soap:fault use="literal" name="GET_ListReturns_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_ListReturns_500">
+        <soap:fault use="literal" name="GET_ListReturns_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="POST_RefundMilePayment">
+      <soap:operation soapAction="POST_RefundMilePayment" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="POST_RefundMilePayment_400">
+        <soap:fault use="literal" name="POST_RefundMilePayment_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_RefundMilePayment_401">
+        <soap:fault use="literal" name="POST_RefundMilePayment_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_RefundMilePayment_402">
+        <soap:fault use="literal" name="POST_RefundMilePayment_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_RefundMilePayment_404">
+        <soap:fault use="literal" name="POST_RefundMilePayment_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_RefundMilePayment_429">
+        <soap:fault use="literal" name="POST_RefundMilePayment_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_RefundMilePayment_500">
+        <soap:fault use="literal" name="POST_RefundMilePayment_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="POST_Cart">
+      <soap:operation soapAction="POST_Cart" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="POST_Cart_400">
+        <soap:fault use="literal" name="POST_Cart_400" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Cart_401">
+        <soap:fault use="literal" name="POST_Cart_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Cart_402">
+        <soap:fault use="literal" name="POST_Cart_402" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Cart_404">
+        <soap:fault use="literal" name="POST_Cart_404" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Cart_429">
+        <soap:fault use="literal" name="POST_Cart_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Cart_500">
+        <soap:fault use="literal" name="POST_Cart_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+  </binding>
+  <service name="Global_x0020_Miles_x0020_E-commerce_x0020_API">
+    <documentation>API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.</documentation>
+    <port name="default_Port" xmlns:q242="https://api.sandbox.globalmiles.com/wsdl" binding="q242:Global_x0020_Miles_x0020_E-commerce_x0020_API_Binding">
+      <soap:address location="https%3A%2F%2Fapi.sandbox.globalmiles.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+    </port>
+  </service>
+</definitions>

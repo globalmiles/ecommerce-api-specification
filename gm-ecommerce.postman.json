@@ -1,209 +1,95 @@
-﻿{
+{
   "info": {
-    "name": "Global Miles Ecommerce API",
-    "_postman_id": "af2265b7-e9b9-4bd2-8286-f409345fe1b5",
-    "description": "API for Ecommerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.",
+    "name": "Global Miles E-commerce API",
+    "_postman_id": "686dee26-1b4f-4ea7-b04e-99c50aaab2eb",
+    "description": "API for E-commerce Partners. This document includes Cart, Discount, Payment, Order and Return related endpoints provided by Global Miles.",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/"
   },
   "item": [
     {
-      "name": "Pay with Miles",
-      "item": [
-        {
-          "id": "9a436078-47e3-4926-9738-fa49a8ef13c4",
-          "name": "List Mile Payments",
-          "request": {
-            "url": "http://default/v2/ecommerce/payments?StoreCode=filter%5Bstore_code%5D%3DECO123858493939&FilterByCreatedAt=filter%5Bcreated_at%5D%3D2017-01-01...2018-01-01&FilterByStatus=filter%5Bstatus%5D%3Dcompleted&SortBy=sort%3D-created_at",
-            "method": "GET",
-            "body": {
-              "mode": "raw"
-            },
-            "description": "This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint."
-          },
-          "response": [
-            {
-              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": [\r\n    {\r\n      \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\",\r\n      \"created_at\": \"2018-01-01T10:00:00\",\r\n      \"updated_at\": \"2018-01-01T10:10:00\",\r\n      \"status\": \"completed\",\r\n      \"amount\": {\r\n        \"value\": 10.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    },\r\n    {\r\n      \"payment_provision_token\": \"ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10\",\r\n      \"created_at\": \"2017-12-01T23:00:00\",\r\n      \"updated_at\": \"2017-12-02T14:00:00\",\r\n      \"status\": \"refunded\",\r\n      \"amount\": {\r\n        \"value\": 20.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    },\r\n    {\r\n      \"payment_provision_token\": \"ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5\",\r\n      \"created_at\": \"2017-11-01T12:00:00\",\r\n      \"updated_at\": \"2017-11-01T12:05:00\",\r\n      \"status\": \"cancelled\",\r\n      \"amount\": {\r\n        \"value\": 23.0,\r\n        \"currency\": \"usd\"\r\n      }\r\n    }\r\n  ]\r\n}",
-              "code": 200,
-              "name": "Response_200",
-              "id": "aa901434-9e5e-478e-9948-cc1fa2d171f8"
-            }
-          ]
-        },
-        {
-          "id": "1788d12c-6d5e-4a9d-bf63-66a16fc614a2",
-          "name": "Refund Mile Payment",
-          "request": {
-            "url": "http://default/v2/ecommerce/payments/actions/refund",
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"usd\"\r\n  }\r\n}"
-            },
-            "description": "This endpoint allows to refund a payment."
-          },
-          "response": [
-            {
-              "body": "{\r\n  \"status\": \"ok\"\r\n}",
-              "code": 200,
-              "name": "Response_200",
-              "id": "b83f0032-845a-4238-b9d5-76ad0e6afb36"
-            }
-          ]
-        },
-        {
-          "id": "067f2618-1bb3-44f7-affa-66597a76c2ad",
-          "name": "Cancel Mile Payment",
-          "request": {
-            "url": "http://default/v2/ecommerce/payments",
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n}"
-            },
-            "description": "This endpoint allows to cancel a payment."
-          },
-          "response": [
-            {
-              "body": "{\r\n  \"status\": \"ok\"\r\n}",
-              "code": 200,
-              "name": "Response_200",
-              "id": "805c7d10-c1dd-4368-8033-ebbd7609bfb6"
-            }
-          ]
-        },
-        {
-          "id": "59a090b5-bee7-4c29-b2de-9bf371e53ad9",
-          "name": "Complete Mile Payment",
-          "request": {
-            "url": "http://default/v2/ecommerce/payments",
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n}"
-            },
-            "description": "This endpoint allows to complete a payment."
-          },
-          "response": [
-            {
-              "body": "{\r\n  \"status\": \"ok\"\r\n}",
-              "code": 200,
-              "name": "Response_200",
-              "id": "829b5c64-f0e2-4e77-9ff2-8387adf3020f"
-            }
-          ]
-        },
-        {
-          "id": "e91667c6-8f93-4a5d-bb3c-0a2efbb88262",
-          "name": "Start Mile Payment",
-          "request": {
-            "url": "http://default/v2/ecommerce/payments",
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"usd\"\r\n  }\r\n}"
-            },
-            "description": "After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check \"Complete Mile Payment endpoint\" please."
-          },
-          "response": [
-            {
-              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n  }\r\n}",
-              "code": 200,
-              "name": "Response_200",
-              "id": "1e0104bb-d463-4e03-bca3-30571a041472"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "Earn Miles",
       "item": [
         {
-          "id": "426d7a34-fefa-4b5a-b7ad-dce77cbf3a2a",
-          "name": "Order Info",
+          "id": "257dd490-b8a3-44ae-a34c-870a650ddac9",
+          "name": "List Orders",
           "request": {
-            "url": "http://default/v2/ecommerce/orders",
-            "method": "POST",
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/orders?filter[store_code]=ECO123858493939&filter[completed_at]=2017-01-01..2019-01-01&filter[status]=processed&sort=-completed_at",
+            "method": "GET",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"transaction_id\": \"cf01b6c3-74c9-4e69-a779-9742571abff6\",\r\n  \"order\": {\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"usd\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ],\r\n    \"payments\": [\r\n      {\r\n        \"type\": \"cash\",\r\n        \"amount\": 25.5\r\n      },\r\n      {\r\n        \"type\": \"mile_payment\",\r\n        \"amount\": 50.0,\r\n        \"payment_provision_token\": \"ppt_66feace2-873d-4a8b-9fdc-9eac06b07517\"\r\n      }\r\n    ],\r\n    \"discounts\": [\r\n      {\r\n        \"type\": \"other\",\r\n        \"amount\": 1.5\r\n      },\r\n      {\r\n        \"type\": \"loyalty_discount\",\r\n        \"amount\": 1.0,\r\n        \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\r\n      }\r\n    ]\r\n  }\r\n}"
+              "mode": "raw"
             },
-            "description": "This endpoint allows to create an order for earn miles. It may also include discounts and payments."
+            "description": "This endpoint allows to get list of orders. In order to get detailed order history and reconciliation you can use this endpoint.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
           },
           "response": [
             {
-              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"transaction_token\": \"ot_71f06a17-3021-4c42-bd38-e492a7579f65\"\r\n  }\r\n}",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": [\r\n    {\r\n      \"transaction_token\": \"ort_b3b45895-f961-4cde-b9df-5b274fb757e7\",\r\n      \"transaction_id\": \"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\",\r\n      \"completed_at\": \"2018-01-01T09:00:00\",\r\n      \"created_at\": \"2018-01-01T10:00:00\",\r\n      \"updated_at\": \"2018-01-01T10:10:00\",\r\n      \"status\": \"processed\",\r\n      \"subtotal\": 90.0,\r\n      \"tax\": 10.2,\r\n      \"total\": 100.2,\r\n      \"currency\": \"USD\"\r\n    },\r\n    {\r\n      \"transaction_token\": \"ot_fd7bc94b-4fe4-4c5a-89fa-85ce017c2b0b\",\r\n      \"transaction_id\": \"42db67d6-fde6-47ce-81eb-121cf333e0d7\",\r\n      \"completed_at\": \"2018-01-02T09:00:00\",\r\n      \"created_at\": \"2018-01-02T10:00:00\",\r\n      \"updated_at\": \"2018-01-02T10:10:00\",\r\n      \"status\": \"processed\",\r\n      \"subtotal\": 70.0,\r\n      \"tax\": 8.2,\r\n      \"total\": 78.2,\r\n      \"currency\": \"USD\"\r\n    },\r\n    {\r\n      \"transaction_token\": \"ot_e59410fb-831a-47d2-9822-9de6efd3e39e\",\r\n      \"transaction_id\": \"51424457-4997-4fa2-aed0-1a71aff88294\",\r\n      \"completed_at\": \"2018-01-03T09:00:00\",\r\n      \"created_at\": \"2018-01-03T10:00:00\",\r\n      \"updated_at\": \"2018-01-03T10:10:00\",\r\n      \"status\": \"refunded\",\r\n      \"subtotal\": 60.0,\r\n      \"tax\": 7.2,\r\n      \"total\": 67.2,\r\n      \"currency\": \"USD\"\r\n    }\r\n  ]\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "b61ef010-6a27-4e42-b7df-4131a7a67b33"
+              "id": "965fa1e5-2389-44e9-b9ab-e4b2e3b84193"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "cd470e0b-117d-4c37-b5f1-18cec846a3d5"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "795fb327-f3a8-4672-9f62-d9c4c97517e2"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "8e758214-4608-4809-a14c-408019013ac3"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "1eea5b55-374f-42ff-8394-5a7fec5ea2dc"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "fde7ee9d-b5aa-4a2b-ac8e-44a1c32ecd34"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "9245131f-61e0-4358-8383-6973871ed856"
             }
           ]
         },
         {
-          "id": "4630e4df-f3de-4481-b892-b5c602a01b99",
-          "name": "Cart Info",
+          "id": "10130e4d-790a-47fe-ae0e-620f321c2a0c",
+          "name": "Order",
           "request": {
-            "url": "http://default/v2/ecommerce/carts",
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/orders",
             "method": "POST",
             "header": [
               {
@@ -213,22 +99,242 @@
               },
               {
                 "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
+                "value": "application/json",
                 "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_b69c3393-54eb-471c-907d-8d4ed405f88e\",\r\n  \"cart\": {\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"usd\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ]\r\n  }\r\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf\",\r\n  \"order\": {\r\n    \"transaction_id\": \"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\",\r\n    \"completed_at\": \"2018-01-01T10:00:00\",\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"USD\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ],\r\n    \"payments\": [\r\n      {\r\n        \"type\": \"cash\",\r\n        \"amount\": 25.5\r\n      },\r\n      {\r\n        \"type\": \"mile_payment\",\r\n        \"amount\": 50.0,\r\n        \"payment_provision_token\": \"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"\r\n      }\r\n    ],\r\n    \"discounts\": [\r\n      {\r\n        \"type\": \"other\",\r\n        \"amount\": 1.5\r\n      },\r\n      {\r\n        \"type\": \"loyalty_discount\",\r\n        \"amount\": 1.0,\r\n        \"discount_provision_token\": \"dpt_edb17503-c804-48bf-b798-1d5e7d8757c7\"\r\n      }\r\n    ]\r\n  }\r\n}"
             },
-            "description": "This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items."
+            "description": "This endpoint allows to create an order for earn miles. It may also include discounts and payments.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
           },
           "response": [
             {
-              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"available_point\": {\r\n      \"value\": 100.2,\r\n      \"currency\": \"usd\"\r\n    },\r\n    \"cart_discount\": {\r\n      \"discount\": 10.0,\r\n      \"currency\": \"usd\",\r\n      \"discount_provision_token\": \"dpt_91b518d5-be93-4b54-b943-1b3c71cee7c4\"\r\n    }\r\n  }\r\n}",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"transaction_token\": \"ort_b3b45895-f961-4cde-b9df-5b274fb757e7\"\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "2659e904-cc2e-4922-91da-95b006b8fd5a"
+              "id": "68a36cee-bce5-4b9c-b948-007b0d0021c9"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "86d0784d-1169-4300-90f3-aff979a161b2"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "0c5983b1-73e3-4807-b396-bcbf959dd50f"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "660165da-1f23-47d4-83e5-9b24ad558625"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "5506a8a1-0eba-465c-bb97-101319e16604"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "8b223f94-9d34-4288-bb41-8208fcd868b3"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "b8f62a29-7684-4769-8af8-772396fd6cd3"
+            }
+          ]
+        },
+        {
+          "id": "3615dfbc-1d39-4d8e-ad2b-777836a1d637",
+          "name": "Retrieve Order",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "host": "api.sandbox.globalmiles.com",
+              "path": [
+                "v2/ecommerce/orders/:transaction_id"
+              ],
+              "variable": [
+                {
+                  "id": "transaction_id",
+                  "value": "6c1a75f2-d7de-4ac1-80e0-60ac83f7e083",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "This endpoint allows to get an order.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"transaction_token\": \"ort_b3b45895-f961-4cde-b9df-5b274fb757e7\",\r\n    \"transaction_id\": \"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\",\r\n    \"completed_at\": \"2018-01-01T09:00:00\",\r\n    \"created_at\": \"2018-01-01T10:00:00\",\r\n    \"updated_at\": \"2018-01-01T10:10:00\",\r\n    \"status\": \"processed\",\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"USD\"\r\n  }\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "4443da50-83e2-4cd9-9596-af59e3a699b7"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "989069c1-4f3f-4330-9c71-53d44fd0a272"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "5c49df1a-2fd0-4d8a-9d0b-117ee064361f"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "cb1dbc81-0978-45e0-bcfe-6237a3265fed"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "ebef0de2-c823-40f5-b8da-8e3128f0f933"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "bf9c0f42-9781-4125-826b-7bf1d2aded7d"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "7e0c6992-7f92-422b-b89a-b750e71c4857"
+            }
+          ]
+        },
+        {
+          "id": "9de26e91-f33a-4db9-9e8f-035c0f3d23e1",
+          "name": "Cart",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/carts",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf\",\r\n  \"cart\": {\r\n    \"subtotal\": 90.0,\r\n    \"tax\": 10.2,\r\n    \"total\": 100.2,\r\n    \"currency\": \"USD\",\r\n    \"items\": [\r\n      {\r\n        \"id\": \"344187961\",\r\n        \"quantity\": 1,\r\n        \"price\": 20.0\r\n      },\r\n      {\r\n        \"id\": \"344187960\",\r\n        \"quantity\": 2.2,\r\n        \"price\": 0.91\r\n      },\r\n      {\r\n        \"id\": \"344187965\",\r\n        \"quantity\": 5,\r\n        \"price\": 10.0\r\n      }\r\n    ]\r\n  }\r\n}"
+            },
+            "description": "This endpoint allows to get available amount of money, based on miles of user and their discounts which is based on cart or items.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"available_point\": {\r\n      \"value\": 100.2,\r\n      \"currency\": \"USD\"\r\n    },\r\n    \"cart_discount\": {\r\n      \"discount\": 10.0,\r\n      \"currency\": \"USD\",\r\n      \"discount_provision_token\": \"dpt_edb17503-c804-48bf-b798-1d5e7d8757c7\"\r\n    }\r\n  }\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "b4290b70-a730-4c3c-8245-49ea56540145"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "9076e72c-9efa-499d-a8ce-9b1d8dfae2c1"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "8e700b96-6884-45a4-b8db-05712d4c64fd"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "8f82d682-64d5-4e7d-8452-26bebbd85aec"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "cb8a7357-67a7-430f-ae0f-514b0ab22f4e"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "54cc0857-97cd-4db4-9f60-ac7d0b8e0ba2"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "a8ac0e73-e6e4-46a7-a948-e30b26b939dc"
             }
           ]
         }
@@ -238,10 +344,10 @@
       "name": "Authentication",
       "item": [
         {
-          "id": "3c80c245-fcbc-4bf1-b5a8-6b1dad4fda6b",
+          "id": "7d7ce996-fd3c-4e77-9532-8cbac7bdd152",
           "name": "Authentication",
           "request": {
-            "url": "http://default/oauth/token",
+            "url": "https://api.sandbox.globalmiles.com/oauth/token",
             "auth": {
               "type": "noauth"
             },
@@ -264,14 +370,63 @@
               "mode": "raw",
               "raw": "{\r\n  \"client_id\": \"{{client_id}}\",\r\n  \"client_secret\": \"{{client_secret}}\",\r\n  \"grant_type\": \"{{grant_type}}\"\r\n}"
             },
-            "description": "An access token will allow you to make requests for the system. We support only one type of token: client_credentials"
+            "description": "An access token will allow you to make requests for the system. We support only one type of token: client_credentials.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
           },
           "response": [
             {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
               "body": "{\r\n  \"access_token\": \"{{access_token}}\",\r\n  \"token_type\": \"bearer\",\r\n  \"created_at\": \"1496737098\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "e4be8f05-b853-4ded-bb5b-9354e1f105e3"
+              "id": "4f166ddf-1590-4715-a5d5-5d3e8f6f9086"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "a0ad9548-dfe8-4fb0-986a-a496fa3afd64"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "1aa320d4-3827-47e9-9b01-b8536027598b"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "28791ca5-6a91-448d-b7ff-8fd4688b7fe5"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "f24b94fa-cafa-4278-9eb2-a063bc7f41e0"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "6d8e143e-21d4-47fc-8ebf-42bf866c0b6d"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "72bb6be7-b161-424e-926a-f8154b0486bc"
             }
           ]
         }
@@ -281,76 +436,99 @@
       "name": "Return",
       "item": [
         {
-          "id": "c96d18b7-f469-4e21-b42d-397b71c51092",
-          "name": "Start Return",
+          "id": "c9e8387b-d36c-4ad6-94bf-4783e6885eaa",
+          "name": "Retrieve Return",
           "request": {
-            "url": "http://default/v2/ecommerce/returns",
-            "method": "POST",
+            "url": {
+              "protocol": "https",
+              "host": "api.sandbox.globalmiles.com",
+              "path": [
+                "v1/ecommerce/returns/:return_provision_token"
+              ],
+              "variable": [
+                {
+                  "id": "return_provision_token",
+                  "value": "rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json",
                 "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
               }
             ],
             "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"transaction_id\": \"cf01b6c3-74c9-4e69-a779-9742571abff6\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"usd\"\r\n  }\r\n}"
+              "mode": "raw"
             },
-            "description": "This endpoint allows to start a return for a specific order."
+            "description": "This endpoint allows to get a return.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
           },
           "response": [
             {
-              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\r\n  }\r\n}",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"return_provision_token\": \"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef\",\r\n    \"transaction_id\": \"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\",\r\n    \"created_at\": \"2018-01-01T10:00:00\",\r\n    \"updated_at\": \"2018-01-01T10:10:00\",\r\n    \"status\": \"completed\",\r\n    \"amount\": {\r\n      \"value\": 10.0,\r\n      \"currency\": \"USD\"\r\n    }\r\n  }\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "5da5a059-2a66-4585-b082-2be9eb98cf1f"
+              "id": "c0174caf-8275-4f7b-bb5a-b5a339d8249c"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "4a6bfade-a685-49ab-be8d-41929f23de04"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "2938563a-a26c-45ed-bc8a-9d0b8fab6b0b"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "17709094-c86b-4651-9277-a4630b70c2ef"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "253ce930-8cd6-4c32-9852-88a854beb42f"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "e51e083b-2740-4f20-b869-2a820dba21a2"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "47102a50-3abe-4126-a5fb-b105fd7d9d21"
             }
           ]
         },
         {
-          "id": "aab5236a-9fbf-42be-a583-f210d5141d4c",
-          "name": "Complete Return",
-          "request": {
-            "url": "http://default/v2/ecommerce/returns",
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "disabled": false
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
-                "disabled": false
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\r\n}"
-            },
-            "description": "This endpoint allows to complete a return."
-          },
-          "response": [
-            {
-              "body": "{\r\n  \"status\": \"ok\"\r\n}",
-              "code": 200,
-              "name": "Response_200",
-              "id": "2d0d2cb4-fd47-4d4a-b683-6fc4951a054a"
-            }
-          ]
-        },
-        {
-          "id": "8a3c7bd1-aca1-452a-bad2-3f4bd2e18809",
+          "id": "1131c8ba-c277-43d9-89a9-2587b286b6f6",
           "name": "Cancel Return",
           "request": {
-            "url": "http://default/v2/ecommerce/returns",
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/returns",
             "method": "DELETE",
             "header": [
               {
@@ -360,22 +538,720 @@
               },
               {
                 "key": "Content-Type",
-                "value": "application/json;charset=utf-8",
+                "value": "application/json",
                 "disabled": false
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"return_provision_token\": \"rpt_e0563e09-e1b2-4144-a236-30ea76b58058\"\r\n}"
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"return_provision_token\": \"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef\"\r\n}"
             },
-            "description": "This endpoint allows to cancel a return."
+            "description": "This endpoint allows to cancel a return.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
           },
           "response": [
             {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
               "body": "{\r\n  \"status\": \"ok\"\r\n}",
               "code": 200,
               "name": "Response_200",
-              "id": "c33fae0e-0d40-4a07-85bc-a1cf2b4a46b5"
+              "id": "3fbd0146-4483-4542-aa19-af1f47a670ae"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "57dbe55d-0b0d-474c-b674-29ce05d09135"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "c8178121-95bb-4da3-a7eb-1b2d717241ea"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "714aa4a7-75bb-4559-9478-323258bc6efc"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "1b62fb16-c03a-4c28-a0ab-2c3407b236a8"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "0f2f4d54-9bdd-446b-9000-2540a7495aba"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "6e054f5c-63d1-45cb-b27c-577c03d5481e"
+            }
+          ]
+        },
+        {
+          "id": "b2ccb610-f21f-4ffc-9700-a46fdbc0209e",
+          "name": "Complete Return",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/returns",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"return_provision_token\": \"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef\"\r\n}"
+            },
+            "description": "This endpoint allows to complete a return.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "a6a3c640-d126-4596-876a-58f886a8473b"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "343c8cfd-099a-44cf-b8e3-4347ae132cdb"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "9fe7f241-4d8b-4d4a-b30a-948e55563676"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "aea6d860-7379-4870-a541-1ae59faa153e"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "67a47558-0a8e-414b-9151-f417df11de9c"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "1721e340-7868-4e50-9e0f-9bfce8e1cf89"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "03c328eb-9a62-4456-8519-9650ea17d9d8"
+            }
+          ]
+        },
+        {
+          "id": "df38e0f3-fdb3-468e-a9c0-874a38d2d16f",
+          "name": "Start Return",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/returns",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"transaction_id\": \"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"USD\"\r\n  }\r\n}"
+            },
+            "description": "This endpoint allows to start a return for a specific order.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"return_provision_token\": \"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef\"\r\n  }\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "e2887581-bc8f-486e-aa65-405c35a7e6e0"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "409749aa-4f32-4f4c-a1b0-4fb3b159fdee"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "f50b823d-dce7-4b35-871f-da2b1d0f983a"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "dc16f7a7-da4d-49dc-9f50-bbdd0431a842"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "433aca94-0834-41e8-b7cc-2e3f5cfb4e25"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "dc13e557-ad5f-4564-a953-f5ac67a5245e"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "d54824d5-0227-424e-8336-52034572acef"
+            }
+          ]
+        },
+        {
+          "id": "c3a621bc-e3cf-4b8b-a788-364f22314b75",
+          "name": "List Returns",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/returns?filter[store_code]=ECO123858493939&filter[created_at]=2017-01-01..2018-01-01&filter[status]=completed&sort=-created_at",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "This endpoint allows to get list of returns. In order to get detailed return history and reconciliation you can use this endpoint.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": [\r\n    {\r\n      \"return_provision_token\": \"rpt_f4dd4f17-da27-4c61-af29-f7b116efa0ef\",\r\n      \"transaction_id\": \"6c1a75f2-d7de-4ac1-80e0-60ac83f7e083\",\r\n      \"created_at\": \"2018-01-01T10:00:00\",\r\n      \"updated_at\": \"2018-01-01T10:10:00\",\r\n      \"status\": \"completed\",\r\n      \"amount\": {\r\n        \"value\": 10.0,\r\n        \"currency\": \"USD\"\r\n      }\r\n    },\r\n    {\r\n      \"return_provision_token\": \"rpt_a0d2070b-0676-4131-b315-c9d653a31505\",\r\n      \"transaction_id\": \"42db67d6-fde6-47ce-81eb-121cf333e0d7\",\r\n      \"created_at\": \"2018-01-02T10:00:00\",\r\n      \"updated_at\": \"2018-01-02T10:10:00\",\r\n      \"status\": \"cancelled\",\r\n      \"amount\": {\r\n        \"value\": 10.0,\r\n        \"currency\": \"USD\"\r\n      }\r\n    },\r\n    {\r\n      \"return_provision_token\": \"rpt_0399bad5-fac3-45dd-88af-99604b153355\",\r\n      \"transaction_id\": \"51424457-4997-4fa2-aed0-1a71aff88294\",\r\n      \"created_at\": \"2018-01-03T10:00:00\",\r\n      \"updated_at\": \"2018-01-03T10:10:00\",\r\n      \"status\": \"completed\",\r\n      \"residual\": {\r\n        \"value\": 5.0,\r\n        \"currency\": \"USD\"\r\n      }\r\n    }\r\n  ]\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "a8f5c5a8-9405-4c57-b26b-4cf3ece8212b"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "8d01c08e-e74c-49e4-9ba6-6ab9426e4176"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "c2e56e57-b6bc-4ef0-ac52-f019807bd288"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "07f3ddd5-7583-4d57-9db9-396e98ae46e0"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "8f88fb19-a908-4c50-bcf1-b5f1ab40de26"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "15cba762-3884-491f-b957-90af1ad5a183"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "ce5343e4-40e6-46da-9c30-3cfc90e5e9a3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pay with Miles",
+      "item": [
+        {
+          "id": "67d9958a-3290-47d9-aa50-ed7cfbc55d02",
+          "name": "List Mile Payments",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/payments?filter[store_code]=ECO123858493939&filter[created_at]=2017-01-01..2019-01-01&filter[status]=completed&sort=created_at",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "This endpoint allows to get list of payments. In order to get detailed payment history and reconciliation you can use this endpoint.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": [\r\n    {\r\n      \"payment_provision_token\": \"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\",\r\n      \"created_at\": \"2018-01-01T10:00:00\",\r\n      \"updated_at\": \"2018-01-01T10:10:00\",\r\n      \"status\": \"completed\",\r\n      \"amount\": {\r\n        \"value\": 10.0,\r\n        \"currency\": \"USD\"\r\n      }\r\n    },\r\n    {\r\n      \"payment_provision_token\": \"ppt_0d64fa6f-8871-4a3f-be3b-5a7c97853d10\",\r\n      \"created_at\": \"2017-12-01T23:00:00\",\r\n      \"updated_at\": \"2017-12-02T14:00:00\",\r\n      \"status\": \"refunded\",\r\n      \"amount\": {\r\n        \"value\": 20.0,\r\n        \"currency\": \"USD\"\r\n      }\r\n    },\r\n    {\r\n      \"payment_provision_token\": \"ppt_dadd0d63-dddf-4e82-b483-5c2aca9fb5a5\",\r\n      \"created_at\": \"2017-11-01T12:00:00\",\r\n      \"updated_at\": \"2017-11-01T12:05:00\",\r\n      \"status\": \"cancelled\",\r\n      \"amount\": {\r\n        \"value\": 23.0,\r\n        \"currency\": \"USD\"\r\n      }\r\n    }\r\n  ]\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "33e79bd5-c271-4971-8ad5-d8f022ec7024"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "7488f960-95fb-44ca-90ab-de3c12a4499c"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "d76107ec-e9e6-4e4f-b29a-1facd675e6b9"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "9463a4ce-dbdb-477c-bbe8-11a2991ad824"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "8dcab1a7-da42-43b4-98e6-8c75b2064dfc"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "a702abcf-787e-4d56-8754-1e28adf5a568"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "90d31c25-4075-43e1-bbb2-c1d8a6c46c15"
+            }
+          ]
+        },
+        {
+          "id": "2cb94615-6aa7-4524-9d6b-a6d0408738a2",
+          "name": "Start Mile Payment",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/payments",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"user_token\": \"ut_345021fb-9ed2-4c55-841e-3ffa95ca83bf\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"USD\"\r\n  }\r\n}"
+            },
+            "description": "After successful authentication and retrieving needed token, this endpoint allows to start a payment transaction. To be able to complete whole payment process successfully also check \"Complete Mile Payment endpoint\" please.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\",\r\n  \"result\": {\r\n    \"payment_provision_token\": \"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"\r\n  }\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "c499ab94-b0c9-49f1-b049-9a600a666044"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "a53518c2-5689-443c-b792-3b499ecedd37"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "fcf0e35b-2ea4-4bed-847f-a096428b6d93"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "d5ab181f-ebf4-4d3d-8344-263159b1ad1d"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "54f8b2a6-d75a-41e9-a7cb-26b8e265fedf"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "379daa53-8f86-4ce8-82f9-c4e93a9b385e"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "d608cd23-cd8d-4295-b184-3b7284a3b548"
+            }
+          ]
+        },
+        {
+          "id": "d383b163-b41f-4f4f-acd9-e4ea2a6ba51b",
+          "name": "Complete Mile Payment",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/payments",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"\r\n}"
+            },
+            "description": "This endpoint allows to complete a payment.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "114c5358-11e7-4bba-b625-edba3f46d8ba"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "b6c1ca1c-722c-4a4b-aeab-debe7d36e38d"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "44cd24e8-995c-468e-9100-bd24af152f53"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "79aeb13d-2ca7-44e6-b4cd-94e4bf5cc931"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "62961756-fcbb-49a4-ab8f-3b73a5a6d696"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "0f483167-084f-4118-a7fb-144d829b8f0c"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "056bd51b-35f5-482f-8ea6-3a97c9d3531a"
+            }
+          ]
+        },
+        {
+          "id": "9f104af8-339f-4dae-989a-cab09a5f2044",
+          "name": "Cancel Mile Payment",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/payments",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\"\r\n}"
+            },
+            "description": "This endpoint allows to cancel a payment.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "6db57c85-6aa5-4b52-8d7a-d67fe2ada15c"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "3e4391f8-3473-40db-be1e-925926326730"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "2daac0d5-df9e-4353-85eb-cedda902f5e9"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "1d112073-3bfd-4455-9363-b3b2389c8616"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "6cd66555-e465-458e-9ec1-08ce6776bf74"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "c8e3b745-960a-4305-8ebb-5eae7065df14"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "0f31f354-4bc9-49b0-92e8-15f73c3c25ae"
+            }
+          ]
+        },
+        {
+          "id": "7147c90d-d975-4ba0-9ea9-54da87081ab8",
+          "name": "Refund Mile Payment",
+          "request": {
+            "url": "https://api.sandbox.globalmiles.com/v2/ecommerce/payments/actions/refund",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"store_code\": \"ECO123858493939\",\r\n  \"payment_provision_token\": \"ppt_4c558b3d-7146-4043-b559-4599434e2ad7\",\r\n  \"amount\": {\r\n    \"value\": 10.0,\r\n    \"currency\": \"USD\"\r\n  }\r\n}"
+            },
+            "description": "This endpoint allows to refund a payment.\n\nYou can try this API with configuring client parameters in Console Tab below. Test OAuthClientId is b30359c21700fd6f2b91154adcb7b37bab3e7e0a33e22682e5dd149d7a6ac4df and OAuthClientSecret is 4bc4335faad41d6a23cd059e495005f00496a64e34e6187b1d72695a8debd28c"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"status\": \"ok\"\r\n}",
+              "code": 200,
+              "name": "Response_200",
+              "id": "45e6d43f-cc54-46ac-b703-4eab3317e6d3"
+            },
+            {
+              "body": "error 400",
+              "status": "Bad Request\t- The request was unacceptable, often due to missing a required parameter.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "5f2baaba-4429-4697-ae31-6cee76adb3ca"
+            },
+            {
+              "body": "error 401",
+              "status": "Unauthorized - No valid API key provided.",
+              "code": 401,
+              "name": "Response_401",
+              "id": "642c0fdb-15f4-454a-ba8a-7739dc60adf4"
+            },
+            {
+              "body": "error 402",
+              "status": "Request Failed - The parameters were valid but the request failed.",
+              "code": 402,
+              "name": "Response_402",
+              "id": "c657e4c1-cc97-49a2-bd9b-16119b10776c"
+            },
+            {
+              "body": "error 404",
+              "status": "Not Found - The requested resource doesn't exist.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "f42dbbc0-617b-422b-b5e3-e8277675a163"
+            },
+            {
+              "body": "error 429",
+              "status": "Too Many Requests - Too many requests hit the API too quickly.",
+              "code": 429,
+              "name": "Response_429",
+              "id": "5450a56d-2428-4360-a454-2044f4e43161"
+            },
+            {
+              "body": "error 500",
+              "status": "Server Error - Something went wrong.",
+              "code": 500,
+              "name": "Response_500",
+              "id": "56bbf85e-19bf-4a54-9975-aee758b79881"
             }
           ]
         }
@@ -385,7 +1261,7 @@
   "auth": {
     "type": "oauth2",
     "oauth2": {
-      "accessTokenUrl": "https://test1.api.globalmiles.com/oauth/token",
+      "accessTokenUrl": "https://api.sandbox.globalmiles.com/oauth/token",
       "scope": "",
       "grantType": "client_credentials"
     }
